@@ -1,3 +1,6 @@
+import org.xml.sax.SAXException;
+
+import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -5,6 +8,8 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.*;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -31,21 +36,14 @@ public class Model {
         counter = 1;
     }
 
-    public void loadXML(String path, Model m) throws JAXBException {
-        JAXBContext jaxbCtx = JAXBContext.newInstance(this.getClass());
+    public Model loadXML(String path, Model m) throws JAXBException, SAXException {
+        JAXBContext jaxbCtx = JAXBContext.newInstance(m.getClass());
         Unmarshaller um = jaxbCtx.createUnmarshaller();
         Marshaller marshaller = jaxbCtx.createMarshaller();
-        FileInputStream fis = null;
-        try {
-            //Пробуем связать поток ввода с файлом, откуда будем считывать XML.
-            fis = new FileInputStream(path);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Start load");
-        m = (Model) um.unmarshal(fis);
-        marshaller.marshal(m, System.out);
-        System.out.println("exit load");
+
+        m = (Model) um.unmarshal(new File("C:\\test.xml"));
+
+        return m;
 
     }
 
@@ -59,17 +57,15 @@ public class Model {
         File localNewFile = new File(path);
         FileOutputStream fos = null;
         try {
-            //Связываем поток вывода с файлом.
+
             fos = new FileOutputStream(localNewFile);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        //Маршаллизируем экземпляр класса Model
-        //в файл и на консоль.
-        System.out.println("Start save");
+
         marshaller.marshal(this, fos);
-        marshaller.marshal(this, System.out);
-        System.out.println("END SAVE");
+
+
 
 
     }
