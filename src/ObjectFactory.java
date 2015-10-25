@@ -1,28 +1,27 @@
 
+
+/*
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
+import javax.xml.namespace.QName;
 
 
 @XmlRegistry
 public class ObjectFactory {
 
-
-
     public ObjectFactory() {
     }
 
-
-    public Model createModel() throws JAXBException {
-        return new Model();
+    @XmlElementDecl(namespace = "", name = "group")
+    public JAXBElement<Group> createGroup(Group value) {
+        return new JAXBElement<Group>(new QName("group"), Group.class, value);
     }
 
-
-    public Group createModelGroups() {
-        return new Group();
+    @XmlElementDecl( name = "facult")
+    public JAXBElement<String> createFacult(String value) {
+        return new JAXBElement<String>(new QName("facult"), String.class, value);
     }
-
-    public Student createModelGroupsStudents() {
-        return new Student();
-    }
-
 }
+*/
