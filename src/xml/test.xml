@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model>
+    <group>
+        <number>11</number>
+        <facult>Bio</facult>
+        <students>
+            <id>1</id>
+            <name>Тест</name>
+            <patronymic>Тестович</patronymic>
+            <surname>Тестов</surname>
+            <date>2015.15.15</date>
+        </students>
+        <students>
+            <id>2</id>
+            <name>Тест2</name>
+            <patronymic>Тестович2</patronymic>
+            <surname>Тестов2</surname>
+            <date>2001.08.25</date>
+        </students>
+    </group>
+    <group>
+        <number>12</number>
+        <facult>KNIIT</facult>
+        <students>
+            <id>3</id>
+            <name>Дмитрий</name>
+            <patronymic>Иванович</patronymic>
+            <surname>Карпенко</surname>
+            <date>2015.10.19</date>
+        </students>
+        <students>
+            <id>4</id>
+            <name>Ксения</name>
+            <patronymic>Андреевна</patronymic>
+            <surname>Карпенко</surname>
+            <date>2015.10.20</date>
+        </students>
+        <students>
+            <id>5</id>
+            <name>Антон</name>
+            <patronymic>Александрович</patronymic>
+            <surname>Казаков</surname>
+            <date>2010.11.29</date>
+        </students>
+    </group>
+</model>

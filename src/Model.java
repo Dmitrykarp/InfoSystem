@@ -32,7 +32,7 @@ public class Model {
     private int counter;
 
     Model() throws JAXBException {
-        //loadXML("C:\\test.xml", this);
+
         counter = 1;
     }
 
@@ -41,7 +41,7 @@ public class Model {
         Unmarshaller um = jaxbCtx.createUnmarshaller();
         Marshaller marshaller = jaxbCtx.createMarshaller();
 
-        m = (Model) um.unmarshal(new File("C:\\test.xml"));
+        m = (Model) um.unmarshal(new File(path));
 
         return m;
 

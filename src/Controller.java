@@ -22,9 +22,9 @@ public class Controller {
 
 
 
-        thisModel= thisModel.loadXML("C:\\test.xml", thisModel);
+        thisModel= thisModel.loadXML("src\\xml\\test.xml", thisModel);
 
-        thisModel.saveXML("C:\\ff.xml");
+        thisModel.saveXML("src\\xml\\test.xml");
 
 
     }
