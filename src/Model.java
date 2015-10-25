@@ -1,10 +1,12 @@
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.*;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -19,17 +21,31 @@ import java.util.List;
 @XmlRootElement
 public class Model {
     @XmlTransient
-    private ArrayList<Student> students=new ArrayList<Student>();
-    private ArrayList<Group> groups=new ArrayList<Group>();
+    private ArrayList<Student> students = new ArrayList<Student>();
+    private ArrayList<Group> groups = new ArrayList<Group>();
     @XmlTransient
     private int counter;
 
-    Model() {
-        loadXML("test.xml");
-        counter=1;
+    Model() throws JAXBException {
+        //loadXML("C:\\test.xml", this);
+        counter = 1;
     }
 
-    public void loadXML(String path) {
+    public void loadXML(String path, Model m) throws JAXBException {
+        JAXBContext jaxbCtx = JAXBContext.newInstance(this.getClass());
+        Unmarshaller um = jaxbCtx.createUnmarshaller();
+        Marshaller marshaller = jaxbCtx.createMarshaller();
+        FileInputStream fis = null;
+        try {
+            //Пробуем связать поток ввода с файлом, откуда будем считывать XML.
+            fis = new FileInputStream(path);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Start load");
+        m = (Model) um.unmarshal(fis);
+        marshaller.marshal(m, System.out);
+        System.out.println("exit load");
 
     }
 
@@ -40,7 +56,7 @@ public class Model {
         marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
-        File localNewFile = new File("C:\\ff.xml");
+        File localNewFile = new File(path);
         FileOutputStream fos = null;
         try {
             //Связываем поток вывода с файлом.
@@ -50,15 +66,16 @@ public class Model {
         }
         //Маршаллизируем экземпляр класса Model
         //в файл и на консоль.
+        System.out.println("Start save");
         marshaller.marshal(this, fos);
         marshaller.marshal(this, System.out);
-
+        System.out.println("END SAVE");
 
 
     }
 
     public void addStudent(String n, String s, String p, String d) {
-    Student student = new Student(counter,n,s,p,d );
+        Student student = new Student(counter, n, s, p, d);
         counter++;
         students.add(student);
     }
@@ -67,11 +84,11 @@ public class Model {
 
     }
 
-    public void studentToGroup(int idStudent, int idGroup){
-        for(Student i: students){
-            if(i.getId()==idStudent){
-                for(Group j: groups){
-                    if(j.getNumber()==idGroup) j.addStudentToGroup(i);
+    public void studentToGroup(int idStudent, int idGroup) {
+        for (Student i : students) {
+            if (i.getId() == idStudent) {
+                for (Group j : groups) {
+                    if (j.getNumber() == idGroup) j.addStudentToGroup(i);
                 }
             }
         }
@@ -82,7 +99,7 @@ public class Model {
     }
 
     public void addGroup(int n, String f) {
-        Group group=new Group(n,f);
+        Group group = new Group(n, f);
         groups.add(group);
 
     }
@@ -90,6 +107,7 @@ public class Model {
     public void delGroup(int n) {
 
     }
+
     public List<Group> getGroup() {
         if (groups == null) {
             groups = new ArrayList<Group>();

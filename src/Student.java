@@ -26,15 +26,17 @@ public class Student {
     private String date;
 
 
+    Student(int i, String name, String surname, String patronymic, String date) {
+        this.name = name;
+        this.surname = surname;
+        this.patronymic = patronymic;
+        this.date = date;
+        this.id = i;
 
 
-   Student(int i, String name, String surname, String patronymic, String date){
-       this.name=name;
-       this.surname=surname;
-       this.patronymic=patronymic;
-       this.date=date;
-       this.id=i;
+    }
 
+    Student(){
 
     }
 
@@ -90,8 +92,6 @@ public class Student {
     public void setDate(String value) {
         this.date = value;
     }
-
-
 
 
 }

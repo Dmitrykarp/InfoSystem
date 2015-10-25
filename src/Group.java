@@ -18,9 +18,13 @@ public class Group {
     protected String facult;
     protected List<Student> students = new ArrayList<Student>();
 
-    Group(int number, String facult){
-        this.facult=facult;
-        this.number=number;
+    Group(int number, String facult) {
+        this.facult = facult;
+        this.number = number;
+    }
+
+    Group(){
+
     }
 
 
@@ -51,7 +55,7 @@ public class Group {
         return this.students;
     }
 
-    public void addStudentToGroup (Student st){
+    public void addStudentToGroup(Student st) {
         students.add(st);
 
     }

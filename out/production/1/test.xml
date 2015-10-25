@@ -1,39 +1,46 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<root>
-  <group>
-    <number>111</number>
-    <facult>KNIIT</facult>
+<model>
+  <groups>
+    <number>11</number>
+    <facult>Bio</facult>
     <students>
       <id>1</id>
-      <name>Dmitry</name>
-      <patronymic>Ivanovich</patronymic>
-      <surname>Karpenko</surname>
-      <date>1990-01-29</date>
+      <name>Тест</name>
+      <patronymic>Тестович</patronymic>
+      <surname>Тестов</surname>
+      <date>2015.15.15</date>
     </students>
     <students>
       <id>2</id>
-      <name>Kseniya</name>
-      <patronymic>Andreevna</patronymic>
-      <surname>Vyazova</surname>
-      <date>1992-09-19</date>
+      <name>Тест2</name>
+      <patronymic>Тестович2</patronymic>
+      <surname>Тестов2</surname>
+      <date>2001.08.25</date>
     </students>
-  </group>
-  <group>
-    <number>112</number>
-    <facult>FilFac</facult>
+  </groups>
+  <groups>
+    <number>12</number>
+    <facult>KNIIT</facult>
     <students>
       <id>3</id>
-      <name>Andrey</name>
-      <patronymic>Pavlovich</patronymic>
-      <surname>Petrov</surname>
-      <date>1995-07-05</date>
+      <name>Дмитрий</name>
+      <patronymic>Иванович</patronymic>
+      <surname>Карпенко</surname>
+      <date>2015.10.19</date>
     </students>
     <students>
       <id>4</id>
-      <name>Nadezda</name>
-      <patronymic>Olegovna</patronymic>
-      <surname>Mazur</surname>
-      <date>1984-11-12</date>
+      <name>Ксения</name>
+      <patronymic>Андреевна</patronymic>
+      <surname>Карпенко</surname>
+      <date>2015.10.20</date>
     </students>
-  </group>
-</root>
+    <students>
+      <id>5</id>
+      <name>Андрей</name>
+      <patronymic>Александрович</patronymic>
+      <surname>Казаков</surname>
+      <date>2010.11.29</date>
+    </students>
+  </groups>
+</model>
