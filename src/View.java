@@ -5,7 +5,7 @@ public class View {
     String s;
 
     View() {
-        System.out.println("Введите команду [help] для справки.");
+        System.out.println("Р’РІРµРґРёС‚Рµ РєРѕРјР°РЅРґСѓ [help] РґР»СЏ СЃРїСЂР°РІРєРё.");
     }
 
     public void printAllStudent(ArrayList<Student> st) {
@@ -25,11 +25,11 @@ public class View {
     }
 
     public void printError() {
-        System.out.println("Ошибка");
+        System.out.println("РћС€РёР±РєР°");
     }
 
     public void printHelp() {
-        System.out.println("Справка");
+        System.out.println("РЎРїСЂР°РІРєР°");
     }
 
 
