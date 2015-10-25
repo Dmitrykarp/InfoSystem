@@ -1,8 +1,38 @@
+import java.util.ArrayList;
 
+/**
+ * Created by Support on 20.10.2015.
+ */
 public class View {
     String s;
 
-    public void sout(){
-        System.out.println(s);
+    View() {
+        System.out.println("Введите команду [help] для справки.");
     }
+
+    public void printAllStudent(ArrayList<Student> st) {
+
+    }
+
+    public void printAllGroup(ArrayList<Group> gr) {
+
+    }
+
+    public void printStudent(Student st) {
+
+    }
+
+    public void printGroup(Group gr) {
+
+    }
+
+    public void printError() {
+        System.out.println("Ошибка");
+    }
+
+    public void printHelp() {
+        System.out.println("Справка");
+    }
+
+
 }

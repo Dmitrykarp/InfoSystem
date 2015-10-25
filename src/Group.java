@@ -1,28 +1,38 @@
+import java.util.ArrayList;
 
+/**
+ * Created by Support on 20.10.2015.
+ */
 public class Group {
     private int numGroup;
-    private Student [] stGroup;
+    private ArrayList<Student> stGroup;
     private String facult;
 
-
-
-    public String[] getAllStudent(int n){
-        return null;
-    }
-
-    public String getGroup(int n){
-        return null;
+    public void addGroup(int n, String f) {
 
     }
 
-    public String getGroup(String f){
+    public void delGroup(int n) {
+
+    }
+
+    public String[] getAllStudent(int n) {
+        return null;
+    }
+
+    public String getGroup(int n) {
         return null;
 
     }
 
+    public String getGroup(String f) {
+        return null;
 
+    }
 
+    public void modifyGroup(int i, String f, Student st) {
 
+    }
 
 
 }
