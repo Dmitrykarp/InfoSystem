@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 
-/**
- * Created by Support on 20.10.2015.
- */
+
 public class Model {
     private ArrayList<Student> students;
     private ArrayList<Group> groups;
@@ -16,6 +14,30 @@ public class Model {
     }
 
     public void saveXML(String path) {
+
+    }
+
+    public void addStudent(String n, String s, String p) {
+
+    }
+
+    public void delStudent(int n) {
+
+    }
+
+    public void modifyStudent(int i, String n, String s, String p) {
+
+    }
+
+    public void addGroup(int n, String f) {
+
+    }
+
+    public void delGroup(int n) {
+
+    }
+
+    public void modifyGroup(int i, String f, Student st) {
 
     }
 

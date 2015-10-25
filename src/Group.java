@@ -1,20 +1,12 @@
 import java.util.ArrayList;
 
-/**
- * Created by Support on 20.10.2015.
- */
+
 public class Group {
     private int numGroup;
     private ArrayList<Student> stGroup;
     private String facult;
 
-    public void addGroup(int n, String f) {
 
-    }
-
-    public void delGroup(int n) {
-
-    }
 
     public String[] getAllStudent(int n) {
         return null;
@@ -30,7 +22,7 @@ public class Group {
 
     }
 
-    public void modifyGroup(int i, String f, Student st) {
+    public void addStudentToGroup (Student st){
 
     }
 
