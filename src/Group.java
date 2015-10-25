@@ -1,6 +1,4 @@
-/**
- * Created by Support on 20.10.2015.
- */
+
 public class Group {
     private int numGroup;
     private Student [] stGroup;
@@ -20,7 +18,7 @@ public class Group {
 
     public String getGroup(int n){
         return null;
-        //TODO В УМЛ надо поменять имя метода + добавить связи с моделью
+
     }
 
     public String getGroup(String f){

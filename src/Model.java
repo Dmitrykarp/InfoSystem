@@ -1,6 +1,4 @@
-/**
- * Created by Support on 20.10.2015.
- */
+
 public class Model {
     private Student[] students;
     private Group[] groups;
@@ -38,5 +36,5 @@ public class Model {
 
     }
 
-    //TODO Поменять УМЛьку
+
 }

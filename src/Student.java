@@ -1,8 +1,6 @@
 import java.util.Calendar;
 
-/**
- * Created by Support on 20.10.2015.
- */
+
 public class Student {
     private String name;
     private String surname;
