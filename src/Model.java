@@ -16,13 +16,13 @@ import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "model", propOrder = {
-        "groups"
+        "group"
 })
 @XmlRootElement
 public class Model {
     @XmlTransient
     private ArrayList<Student> students = new ArrayList<Student>();
-    private ArrayList<Group> groups = new ArrayList<Group>();
+    private ArrayList<Group> group = new ArrayList<Group>();
     @XmlTransient
     private int counter;
 
@@ -87,7 +87,7 @@ public class Model {
     public void studentToGroup(int idStudent, int idGroup) {
         for (Student i : students) {
             if (i.getId() == idStudent) {
-                for (Group j : groups) {
+                for (Group j : group) {
                     if (j.getNumber() == idGroup) j.addStudentToGroup(i);
                 }
             }
@@ -99,8 +99,8 @@ public class Model {
     }
 
     public void addGroup(int n, String f) {
-        Group group = new Group(n, f);
-        groups.add(group);
+        Group groups = new Group(n, f);
+        group.add(groups);
 
     }
 
@@ -109,10 +109,10 @@ public class Model {
     }
 
     public List<Group> getGroup() {
-        if (groups == null) {
-            groups = new ArrayList<Group>();
+        if (group == null) {
+            group = new ArrayList<Group>();
         }
-        return this.groups;
+        return this.group;
     }
 
     public void modifyGroup(int i, String f, Student st) {
