@@ -1,0 +1,38 @@
+/**
+ * Created by Support on 20.10.2015.
+ */
+public class Group {
+    private int numGroup;
+    private Student [] stGroup;
+    private String facult;
+
+    public void addGroup(int n, String f){
+
+    }
+
+    public void delGroup(int n){
+
+    }
+
+    public String[] getAllStudent(int n){
+        return null;
+    }
+
+    public String getGroup(int n){
+        return null;
+        //TODO В УМЛ надо поменять имя метода + добавить связи с моделью
+    }
+
+    public String getGroup(String f){
+        return null;
+
+    }
+
+    public void modifyGroup(int i, String f, Student st){
+
+    }
+
+
+
+
+}
