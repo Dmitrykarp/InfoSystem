@@ -7,13 +7,16 @@ public class Student {
     private String patronymic;
     private Calendar dateStudent;
     private int idStudent;
+    
 
 
-    public void addStudent(String n, String s, String p) {
+   Student(String name, String surname, String patronymic, Calendar date){
+       this.name=name;
+       this.surname=surname;
+       this.patronymic=patronymic;
+       this.dateStudent=date;
+       //TODO Придумать перечисления
 
-    }
-
-    public void delStudent(int n) {
 
     }
 
@@ -21,9 +24,7 @@ public class Student {
         return null;
     }
 
-    public void modifyStudent(int i, String n, String s, String p) {
 
-    }
 
 
 }
