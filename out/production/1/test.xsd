@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="root" type="rootType"/>
+  <xs:complexType name="groupType">
+    <xs:sequence>
+      <xs:element name="number">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:enumeration value="111"/>
+            <xs:enumeration value="112"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="facult">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="KNIIT"/>
+            <xs:enumeration value="FilFac"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="studentsType" name="students" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="rootType">
+    <xs:sequence>
+      <xs:element type="groupType" name="group" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="studentsType">
+    <xs:sequence>
+      <xs:element name="id">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:enumeration value="1"/>
+            <xs:enumeration value="2"/>
+            <xs:enumeration value="3"/>
+            <xs:enumeration value="4"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Dmitry"/>
+            <xs:enumeration value="Kseniya"/>
+            <xs:enumeration value="Andrey"/>
+            <xs:enumeration value="Nadezda"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="patronymic">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Ivanovich"/>
+            <xs:enumeration value="Andreevna"/>
+            <xs:enumeration value="Pavlovich"/>
+            <xs:enumeration value="Olegovna"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="surname">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Karpenko"/>
+            <xs:enumeration value="Vyazova"/>
+            <xs:enumeration value="Petrov"/>
+            <xs:enumeration value="Mazur"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="date">
+        <xs:simpleType>
+          <xs:restriction base="xs:date">
+            <xs:enumeration value="1990-01-29"/>
+            <xs:enumeration value="1992-09-19"/>
+            <xs:enumeration value="1995-07-05"/>
+            <xs:enumeration value="1984-11-12"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
