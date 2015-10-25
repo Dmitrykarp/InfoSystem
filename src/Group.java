@@ -4,13 +4,7 @@ public class Group {
     private Student [] stGroup;
     private String facult;
 
-    public void addGroup(int n, String f){
 
-    }
-
-    public void delGroup(int n){
-
-    }
 
     public String[] getAllStudent(int n){
         return null;
@@ -26,9 +20,7 @@ public class Group {
 
     }
 
-    public void modifyGroup(int i, String f, Student st){
 
-    }
 
 
 
