@@ -23,7 +23,7 @@ public class Group {
         this.number = number;
     }
 
-    Group(){
+    Group() {
 
     }
 

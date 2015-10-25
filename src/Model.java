@@ -1,21 +1,15 @@
 import org.xml.sax.SAXException;
 
-import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.*;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
+
 import java.util.List;
 
 
@@ -36,7 +30,7 @@ public class Model {
         counter = 1;
     }
 
-    public Model loadXML(String path, Model m) throws JAXBException, SAXException {
+    public Model loadXML(String path, Model m) throws JAXBException {
         JAXBContext jaxbCtx = JAXBContext.newInstance(m.getClass());
         Unmarshaller um = jaxbCtx.createUnmarshaller();
         Marshaller marshaller = jaxbCtx.createMarshaller();
@@ -64,8 +58,6 @@ public class Model {
         }
 
         marshaller.marshal(this, fos);
-
-
 
 
     }
@@ -138,7 +130,6 @@ public class Model {
     public void fileToFile(String path) {
 
     }
-
 
 
 }

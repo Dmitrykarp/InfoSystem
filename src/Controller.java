@@ -21,8 +21,7 @@ public class Controller {
     public void run() throws DatatypeConfigurationException, JAXBException, SAXException {
 
 
-
-        thisModel= thisModel.loadXML("src\\xml\\test.xml", thisModel);
+        thisModel = thisModel.loadXML("src\\xml\\test.xml", thisModel);
 
         thisModel.saveXML("src\\xml\\test.xml");
 
