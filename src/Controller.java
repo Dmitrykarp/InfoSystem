@@ -28,6 +28,8 @@ public class Controller {
         thisModel.studentToGroup(3,12);
         thisModel.addStudent("Ксения", "Карпенко", "Андреевна", "2015.10.20");
         thisModel.studentToGroup(4,12);
+        thisModel.addStudent("Андрей", "Казаков", "Александрович", "2010.11.29");
+        thisModel.studentToGroup(5,12);
 
 
 
