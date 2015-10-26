@@ -16,11 +16,12 @@ public class Group {
     protected int number;
     @XmlElement(required = true)
     protected String facult;
-    protected List<Student> students = new ArrayList<Student>();
+    protected List<Student> students;
 
     Group(int number, String facult) {
         this.facult = facult;
         this.number = number;
+        students = new ArrayList<Student>();
     }
 
     Group() {

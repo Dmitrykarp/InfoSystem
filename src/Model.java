@@ -36,7 +36,9 @@ public class Model {
         Marshaller marshaller = jaxbCtx.createMarshaller();
 
         m = (Model) um.unmarshal(new File(path));
-
+        //TODO Продумать поиск одинаковых студентов, чтобы их не добавлять
+        //TODO Оттестить этот метод
+        m.students = equalStudents(m.students, m.group);
         return m;
 
     }
@@ -63,6 +65,7 @@ public class Model {
     }
 
     public void addStudent(String n, String s, String p, String d) {
+        counter=this.students.size()+1;
         Student student = new Student(counter, n, s, p, d);
         counter++;
         students.add(student);
@@ -96,7 +99,11 @@ public class Model {
 
     }
 
-    public List<Group> getGroup() {
+    public ArrayList<Student> getStudent() {
+        return this.students;
+    }
+
+    public ArrayList<Group> getGroup() {
         if (group == null) {
             group = new ArrayList<Group>();
         }
@@ -131,5 +138,30 @@ public class Model {
 
     }
 
+    public ArrayList<Student> equalStudents(ArrayList<Student> s, ArrayList<Group> g) {
+        ArrayList<Student> tempSt = new ArrayList<Student>();
+        ArrayList<Student> tempStud = new ArrayList<Student>();
+        for (int i = 0; i < g.size(); i++) {
+            tempSt.addAll(g.get(i).getStudents());
+        }
+
+        s.add(tempSt.get(0));
+        tempStud.add(tempSt.get(0));
+
+        for (int i = 0; i < tempSt.size(); i++) {
+            for (int j = 0; j < s.size(); j++) {
+                if (tempSt.get(i).getName() == s.get(j).getName()) {
+                    if (tempSt.get(i).getPatronymic() == s.get(j).getPatronymic()) {
+                        if (tempSt.get(i).getSurname() == s.get(j).getSurname()) {
+                            if (tempSt.get(i).getDate() == s.get(j).getDate())
+                                continue;
+                        }
+                    }
+                } else tempStud.add(tempSt.get(i));
+            }
+        }
+        this.counter=tempStud.size();
+        return tempStud;
+    }
 
 }

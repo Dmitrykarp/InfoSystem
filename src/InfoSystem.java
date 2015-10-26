@@ -2,6 +2,7 @@ import org.xml.sax.SAXException;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.datatype.DatatypeConfigurationException;
+import java.io.IOException;
 
 
 public class InfoSystem {
@@ -15,6 +16,8 @@ public class InfoSystem {
         } catch (DatatypeConfigurationException e) {
             e.printStackTrace();
         } catch (JAXBException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
