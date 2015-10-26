@@ -56,9 +56,23 @@ public class Controller {
                 case "mod":
                     break;
                 case "view":
-                    thisView.printAllStudent(thisModel.getStudent());
-                    System.out.println(thisModel.getGroup());
-                    System.out.println(thisModel.getStudent());
+                    if(command[1].equals("-alls")) {
+                        thisView.printAllStudent(thisModel.getStudent());
+                    }else if(command[1].equals("-allg")) {
+                        thisView.printAllGroup(thisModel.getGroup());
+                    }else if(command[1].equals("-s")){
+                        try {
+                            thisView.printStudent(thisModel.getStudent(Integer.parseInt(command[2])-1));
+                        }catch (NumberFormatException e){
+                            thisView.printError();
+                        }
+                    }else if(command[1].equals("-g")){
+                        try {
+                            thisView.printGroup(thisModel.getGroup(Integer.parseInt(command[2])));
+                        }catch (NumberFormatException e){
+                            thisView.printError();
+                        }
+                    }
                     break;
                 case "help":
                     thisView.printHelp();

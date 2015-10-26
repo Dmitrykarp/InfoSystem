@@ -43,5 +43,12 @@
     <group>
         <number>500</number>
         <facult>Филологический</facult>
+        <students>
+            <id>5</id>
+            <name>Петр</name>
+            <patronymic>Петрович</patronymic>
+            <surname>Петров</surname>
+            <date>2001.09.30</date>
+        </students>
     </group>
 </model>

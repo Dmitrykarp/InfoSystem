@@ -16,7 +16,7 @@ public class Group {
     protected int number;
     @XmlElement(required = true)
     protected String facult;
-    protected List<Student> students;
+    protected ArrayList<Student> students;
 
     Group(int number, String facult) {
         this.facult = facult;
@@ -49,7 +49,7 @@ public class Group {
     }
 
 
-    public List<Student> getStudents() {
+    public ArrayList<Student> getStudents() {
         if (students == null) {
             students = new ArrayList<Student>();
         }

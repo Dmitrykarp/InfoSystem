@@ -109,7 +109,7 @@ public class Model {
         }else return false;
     }
 
-    public void modifyStudent(int i, String n, String s, String p) {
+    public void modifyStudent(int i, String n, String s, String p, String d) {
 
     }
 
@@ -135,11 +135,22 @@ public class Model {
         return this.students;
     }
 
+    public Student getStudent(int id){
+        return students.get(id);
+    }
+
     public ArrayList<Group> getGroup() {
         if (group == null) {
             group = new ArrayList<Group>();
         }
         return this.group;
+    }
+
+    public Group getGroup(int id){
+        for(Group g: group){
+            if(g.getNumber()==id) return g;
+        }
+        return null;
     }
 
     public void modifyGroup(int i, String f, Student st) {

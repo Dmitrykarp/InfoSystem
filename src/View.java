@@ -24,15 +24,25 @@ public class View {
     }
 
     public void printAllGroup(ArrayList<Group> gr) {
-
+        for(int i=0; i<gr.size(); i++){
+            System.out.println(gr.get(i).getNumber() + " " + gr.get(i).getFacult());
+        }
     }
 
     public void printStudent(Student st) {
-
+        System.out.print(st.getId() + " " +st.getName() +" ");
+        System.out.print(st.getPatronymic() +" " );
+        System.out.print(st.getSurname() +" " );
+        System.out.print(st.getDate() +" " );
+        System.out.println();
     }
 
     public void printGroup(Group gr) {
-
+        if(gr!=null) {
+            System.out.println(gr.getNumber() + " " + gr.getFacult());
+            System.out.println("Студенты:");
+            printAllStudent(gr.getStudents());
+        } else System.out.println("Ошибка! Группа не найдена!");;
     }
 
     public void printError() {
