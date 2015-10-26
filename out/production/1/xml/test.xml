@@ -40,4 +40,8 @@
             <date>1992.09.19</date>
         </students>
     </group>
+    <group>
+        <number>500</number>
+        <facult>Филологический</facult>
+    </group>
 </model>

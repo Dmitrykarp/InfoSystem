@@ -83,18 +83,22 @@ public class Model {
     }
 
     public boolean studentToGroup(int idStudent, int idGroup) {
-        int temp=0;
+        int tempSt=0;
+        int tempGr=0;
         for(Student i: students){
             if (i.getId() == idStudent) {
                 for (Group j : group) {
                     for (Student n :j.getStudents()){
                         if(i.equals(n))
-                            temp++;
+                            tempSt++;
                     }
                 }
             }
         }
-        if(temp==0 & idStudent<=students.size() & idGroup<=group.size()){
+        for(Group j: group){
+            if(j.getNumber()==idGroup) tempGr++;
+        }
+        if(tempSt==0 & idStudent<=students.size() & tempGr>0){
             for (Student i : students) {
                 if (i.getId() == idStudent) {
                     for (Group j : group) {

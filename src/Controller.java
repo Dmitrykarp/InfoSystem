@@ -36,11 +36,19 @@ public class Controller {
                         confirm=thisModel.addStudent(command[2],command[4], command[3],command[5]);
                         thisView.printConfirm(confirm, command[1]);
                     }else if(command[1].equals("-g")){
-                        confirm=thisModel.addGroup(Integer.parseInt(command[2]),command[3]);
-                        thisView.printConfirm(confirm, command[1]);
+                        try {
+                            confirm=thisModel.addGroup(Integer.parseInt(command[2]),command[3]);
+                            thisView.printConfirm(confirm, command[1]);
+                        }catch (NumberFormatException e){
+                            thisView.printError();
+                        }
                     }else if(command[1].equals("-stg")){
-                        confirm=thisModel.studentToGroup(Integer.parseInt(command[2]),Integer.parseInt(command[3]));
-                        thisView.printConfirm(confirm, command[1]);
+                        try {
+                            confirm=thisModel.studentToGroup(Integer.parseInt(command[2]),Integer.parseInt(command[3]));
+                            thisView.printConfirm(confirm, command[1]);
+                        }catch (NumberFormatException e){
+                            thisView.printError();
+                        }
                     }else thisView.printError();
                     break;
                 case "del":
