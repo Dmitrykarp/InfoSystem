@@ -1,4 +1,4 @@
-import org.xml.sax.SAXException;
+
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -10,7 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
-import java.util.List;
+
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -33,11 +33,7 @@ public class Model {
     public Model loadXML(String path, Model m) throws JAXBException {
         JAXBContext jaxbCtx = JAXBContext.newInstance(m.getClass());
         Unmarshaller um = jaxbCtx.createUnmarshaller();
-        Marshaller marshaller = jaxbCtx.createMarshaller();
-
         m = (Model) um.unmarshal(new File(path));
-        //TODO Продумать поиск одинаковых студентов, чтобы их не добавлять
-        //TODO Оттестить этот метод
         m.students = equalStudents(m.students, m.group);
         return m;
 
@@ -67,8 +63,18 @@ public class Model {
     public void addStudent(String n, String s, String p, String d) {
         counter=this.students.size()+1;
         Student student = new Student(counter, n, s, p, d);
-        counter++;
-        students.add(student);
+        int tempStud=0;
+        for(int i=0; i<students.size(); i++)
+            if(students.get(i).getName().equals(student.getName()))
+                if(students.get(i).getPatronymic().equals(student.getPatronymic()))
+                    if (students.get(i).getSurname().equals(student.getSurname()))
+                        if (students.get(i).getDate().equals(student.getDate()))
+                            tempStud++;
+
+        if (tempStud==0) {
+            counter++;
+            students.add(student);
+        }
     }
 
     public void delStudent(int n) {
@@ -76,13 +82,26 @@ public class Model {
     }
 
     public void studentToGroup(int idStudent, int idGroup) {
-        for (Student i : students) {
+    int temp=0;
+        for(Student i: students){
             if (i.getId() == idStudent) {
                 for (Group j : group) {
-                    if (j.getNumber() == idGroup) j.addStudentToGroup(i);
+                    for (Student n :j.getStudents()){
+                        if(i.equals(n))
+                            temp++;
+                    }
                 }
             }
         }
+        if(temp==0){
+            for (Student i : students) {
+                if (i.getId() == idStudent) {
+                    for (Group j : group) {
+                        if (j.getNumber() == idGroup) j.addStudentToGroup(i);
+                    }
+                }
+            }
+        }else System.out.println("Данный студент имеется в группе");
     }
 
     public void modifyStudent(int i, String n, String s, String p) {
@@ -91,8 +110,14 @@ public class Model {
 
     public void addGroup(int n, String f) {
         Group groups = new Group(n, f);
+        int tempCount=0;
+        for(int i=0; i<group.size(); i++){
+            if(group.get(i).getNumber()==groups.getNumber())
+                if (group.get(i).getFacult().equals(groups.getFacult()))
+                tempCount++;
+        }
+        if(tempCount==0)
         group.add(groups);
-
     }
 
     public void delGroup(int n) {

@@ -26,50 +26,7 @@
             <name>Дмитрий</name>
             <patronymic>Иванович</patronymic>
             <surname>Карпенко</surname>
-            <date>2015.10.19</date>
-        </students>
-        <students>
-            <id>4</id>
-            <name>Ксения</name>
-            <patronymic>Андреевна</patronymic>
-            <surname>Карпенко</surname>
-            <date>2015.10.20</date>
-        </students>
-        <students>
-            <id>5</id>
-            <name>Антон</name>
-            <patronymic>Александрович</patronymic>
-            <surname>Казаков</surname>
-            <date>2010.11.29</date>
-        </students>
-    </group>
-    <group>
-        <number>501</number>
-        <facult>Филологический</facult>
-        <students>
-            <id>7</id>
-            <name>Сергей</name>
-            <patronymic>Павлович</patronymic>
-            <surname>Цой</surname>
-            <date>1990.04.12</date>
-        </students>
-    </group>
-    <group>
-        <number>605</number>
-        <facult>Физический</facult>
-        <students>
-            <id>6</id>
-            <name>Игорь</name>
-            <patronymic>Сергеевич</patronymic>
-            <surname>Бояров</surname>
-            <date>2004.10.14</date>
-        </students>
-        <students>
-            <id>8</id>
-            <name>Ольга</name>
-            <patronymic>Владимировна</patronymic>
-            <surname>Миронова</surname>
-            <date>2006.15.43</date>
+            <date>1990.01.29</date>
         </students>
     </group>
 </model>
