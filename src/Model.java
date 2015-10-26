@@ -60,7 +60,7 @@ public class Model {
 
     }
 
-    public void addStudent(String n, String s, String p, String d) {
+    public boolean addStudent(String n, String s, String p, String d) {
         counter=this.students.size()+1;
         Student student = new Student(counter, n, s, p, d);
         int tempStud=0;
@@ -74,15 +74,16 @@ public class Model {
         if (tempStud==0) {
             counter++;
             students.add(student);
-        }
+            return true;
+        }else return false;
     }
 
     public void delStudent(int n) {
 
     }
 
-    public void studentToGroup(int idStudent, int idGroup) {
-    int temp=0;
+    public boolean studentToGroup(int idStudent, int idGroup) {
+        int temp=0;
         for(Student i: students){
             if (i.getId() == idStudent) {
                 for (Group j : group) {
@@ -93,22 +94,22 @@ public class Model {
                 }
             }
         }
-        if(temp==0){
+        if(temp==0 & idStudent<=students.size() & idGroup<=group.size()){
             for (Student i : students) {
                 if (i.getId() == idStudent) {
                     for (Group j : group) {
                         if (j.getNumber() == idGroup) j.addStudentToGroup(i);
                     }
                 }
-            }
-        }else System.out.println("Данный студент имеется в группе");
+            } return true;
+        }else return false;
     }
 
     public void modifyStudent(int i, String n, String s, String p) {
 
     }
 
-    public void addGroup(int n, String f) {
+    public boolean addGroup(int n, String f) {
         Group groups = new Group(n, f);
         int tempCount=0;
         for(int i=0; i<group.size(); i++){
@@ -116,8 +117,10 @@ public class Model {
                 if (group.get(i).getFacult().equals(groups.getFacult()))
                 tempCount++;
         }
-        if(tempCount==0)
-        group.add(groups);
+        if(tempCount==0) {
+            group.add(groups);
+            return true;
+        }else return false;
     }
 
     public void delGroup(int n) {

@@ -15,11 +15,10 @@ public class View {
 
     public void printAllStudent(ArrayList<Student> st) {
         for (int i=0; i<st.size(); i++){
-            System.out.print("Номер: " + st.get(i).getId() + " ");
-            System.out.print("Имя: " +st.get(i).getName() +" " );
-            System.out.print("Отчество: " +st.get(i).getPatronymic() +" " );
-            System.out.print("Фамилия: " +st.get(i).getSurname() +" " );
-            System.out.print("Дата: " +st.get(i).getDate() +" " );
+            System.out.print(st.get(i).getId() + " " +st.get(i).getName() +" ");
+            System.out.print(st.get(i).getPatronymic() +" " );
+            System.out.print(st.get(i).getSurname() +" " );
+            System.out.print(st.get(i).getDate() +" " );
             System.out.println();
         }
     }
@@ -42,15 +41,30 @@ public class View {
 
     public void printHelp() {
         System.out.println("ADD - ДОБАВЛЕНИЕ ЭЛЕМЕНТА");
-        System.out.println("ADD [-s] Добавление студента. Формат: ");
         System.out.println("ADD -s [имя] [фамилия] [отчество] [дата]");
-        System.out.println();
-        System.out.println("ADD [-g] Добавление группы. Формат: ");
         System.out.println("ADD -g [номер] [факультет]");
-        System.out.println();
-        System.out.println("ADD [-stg] Добавление студента в группу. Формат: ");
         System.out.println("ADD -stg [ID студента] [ID группы]");
     }
 
+    public void printConfirm (Boolean b, String t){
+        switch (t){
+            case "-s":
+                if(b) System.out.println("Студент добавлен");
+                else System.out.println("Данный студент уже имеется в базе");
+                break;
+            case "-g":
+                if(b) System.out.println("Группа добавлена");
+                else System.out.println("Данная группа уже имеется в базе");
+                break;
+            case "-stg":
+                if(b) System.out.println("Студент добавлен в группу");
+                else System.out.println("Ошибка! Студента {группы} не существует или он уже содержится в группе");
+                break;
+            default:
+                System.out.println("Неизвестная ошибка");
+
+
+        }
+    }
 
 }
