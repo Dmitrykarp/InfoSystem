@@ -1,52 +1,44 @@
-import java.util.ArrayList;
-
-
 public class View {
-    String s;
 
     View() {
         System.out.println("Введите команду [help] для справки.");
 
     }
 
-    public void printConsole(){
+    public void printConsole() {
         System.out.print(">");
     }
 
-    public void printAllStudent(ArrayList<Student> st) {
-        for (int i=0; i<st.size(); i++){
-            System.out.print(st.get(i).getId() + " " +st.get(i).getName() +" ");
-            System.out.print(st.get(i).getPatronymic() +" " );
-            System.out.print(st.get(i).getSurname() +" " );
-            System.out.print(st.get(i).getDate() +" " );
-            System.out.println();
+    public void printStudent(int id, String n, String pa, String su, String da) {
+        System.out.println(id + " " + n + " " + pa + " " + su + " " + da);
+    }
+
+
+    public void printGroup(int id, String facult, boolean b) {
+        if (b)
+            System.out.println("Номер: " + id + ". Факультет: " + facult);
+        else System.out.println("Номер: " + id + ". Факультет: " + facult + ". Студенты в группе:");
+    }
+
+    public void printError(int i) {
+        switch (i) {
+            case 0:
+                System.out.println("Ошибка! Введите команду [help] для справки.");
+                break;
+            case 1:
+                System.out.println("Ошибка! Студент не найден!");
+                break;
+            case 2:
+                System.out.println("Ошибка! Группа не найдена!");
+                break;
+            case 3:
+                System.out.println("Ошибка! Неверный синтаксис команды. Введите [help] для справки!");
+                break;
+            case 4:
+                System.out.println("Ошибка! Некорректный ввод команды!");
+            default:
+                System.out.println("Ошибка! Код ошибки не найден!");
         }
-    }
-
-    public void printAllGroup(ArrayList<Group> gr) {
-        for(int i=0; i<gr.size(); i++){
-            System.out.println(gr.get(i).getNumber() + " " + gr.get(i).getFacult());
-        }
-    }
-
-    public void printStudent(Student st) {
-        System.out.print(st.getId() + " " +st.getName() +" ");
-        System.out.print(st.getPatronymic() +" " );
-        System.out.print(st.getSurname() +" " );
-        System.out.print(st.getDate() +" " );
-        System.out.println();
-    }
-
-    public void printGroup(Group gr) {
-        if(gr!=null) {
-            System.out.println(gr.getNumber() + " " + gr.getFacult());
-            System.out.println("Студенты:");
-            printAllStudent(gr.getStudents());
-        } else System.out.println("Ошибка! Группа не найдена!");;
-    }
-
-    public void printError() {
-        System.out.println("Ошибка! Введите команду [help] для справки.");
     }
 
     public void printHelp() {
@@ -54,24 +46,31 @@ public class View {
         System.out.println("ADD -s [имя] [фамилия] [отчество] [дата]");
         System.out.println("ADD -g [номер] [факультет]");
         System.out.println("ADD -stg [ID студента] [ID группы]");
+        System.out.println();
+        System.out.println("VIEW - ПОКАЗ ЭЛЕМЕНТОВ");
+        System.out.println("VIEW -allg");
+        System.out.println("VIEW -alls");
+        System.out.println("VIEW -s [id] ");
+        System.out.println("VIEW -g [номер]");
+
     }
 
-    public void printConfirm (Boolean b, String t){
-        switch (t){
+    public void printConfirm(Boolean b, String t) {
+        switch (t) {
             case "-s":
-                if(b) System.out.println("Студент добавлен");
+                if (b) System.out.println("Студент добавлен");
                 else System.out.println("Данный студент уже имеется в базе");
                 break;
             case "-g":
-                if(b) System.out.println("Группа добавлена");
+                if (b) System.out.println("Группа добавлена");
                 else System.out.println("Данная группа уже имеется в базе");
                 break;
             case "-stg":
-                if(b) System.out.println("Студент добавлен в группу");
+                if (b) System.out.println("Студент добавлен в группу");
                 else System.out.println("Ошибка! Студента {группы} не существует или он уже содержится в группе");
                 break;
             default:
-                System.out.println("Неизвестная ошибка");
+                printError(1000);
 
 
         }

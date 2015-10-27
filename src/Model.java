@@ -11,8 +11,6 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "model", propOrder = {
         "group"
@@ -25,7 +23,7 @@ public class Model {
     @XmlTransient
     private int counter;
 
-    Model() throws JAXBException {
+    Model() {
 
         counter = 1;
     }
@@ -61,21 +59,21 @@ public class Model {
     }
 
     public boolean addStudent(String n, String s, String p, String d) {
-        counter=this.students.size()+1;
+        counter = this.students.size() + 1;
         Student student = new Student(counter, n, s, p, d);
-        int tempStud=0;
-        for(int i=0; i<students.size(); i++)
-            if(students.get(i).getName().equals(student.getName()))
-                if(students.get(i).getPatronymic().equals(student.getPatronymic()))
+        int tempStud = 0;
+        for (int i = 0; i < students.size(); i++)
+            if (students.get(i).getName().equals(student.getName()))
+                if (students.get(i).getPatronymic().equals(student.getPatronymic()))
                     if (students.get(i).getSurname().equals(student.getSurname()))
                         if (students.get(i).getDate().equals(student.getDate()))
                             tempStud++;
 
-        if (tempStud==0) {
+        if (tempStud == 0) {
             counter++;
             students.add(student);
             return true;
-        }else return false;
+        } else return false;
     }
 
     public void delStudent(int n) {
@@ -83,30 +81,31 @@ public class Model {
     }
 
     public boolean studentToGroup(int idStudent, int idGroup) {
-        int tempSt=0;
-        int tempGr=0;
-        for(Student i: students){
+        int tempSt = 0;
+        int tempGr = 0;
+        for (Student i : students) {
             if (i.getId() == idStudent) {
                 for (Group j : group) {
-                    for (Student n :j.getStudents()){
-                        if(i.equals(n))
+                    for (Student n : j.getStudents()) {
+                        if (i.equals(n))
                             tempSt++;
                     }
                 }
             }
         }
-        for(Group j: group){
-            if(j.getNumber()==idGroup) tempGr++;
+        for (Group j : group) {
+            if (j.getNumber() == idGroup) tempGr++;
         }
-        if(tempSt==0 & idStudent<=students.size() & tempGr>0){
+        if (tempSt == 0 & idStudent <= students.size() & tempGr > 0) {
             for (Student i : students) {
                 if (i.getId() == idStudent) {
                     for (Group j : group) {
                         if (j.getNumber() == idGroup) j.addStudentToGroup(i);
                     }
                 }
-            } return true;
-        }else return false;
+            }
+            return true;
+        } else return false;
     }
 
     public void modifyStudent(int i, String n, String s, String p, String d) {
@@ -115,16 +114,16 @@ public class Model {
 
     public boolean addGroup(int n, String f) {
         Group groups = new Group(n, f);
-        int tempCount=0;
-        for(int i=0; i<group.size(); i++){
-            if(group.get(i).getNumber()==groups.getNumber())
+        int tempCount = 0;
+        for (int i = 0; i < group.size(); i++) {
+            if (group.get(i).getNumber() == groups.getNumber())
                 if (group.get(i).getFacult().equals(groups.getFacult()))
-                tempCount++;
+                    tempCount++;
         }
-        if(tempCount==0) {
+        if (tempCount == 0) {
             group.add(groups);
             return true;
-        }else return false;
+        } else return false;
     }
 
     public void delGroup(int n) {
@@ -135,7 +134,7 @@ public class Model {
         return this.students;
     }
 
-    public Student getStudent(int id){
+    public Student getStudent(int id) {
         return students.get(id);
     }
 
@@ -146,9 +145,9 @@ public class Model {
         return this.group;
     }
 
-    public Group getGroup(int id){
-        for(Group g: group){
-            if(g.getNumber()==id) return g;
+    public Group getGroup(int id) {
+        for (Group g : group) {
+            if (g.getNumber() == id) return g;
         }
         return null;
     }
@@ -203,7 +202,7 @@ public class Model {
                 } else tempStud.add(tempSt.get(i));
             }
         }
-        this.counter=tempStud.size();
+        this.counter = tempStud.size();
         return tempStud;
     }
 

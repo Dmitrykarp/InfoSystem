@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model>
     <group>
-        <number>11</number>
-        <facult>Bio</facult>
+        <number>110</number>
+        <facult>Биологический</facult>
         <students>
             <id>1</id>
-            <name>Тест</name>
-            <patronymic>Тестович</patronymic>
-            <surname>Тестов</surname>
+            <name>Иван</name>
+            <patronymic>Иванович</patronymic>
+            <surname>Иванов</surname>
             <date>2015.15.15</date>
         </students>
         <students>
             <id>2</id>
-            <name>Тест2</name>
-            <patronymic>Тестович2</patronymic>
-            <surname>Тестов2</surname>
+            <name>Петр</name>
+            <patronymic>Петрович</patronymic>
+            <surname>Петров</surname>
             <date>2001.08.25</date>
         </students>
     </group>
     <group>
-        <number>12</number>
-        <facult>KNIIT</facult>
+        <number>111</number>
+        <facult>КНИиТ</facult>
         <students>
             <id>3</id>
             <name>Дмитрий</name>
@@ -31,7 +31,7 @@
     </group>
     <group>
         <number>121</number>
-        <facult>ПМИ</facult>
+        <facult>МехМат</facult>
         <students>
             <id>4</id>
             <name>Ксения</name>
@@ -45,9 +45,9 @@
         <facult>Филологический</facult>
         <students>
             <id>5</id>
-            <name>Петр</name>
-            <patronymic>Петрович</patronymic>
-            <surname>Петров</surname>
+            <name>Иван</name>
+            <patronymic>Васильевич</patronymic>
+            <surname>Грозный</surname>
             <date>2001.09.30</date>
         </students>
     </group>
