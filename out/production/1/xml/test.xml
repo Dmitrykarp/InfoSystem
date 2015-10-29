@@ -45,9 +45,9 @@
         <facult>Филологический</facult>
         <students>
             <id>5</id>
-            <name>Петр</name>
-            <patronymic>Петрович</patronymic>
-            <surname>Петров</surname>
+            <name>Иван</name>
+            <patronymic>Васильевич</patronymic>
+            <surname>Грозный</surname>
             <date>2001.09.30</date>
         </students>
     </group>

@@ -17,14 +17,14 @@ public class Controller {
 
     public void run() throws IOException, JAXBException {
         String[] command;
-        String exit = " ";
+        boolean exit = true;
         Boolean confirm;
 
         thisModel = thisModel.loadXML("src\\xml\\test.xml", thisModel);
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        while (!exit.equals("exit")) {
+        while (exit) {
             thisView.printConsole();
 
             command = parseCommand(reader.readLine());
@@ -32,17 +32,17 @@ public class Controller {
             switch (command[0].toLowerCase()) {
                 case "add":
                     try {
-                        if (command[1].toLowerCase().equals("-s")) {
+                        if ("-s".equals(command[1].toLowerCase())) {
                             confirm = thisModel.addStudent(command[2], command[4], command[3], command[5]);
                             thisView.printConfirm(confirm, command[1]);
-                        } else if (command[1].toLowerCase().equals("-g")) {
+                        } else if ("-g".equals(command[1].toLowerCase())) {
                             try {
                                 confirm = thisModel.addGroup(Integer.parseInt(command[2]), command[3]);
                                 thisView.printConfirm(confirm, command[1]);
                             } catch (NumberFormatException e) {
                                 thisView.printError(0);
                             }
-                        } else if (command[1].toLowerCase().equals("-stg")) {
+                        } else if ("-stg".equals(command[1].toLowerCase())) {
                             try {
                                 confirm = thisModel.studentToGroup(Integer.parseInt(command[2]), Integer.parseInt(command[3]));
                                 thisView.printConfirm(confirm, command[1]);
@@ -61,30 +61,30 @@ public class Controller {
                     break;
                 case "view":
                     try {
-                        if (command[1].toLowerCase().equals("-alls")) {
-                            for (int i = 0; i < thisModel.getStudent().size(); i++) {
-                                int id = thisModel.getStudent().get(i).getId();
-                                String na = thisModel.getStudent().get(i).getName();
-                                String pa = thisModel.getStudent().get(i).getPatronymic();
-                                String su = thisModel.getStudent().get(i).getSurname();
-                                String da = thisModel.getStudent().get(i).getDate();
+                        if ("-alls".equals(command[1].toLowerCase())) {
+                            for (int i = 0; i < thisModel.getStudents().size(); i++) {
+                                int id = thisModel.getStudents().get(i).getId();
+                                String na = thisModel.getStudents().get(i).getName();
+                                String pa = thisModel.getStudents().get(i).getPatronymic();
+                                String su = thisModel.getStudents().get(i).getSurname();
+                                String da = thisModel.getStudents().get(i).getDate();
                                 thisView.printStudent(id, na, pa, su, da);
                             }
 
-                        } else if (command[1].toLowerCase().equals("-allg")) {
-                            for (int i = 0; i < thisModel.getGroup().size(); i++) {
-                                int num = thisModel.getGroup().get(i).getNumber();
-                                String fac = thisModel.getGroup().get(i).getFacult();
+                        } else if ("-allg".equals(command[1].toLowerCase())) {
+                            for (int i = 0; i < thisModel.getGroups().size(); i++) {
+                                int num = thisModel.getGroups().get(i).getNumber();
+                                String fac = thisModel.getGroups().get(i).getFacult();
                                 thisView.printGroup(num, fac, true);
                             }
-                        } else if (command[1].toLowerCase().equals("-s")) {
+                        } else if ("-s".equals(command[1].toLowerCase())) {
                             try {
                                 int i = Integer.parseInt(command[2]) - 1;
-                                int id = thisModel.getStudent().get(i).getId();
-                                String na = thisModel.getStudent().get(i).getName();
-                                String pa = thisModel.getStudent().get(i).getPatronymic();
-                                String su = thisModel.getStudent().get(i).getSurname();
-                                String da = thisModel.getStudent().get(i).getDate();
+                                int id = thisModel.getStudents().get(i).getId();
+                                String na = thisModel.getStudents().get(i).getName();
+                                String pa = thisModel.getStudents().get(i).getPatronymic();
+                                String su = thisModel.getStudents().get(i).getSurname();
+                                String da = thisModel.getStudents().get(i).getDate();
                                 thisView.printStudent(id, na, pa, su, da);
 
                             } catch (NumberFormatException e) {
@@ -92,7 +92,7 @@ public class Controller {
                             } catch (IndexOutOfBoundsException e) {
                                 thisView.printError(1);
                             }
-                        } else if (command[1].toLowerCase().equals("-g")) {
+                        } else if ("-g".equals(command[1].toLowerCase())) {
                             try {
                                 int id = Integer.parseInt(command[2]);
                                 int num = thisModel.getGroup(id).getNumber();
@@ -109,7 +109,7 @@ public class Controller {
 
                             } catch (NumberFormatException e) {
                                 thisView.printError(0);
-                            } catch (NullPointerException e) {
+                            } catch (RuntimeException e) {
                                 thisView.printError(2);
                             }
                         }
@@ -122,7 +122,7 @@ public class Controller {
                     thisView.printHelp();
                     break;
                 case "exit":
-                    exit = "exit";
+                    exit = false;
                     thisModel.saveXML("src\\xml\\test.xml");
                     break;
                 default:

@@ -130,7 +130,7 @@ public class Model {
 
     }
 
-    public ArrayList<Student> getStudent() {
+    public ArrayList<Student> getStudents() {
         return this.students;
     }
 
@@ -138,7 +138,7 @@ public class Model {
         return students.get(id);
     }
 
-    public ArrayList<Group> getGroup() {
+    public ArrayList<Group> getGroups() {
         if (group == null) {
             group = new ArrayList<Group>();
         }
@@ -149,7 +149,7 @@ public class Model {
         for (Group g : group) {
             if (g.getNumber() == id) return g;
         }
-        return null;
+        throw new RuntimeException();
     }
 
     public void modifyGroup(int i, String f, Student st) {
