@@ -32,26 +32,34 @@ public class Controller {
                 case "add":
                     try {
                         if ("-s".equals(command[1].toLowerCase())) {
-                            confirm = thisModel.addStudent(command[2], command[4], command[3], command[5]);
-                            thisView.printConfirm(confirm, command[1]);
+                            try {
+                                thisModel.addStudent(command[2], command[4], command[3], command[5]);
+                                thisView.printConfirm(View.Confirm.STUDENT_ADD);
+                            } catch (RuntimeException e){
+                                thisView.printError(View.Error.STUDENT_ALREADY_DB);
+                            }
                         } else if ("-g".equals(command[1].toLowerCase())) {
                             try {
-                                confirm = thisModel.addGroup(Integer.parseInt(command[2]), command[3]);
-                                thisView.printConfirm(confirm, command[1]);
+                                thisModel.addGroup(Integer.parseInt(command[2]), command[3]);
+                                thisView.printConfirm(View.Confirm.GROUP_ADD);
                             } catch (NumberFormatException e) {
                                 thisView.printError(View.Error.HELP);
+                            } catch (RuntimeException e){
+                                thisView.printError(View.Error.GROUP_ALREADY);
                             }
                         } else if ("-stg".equals(command[1].toLowerCase())) {
                             try {
-                                confirm = thisModel.studentToGroup(Integer.parseInt(command[2]), Integer.parseInt(command[3]));
-                                thisView.printConfirm(confirm, command[1]);
+                                thisModel.studentToGroup(Integer.parseInt(command[2]), Integer.parseInt(command[3]));
+                                thisView.printConfirm(View.Confirm.STUDENT_IN_GROUP);
                             } catch (NumberFormatException e) {
                                 thisView.printError(View.Error.HELP);
+                            } catch (RuntimeException e){
+                                thisView.printError(View.Error.STUDENT_ALREADY_GROUP);
                             }
                         } else thisView.printError(View.Error.HELP);
 
                     } catch (ArrayIndexOutOfBoundsException e) {
-                        thisView.printError(View.Error.GROUP_NOT_FOUND);
+                        thisView.printError(View.Error.INVALID_SYNTAX);
                     }
                     break;
                 case "del":
