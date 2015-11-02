@@ -14,7 +14,6 @@ public class Controller {
         thisView = view;
     }
 
-
     public void run() throws IOException, JAXBException {
         String[] command;
         boolean exit = true;
@@ -33,26 +32,34 @@ public class Controller {
                 case "add":
                     try {
                         if ("-s".equals(command[1].toLowerCase())) {
-                            confirm = thisModel.addStudent(command[2], command[4], command[3], command[5]);
-                            thisView.printConfirm(confirm, command[1]);
+                            try {
+                                thisModel.addStudent(command[2], command[4], command[3], command[5]);
+                                thisView.printConfirm(View.Confirm.STUDENT_ADD);
+                            } catch (RuntimeException e){
+                                thisView.printError(View.Error.STUDENT_ALREADY_DB);
+                            }
                         } else if ("-g".equals(command[1].toLowerCase())) {
                             try {
-                                confirm = thisModel.addGroup(Integer.parseInt(command[2]), command[3]);
-                                thisView.printConfirm(confirm, command[1]);
+                                thisModel.addGroup(Integer.parseInt(command[2]), command[3]);
+                                thisView.printConfirm(View.Confirm.GROUP_ADD);
                             } catch (NumberFormatException e) {
-                                thisView.printError(0);
+                                thisView.printError(View.Error.HELP);
+                            } catch (RuntimeException e){
+                                thisView.printError(View.Error.GROUP_ALREADY);
                             }
                         } else if ("-stg".equals(command[1].toLowerCase())) {
                             try {
-                                confirm = thisModel.studentToGroup(Integer.parseInt(command[2]), Integer.parseInt(command[3]));
-                                thisView.printConfirm(confirm, command[1]);
+                                thisModel.studentToGroup(Integer.parseInt(command[2]), Integer.parseInt(command[3]));
+                                thisView.printConfirm(View.Confirm.STUDENT_IN_GROUP);
                             } catch (NumberFormatException e) {
-                                thisView.printError(0);
+                                thisView.printError(View.Error.HELP);
+                            } catch (RuntimeException e){
+                                thisView.printError(View.Error.STUDENT_ALREADY_GROUP);
                             }
-                        } else thisView.printError(0);
+                        } else thisView.printError(View.Error.HELP);
 
                     } catch (ArrayIndexOutOfBoundsException e) {
-                        thisView.printError(3);
+                        thisView.printError(View.Error.INVALID_SYNTAX);
                     }
                     break;
                 case "del":
@@ -88,9 +95,9 @@ public class Controller {
                                 thisView.printStudent(id, na, pa, su, da);
 
                             } catch (NumberFormatException e) {
-                                thisView.printError(0);
+                                thisView.printError(View.Error.HELP);
                             } catch (IndexOutOfBoundsException e) {
-                                thisView.printError(1);
+                                thisView.printError(View.Error.STUDENT_NOT_FOUND);
                             }
                         } else if ("-g".equals(command[1].toLowerCase())) {
                             try {
@@ -108,14 +115,14 @@ public class Controller {
                                 }
 
                             } catch (NumberFormatException e) {
-                                thisView.printError(0);
+                                thisView.printError(View.Error.HELP);
                             } catch (RuntimeException e) {
-                                thisView.printError(2);
+                                thisView.printError(View.Error.GROUP_NOT_FOUND);
                             }
                         }
 
                     } catch (ArrayIndexOutOfBoundsException e) {
-                        thisView.printError(3);
+                        thisView.printError(View.Error.INVALID_SYNTAX);
                     }
                     break;
                 case "help":
@@ -126,7 +133,7 @@ public class Controller {
                     thisModel.saveXML("src\\xml\\test.xml");
                     break;
                 default:
-                    thisView.printError(0);
+                    thisView.printError(View.Error.HELP);
                     break;
             }
         }

@@ -5,6 +5,24 @@ public class View {
 
     }
 
+    enum Error{
+        HELP,
+        STUDENT_NOT_FOUND,
+        GROUP_NOT_FOUND,
+        INVALID_SYNTAX,
+        UNKNOWN_ERROR,
+        STUDENT_ALREADY_DB,
+        STUDENT_ALREADY_GROUP,
+        GROUP_ALREADY
+
+    }
+
+    enum Confirm{
+        STUDENT_ADD,
+        GROUP_ADD,
+        STUDENT_IN_GROUP
+    }
+
     public void printConsole() {
         System.out.print(">");
     }
@@ -20,24 +38,34 @@ public class View {
         else System.out.println("Номер: " + id + ". Факультет: " + facult + ". Студенты в группе:");
     }
 
-    public void printError(int i) {
-        switch (i) {
-            case 0:
+    public void printError(Error e) {
+        switch (e) {
+            case HELP:
                 System.out.println("Ошибка! Введите команду [help] для справки.");
                 break;
-            case 1:
+            case STUDENT_NOT_FOUND:
                 System.out.println("Ошибка! Студент не найден!");
                 break;
-            case 2:
+            case GROUP_NOT_FOUND:
                 System.out.println("Ошибка! Группа не найдена!");
                 break;
-            case 3:
+            case INVALID_SYNTAX:
                 System.out.println("Ошибка! Неверный синтаксис команды. Введите [help] для справки!");
                 break;
-            case 4:
-                System.out.println("Ошибка! Некорректный ввод команды!");
-            default:
+            case UNKNOWN_ERROR:
                 System.out.println("Ошибка! Код ошибки не найден!");
+                break;
+            case STUDENT_ALREADY_DB:
+                System.out.println("Ошибка! Данный студент уже имеется в базе!");
+                break;
+            case STUDENT_ALREADY_GROUP:
+                System.out.println("Ошибка! Студента {группы} не существует или он уже содержится в группе!");
+                break;
+            case GROUP_ALREADY:
+                System.out.println("Ошибка! Данная группа уже имеется в базе!");
+                break;
+            default:
+                System.out.println("Ошибка!");
         }
     }
 
@@ -55,22 +83,19 @@ public class View {
 
     }
 
-    public void printConfirm(Boolean b, String t) {
-        switch (t) {
-            case "-s":
-                if (b) System.out.println("Студент добавлен");
-                else System.out.println("Данный студент уже имеется в базе");
+    public void printConfirm(Confirm c) {
+        switch (c) {
+            case STUDENT_ADD:
+                System.out.println("Студент добавлен");
                 break;
-            case "-g":
-                if (b) System.out.println("Группа добавлена");
-                else System.out.println("Данная группа уже имеется в базе");
+            case GROUP_ADD:
+                System.out.println("Группа добавлена");
                 break;
-            case "-stg":
-                if (b) System.out.println("Студент добавлен в группу");
-                else System.out.println("Ошибка! Студента {группы} не существует или он уже содержится в группе");
+            case STUDENT_IN_GROUP:
+                System.out.println("Студент добавлен в группу");
                 break;
             default:
-                printError(1000);
+                printError(Error.UNKNOWN_ERROR);
 
 
         }
