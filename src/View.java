@@ -5,6 +5,14 @@ public class View {
 
     }
 
+    enum Error{
+        HELP,
+        STUDENT_NOT_FOUND,
+        GROUP_NOT_FOUND,
+        INVALID_SYNTAX,
+        UNKNOWN_ERROR
+    }
+
     public void printConsole() {
         System.out.print(">");
     }
@@ -20,24 +28,25 @@ public class View {
         else System.out.println("Номер: " + id + ". Факультет: " + facult + ". Студенты в группе:");
     }
 
-    public void printError(int i) {
-        switch (i) {
-            case 0:
+    public void printError(Error e) {
+        switch (e) {
+            case HELP:
                 System.out.println("Ошибка! Введите команду [help] для справки.");
                 break;
-            case 1:
+            case STUDENT_NOT_FOUND:
                 System.out.println("Ошибка! Студент не найден!");
                 break;
-            case 2:
+            case GROUP_NOT_FOUND:
                 System.out.println("Ошибка! Группа не найдена!");
                 break;
-            case 3:
+            case INVALID_SYNTAX:
                 System.out.println("Ошибка! Неверный синтаксис команды. Введите [help] для справки!");
                 break;
-            case 4:
-                System.out.println("Ошибка! Некорректный ввод команды!");
-            default:
+            case UNKNOWN_ERROR:
                 System.out.println("Ошибка! Код ошибки не найден!");
+                break;
+            default:
+                System.out.println("Ошибка!");
         }
     }
 
@@ -70,7 +79,7 @@ public class View {
                 else System.out.println("Ошибка! Студента {группы} не существует или он уже содержится в группе");
                 break;
             default:
-                printError(1000);
+                printError(Error.UNKNOWN_ERROR);
 
 
         }
