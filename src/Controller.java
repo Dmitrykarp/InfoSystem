@@ -56,7 +56,7 @@ public class Controller {
                             } catch (RuntimeException e){
                                 thisView.printError(View.Error.STUDENT_ALREADY_GROUP);
                             }
-                        } else thisView.printError(View.Error.HELP);
+                        } else thisView.printError(View.Error.INVALID_SYNTAX);
 
                     } catch (ArrayIndexOutOfBoundsException e) {
                         thisView.printError(View.Error.INVALID_SYNTAX);
@@ -119,7 +119,7 @@ public class Controller {
                             } catch (RuntimeException e) {
                                 thisView.printError(View.Error.GROUP_NOT_FOUND);
                             }
-                        }
+                        } else thisView.printError(View.Error.INVALID_SYNTAX);
 
                     } catch (ArrayIndexOutOfBoundsException e) {
                         thisView.printError(View.Error.INVALID_SYNTAX);
