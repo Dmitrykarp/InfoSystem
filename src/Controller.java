@@ -198,7 +198,13 @@ public class Controller {
                                 thisView.printStudent(id, na, pa, su, da);
                             }
                         }else if ("-g".equals(command[1].toLowerCase())){
-                            //TODO группы
+                            ArrayList<Group> groups = new ArrayList<Group>();
+                            groups = thisModel.searchGroup(command[2]);
+                            for (int i = 0; i < groups.size(); i++) {
+                                int num = groups.get(i).getNumber();
+                                String fac = groups.get(i).getFacult();
+                                thisView.printGroup(num, fac, true);
+                            }
                         }else thisView.printError(View.Error.INVALID_SYNTAX);
 
                     } catch (ArrayIndexOutOfBoundsException e) {

@@ -297,13 +297,31 @@ public class Model {
     }
 
 
-    public Group searchGroup(int id) {
-        return null;
+    public ArrayList<Group> searchGroup(String find) {
+        int temp =0;
+        ArrayList<Group> grTemp = new ArrayList<Group>();
+        if(find.contains("*")){
+            find = find.replace("*",".");
+        }else if(find.contains("?")){
+            find = find.replace("?","[а-я]*");
+        }
+        Pattern p = Pattern.compile("^" +find.toLowerCase() +"$");
+        Matcher m;
+        for(Group gr: group){
+            m=p.matcher(gr.getFacult().toLowerCase());
+            if(m.matches()){
+                grTemp.add(gr);
+                temp++;
+            }
+
+        }
+
+        if(temp==0) throw new RuntimeException();
+        else return grTemp;
+
     }
 
-    public Group searchGroup(String facult) {
-        return null;
-    }
+
 
     public void fileToFile(String path) {
 

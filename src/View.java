@@ -84,24 +84,30 @@ public class View {
     }
 
     public void printHelp() {
-        System.out.println("ADD - ДОБАВЛЕНИЕ ЭЛЕМЕНТА");
+        System.out.println("-= ДОБАВЛЕНИЕ ЭЛЕМЕНТА =-");
         System.out.println("ADD -s [имя] [отчество] [фамилия] [дата: dd.mm.yyyy]");
         System.out.println("ADD -g [номер] [факультет]");
         System.out.println("ADD -stg [ID студента] [ID группы]");
         System.out.println();
-        System.out.println("VIEW - ПОКАЗ ЭЛЕМЕНТОВ");
+        System.out.println("-= ПОКАЗ ЭЛЕМЕНТОВ =-");
         System.out.println("VIEW -allg");
         System.out.println("VIEW -alls");
         System.out.println("VIEW -s [id] ");
         System.out.println("VIEW -g [номер]");
         System.out.println();
-        System.out.println("DEL - УДАЛЕНИЕ ЭЛЕМЕНТОВ");
+        System.out.println("-= УДАЛЕНИЕ ЭЛЕМЕНТОВ =-");
         System.out.println("DEL -g [id Группы]");
         System.out.println("DEL -s [id Студента]");
         System.out.println();
-        System.out.println("MOD - ИЗМЕНЕНИЕ ЭЛЕМЕНТОВ");
+        System.out.println("-= ИЗМЕНЕНИЕ ЭЛЕМЕНТОВ =-");
         System.out.println("MOD -g [id изменяемой группы] [новый id] [факультет]");
         System.out.println("MOD -s [id Студента] [имя] [отчество] [фамилия] [дата]");
+        System.out.println();
+        System.out.println("-= ПОИСК ЭЛЕМЕНТОВ =-");
+        System.out.println("FIND -g [факультет]");
+        System.out.println("FIND -s [имя/отчество/фамилия]");
+        System.out.println("        В параметре можно указать [*] для неизвестного символа");
+        System.out.println("        или [?] для неизвестного набора символов.");
 
     }
 
