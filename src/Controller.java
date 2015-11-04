@@ -11,7 +11,6 @@ public class Controller {
     private Model thisModel;
     private View thisView;
 
-
     Controller(Model model, View view) {
         thisModel = model;
         thisView = view;
@@ -20,15 +19,13 @@ public class Controller {
     public void run() throws IOException, JAXBException {
         String[] command;
         boolean exit = true;
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         thisModel.loadZIP("src\\test.zip");
         thisModel = thisModel.loadXML("src\\xml\\test.xml", thisModel);
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
         while (exit) {
             thisView.printConsole();
-
             command = parseCommand(reader.readLine());
 
             switch (command[0].toLowerCase()) {
@@ -136,7 +133,6 @@ public class Controller {
                                 Date da = thisModel.getStudents().get(i).getDate();
                                 thisView.printStudent(id, na, pa, su, da);
                             }
-
                         } else if ("-allg".equals(command[1].toLowerCase())) {
                             for (int i = 0; i < thisModel.getGroups().size(); i++) {
                                 int num = thisModel.getGroups().get(i).getNumber();
@@ -152,7 +148,6 @@ public class Controller {
                                 String su = thisModel.getStudents().get(i).getSurname();
                                 Date da = thisModel.getStudents().get(i).getDate();
                                 thisView.printStudent(id, na, pa, su, da);
-
                             } catch (NumberFormatException e) {
                                 thisView.printError(View.Error.HELP);
                             } catch (IndexOutOfBoundsException e) {
@@ -172,7 +167,6 @@ public class Controller {
                                     Date da = thisModel.getGroup(id).getStudents().get(i).getDate();
                                     thisView.printStudent(ids, na, pa, su, da);
                                 }
-
                             } catch (NumberFormatException e) {
                                 thisView.printError(View.Error.HELP);
                             } catch (RuntimeException e) {
@@ -206,13 +200,19 @@ public class Controller {
                                 thisView.printGroup(num, fac, true);
                             }
                         }else thisView.printError(View.Error.INVALID_SYNTAX);
-
                     } catch (ArrayIndexOutOfBoundsException e) {
                         thisView.printError(View.Error.INVALID_SYNTAX);
                     } catch (RuntimeException e) {
                         if("-s".equals(command[1].toLowerCase())) thisView.printError(View.Error.STUDENT_NOT_FOUND);
                         else if("-g".equals(command[1].toLowerCase())) thisView.printError(View.Error.GROUP_NOT_FOUND);
                         else thisView.printError(View.Error.UNKNOWN_ERROR);
+                    }
+                    break;
+                case "file":
+                    try {
+                        thisModel = thisModel.fileToFile("src\\xml\\test2.xml", thisModel);
+                    }catch (NullPointerException e){
+                        thisView.printError(View.Error.FILE_NULL);
                     }
                     break;
                 case "help":
@@ -230,11 +230,8 @@ public class Controller {
         }
     }
 
-
     public String[] parseCommand(String s) {
         String[] st = s.trim().split("\\s+");
-
         return st;
     }
-
 }

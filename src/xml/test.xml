@@ -47,4 +47,41 @@
             <date>2014-05-16T14:13:45.495+04:00</date>
         </students>
     </group>
+    <group>
+        <number>600</number>
+        <facult>Физический</facult>
+        <students>
+            <id>6</id>
+            <name>Татьяна</name>
+            <patronymic>Петровна</patronymic>
+            <surname>Зимина</surname>
+            <date>1995-04-20T11:15:33.691+04:00</date>
+        </students>
+    </group>
+    <group>
+        <number>610</number>
+        <facult>Физический</facult>
+        <students>
+            <id>7</id>
+            <name>Ольга</name>
+            <patronymic>Николаевна</patronymic>
+            <surname>Писакина</surname>
+            <date>1999-11-09T09:18:08.041+03:00</date>
+        </students>
+    </group>
+    <group>
+        <number>700</number>
+        <facult>Физический</facult>
+    </group>
+    <group>
+        <number>710</number>
+        <facult>Филологический</facult>
+        <students>
+            <id>8</id>
+            <name>Дмитрий</name>
+            <patronymic>Иванович</patronymic>
+            <surname>Мазяркин</surname>
+            <date>1992-09-05T10:18:08.041+04:00</date>
+        </students>
+    </group>
 </model>

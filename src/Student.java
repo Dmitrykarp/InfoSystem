@@ -31,68 +31,83 @@ public class Student {
         this.patronymic = patronymic;
         this.date = date;
         this.id = i;
-
-
     }
 
-    Student() {
+    Student(){
 
-    }
-
-    public String getStudent(int id) {
-
-        return null;
     }
 
     public int getId() {
         return id;
     }
 
-
     public void setId(int value) {
         this.id = value;
     }
-
 
     public String getName() {
         return name;
     }
 
-
     public void setName(String value) {
         this.name = value;
     }
-
 
     public String getPatronymic() {
         return patronymic;
     }
 
-
     public void setPatronymic(String value) {
         this.patronymic = value;
     }
-
 
     public String getSurname() {
         return surname;
     }
 
-
     public void setSurname(String value) {
         this.surname = value;
     }
 
-
     public Date getDate() {
         return date;
     }
-
 
     public void setDate(Date value) {
         this.date = value;
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if(id == ((Student) o).getId() )
+            if(name.equals(((Student) o).getName()))
+                if(surname.equals(((Student) o).getSurname()))
+                    if(patronymic.equals(((Student) o).getPatronymic()))
+                        return true;
+        Student student = (Student) o;
+        if (id != student.id) return false;
+        if (name != null ? !name.equals(student.name) : student.name != null) return false;
+        if (surname != null ? !surname.equals(student.surname) : student.surname != null) return false;
+        if (patronymic != null ? !patronymic.equals(student.patronymic) : student.patronymic != null) return false;
+        return !(date != null ? !date.equals(student.date) : student.date != null);
+    }
+
+    public boolean equals(Object o, int n) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if(name.equals(((Student) o).getName()))
+            if(surname.equals(((Student) o).getSurname()))
+                 if(patronymic.equals(((Student) o).getPatronymic()))
+                    return true;
+        Student student = (Student) o;
+        if (id != student.id) return false;
+        if (name != null ? !name.equals(student.name) : student.name != null) return false;
+        if (surname != null ? !surname.equals(student.surname) : student.surname != null) return false;
+        if (patronymic != null ? !patronymic.equals(student.patronymic) : student.patronymic != null) return false;
+        return !(date != null ? !date.equals(student.date) : student.date != null);
+    }
 }
 

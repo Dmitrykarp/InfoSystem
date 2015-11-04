@@ -24,30 +24,25 @@ public class Group {
         students = new ArrayList<Student>();
     }
 
-    Group() {
+    Group(){
 
     }
-
 
     public int getNumber() {
         return number;
     }
 
-
     public void setNumber(int value) {
         this.number = value;
     }
-
 
     public String getFacult() {
         return facult;
     }
 
-
     public void setFacult(String value) {
         this.facult = value;
     }
-
 
     public ArrayList<Student> getStudents() {
         if (students == null) {
@@ -58,8 +53,5 @@ public class Group {
 
     public void addStudentToGroup(Student st) {
         students.add(st);
-
     }
-
-
 }

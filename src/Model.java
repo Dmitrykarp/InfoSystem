@@ -1,5 +1,3 @@
-
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -29,7 +27,6 @@ public class Model {
     private int counter;
 
     Model() {
-
         counter = 1;
     }
 
@@ -37,7 +34,13 @@ public class Model {
         JAXBContext jaxbCtx = JAXBContext.newInstance(m.getClass());
         Unmarshaller um = jaxbCtx.createUnmarshaller();
         m = (Model) um.unmarshal(new File(path));
-        m.students = equalStudents(m.students, m.group);
+        ArrayList<Student> grSt = new ArrayList<Student>();
+        for (int i = 0; i < m.getGroups().size(); i++) {
+            grSt.addAll(m.getGroups().get(i).getStudents());
+        }
+        for (int i =0; i<grSt.size(); i++){
+            m.addStudent(grSt.get(i).getId(), grSt.get(i).getName(),grSt.get(i).getSurname(),grSt.get(i).getPatronymic(),grSt.get(i).getDate());
+        }
         return m;
 
     }
@@ -58,16 +61,12 @@ public class Model {
         } catch (IOException e){
             System.out.println(e);
         }
-
     }
 
     public void saveZIP(String path) {
-
         byte[] buf = new byte[1024];
-
         try {
             String target = "src\\test.zip";
-
             ZipOutputStream out = new ZipOutputStream(new FileOutputStream(target));
             FileInputStream in = new FileInputStream(path);
             out.putNextEntry(new ZipEntry(path));
@@ -78,8 +77,6 @@ public class Model {
             out.closeEntry();
             in.close();
             out.close();
-
-
         } catch (IOException e) {
             System.out.println(e);
         }
@@ -89,22 +86,16 @@ public class Model {
     public void saveXML(String path) throws JAXBException {
         JAXBContext jaxbCtx = JAXBContext.newInstance(this.getClass());
         Marshaller marshaller = jaxbCtx.createMarshaller();
-
         marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-
         File localNewFile = new File(path);
         FileOutputStream fos = null;
         try {
-
             fos = new FileOutputStream(localNewFile);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
         marshaller.marshal(this, fos);
-
-
     }
 
 
@@ -114,16 +105,22 @@ public class Model {
         Student student = new Student(counter, n, s, p, d);
         int tempStud = 0;
         for (int i = 0; i < students.size(); i++)
-            if (students.get(i).getName().equals(student.getName()))
-                if (students.get(i).getPatronymic().equals(student.getPatronymic()))
-                    if (students.get(i).getSurname().equals(student.getSurname()))
-                        if (students.get(i).getDate().equals(student.getDate()))
-                            tempStud++;
-
+            if (students.get(i).equals(student))
+                tempStud++;
         if (tempStud == 0) {
             counter++;
             students.add(student);
+        } else throw new RuntimeException();
+    }
 
+    public void addStudent(int id,String n, String s, String p, Date d) {
+        Student student = new Student(id, n, s, p, d);
+        int tempStud = 0;
+        for (int i = 0; i < students.size(); i++)
+            if (students.get(i).equals(student))
+                tempStud++;
+        if (tempStud == 0) {
+            students.add(student);
         } else throw new RuntimeException();
     }
 
@@ -182,8 +179,6 @@ public class Model {
         } else throw new RuntimeException();
     }
 
-
-
     public void addGroup(int n, String f) {
         Group groups = new Group(n, f);
         int tempCount = 0;
@@ -197,7 +192,9 @@ public class Model {
         } else throw new RuntimeException();
     }
 
-
+    public void addGroup(Group g){
+        this.group.add(g);
+    }
 
     public ArrayList<Student> getStudents() {
         return this.students;
@@ -244,7 +241,6 @@ public class Model {
             }
         }
         if(temp==0) throw new RuntimeException();
-
     }
 
     public void modifyGroup(int oldID, int newID, String f) {
@@ -257,13 +253,11 @@ public class Model {
             }
         }
         if(temp==0) throw new RuntimeException();
-
     }
 
     public ArrayList<Student> searchStudent(String find) {
         int temp=0;
         ArrayList<Student> stTemp = new ArrayList<Student>();
-
         if(find.contains("*")){
             find = find.replace("*",".");
         }else if(find.contains("?")){
@@ -271,7 +265,6 @@ public class Model {
         }
         Pattern p = Pattern.compile("^" +find.toLowerCase() +"$");
         Matcher m;
-
         for(Student st: students){
             m = p.matcher(st.getName().toLowerCase());
             if(m.matches()){
@@ -315,42 +308,76 @@ public class Model {
             }
 
         }
-
         if(temp==0) throw new RuntimeException();
         else return grTemp;
-
     }
 
-
-
-    public void fileToFile(String path) {
-
-    }
-
-    public ArrayList<Student> equalStudents(ArrayList<Student> s, ArrayList<Group> g) {
-        ArrayList<Student> tempSt = new ArrayList<Student>();
-        ArrayList<Student> tempStud = new ArrayList<Student>();
-        for (int i = 0; i < g.size(); i++) {
-            tempSt.addAll(g.get(i).getStudents());
-        }
-
-        s.add(tempSt.get(0));
-        tempStud.add(tempSt.get(0));
-
-        for (int i = 0; i < tempSt.size(); i++) {
-            for (int j = 0; j < s.size(); j++) {
-                if (tempSt.get(i).getName() == s.get(j).getName()) {
-                    if (tempSt.get(i).getPatronymic() == s.get(j).getPatronymic()) {
-                        if (tempSt.get(i).getSurname() == s.get(j).getSurname()) {
-                            if (tempSt.get(i).getDate() == s.get(j).getDate())
-                                continue;
+    public Model fileToFile(String path, Model m) throws JAXBException {
+        JAXBContext jaxbCtx = JAXBContext.newInstance(m.getClass());
+        Unmarshaller um = jaxbCtx.createUnmarshaller();
+        Model mTemp = new Model();
+        mTemp = (Model) um.unmarshal(new File(path));
+        mTemp = equalStudents(mTemp);
+        Iterator iteratorGroupM = m.getGroups().iterator();
+        while(iteratorGroupM.hasNext()){
+            Group itemGroupM = (Group) iteratorGroupM.next();
+            Iterator groupIteratorTemp = mTemp.getGroups().iterator();
+            while (groupIteratorTemp.hasNext()) {
+                Group itemGroupTemp = (Group) groupIteratorTemp.next();
+                if(itemGroupM.getNumber()==itemGroupTemp.getNumber() & itemGroupM.getFacult().equals(itemGroupTemp.getFacult())){
+                    groupIteratorTemp.remove();
+                }else{
+                    Iterator iteratorStudentM = m.getStudents().iterator();
+                    while (iteratorStudentM.hasNext()) {
+                        Student itemStudentM = (Student) iteratorStudentM.next();
+                        Iterator iteratotStudentTemp = itemGroupTemp.getStudents().iterator();
+                        while (iteratotStudentTemp.hasNext()) {
+                            Student itemStTemp = (Student) iteratotStudentTemp.next();
+                            if (itemStudentM.equals(itemStTemp, 1)) {
+                                iteratotStudentTemp.remove();
+                            }
                         }
                     }
-                } else tempStud.add(tempSt.get(i));
+
+                }
+
             }
         }
-        this.counter = tempStud.size();
-        return tempStud;
+        for (Group gr: mTemp.getGroups())
+            for (Student st: gr.getStudents())
+                st.setId(m.students.size() + 1);
+        for(Group gr: mTemp.getGroups())
+        System.out.print(gr.getNumber() +" " +gr.getFacult()+"   ");
+        System.out.println("111111");
+        for (Student st: mTemp.getStudents())
+            System.out.println(st.getSurname());
+        System.out.println("111111");
+        for (Group gr: mTemp.getGroups())
+        for (Student st: gr.getStudents())
+            System.out.println(st.getId() +" " +st.getSurname());
+        System.out.println();
+        for(int i=0; i<mTemp.getGroups().size();i++) {
+            m.addGroup(mTemp.getGroups().get(i));
+            for (int j = 0; j < mTemp.getGroups().get(i).getStudents().size(); j++) {
+                String n = mTemp.getGroups().get(i).getStudents().get(j).getName();
+                String p = mTemp.getGroups().get(i).getStudents().get(j).getPatronymic();
+                String s = mTemp.getGroups().get(i).getStudents().get(j).getSurname();
+                Date d = mTemp.getGroups().get(i).getStudents().get(j).getDate();
+                m.addStudent(n,s,p,d);
+            }
+        }
+        System.out.println();
+    return m;
     }
 
+    public Model equalStudents(Model m) {
+       ArrayList<Student> grSt = new ArrayList<Student>();
+        for (int i = 0; i < m.getGroups().size(); i++) {
+            grSt.addAll(m.getGroups().get(i).getStudents());
+        }
+        for (int i =0; i<grSt.size(); i++){
+            m.addStudent(grSt.get(i).getName(),grSt.get(i).getSurname(),grSt.get(i).getPatronymic(),grSt.get(i).getDate());
+        }
+        return m;
+    }
 }

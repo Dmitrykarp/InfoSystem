@@ -8,9 +8,6 @@ public class InfoSystem {
         View thisView = new View();
         Controller thisController = new Controller(thisModel, thisView);
 
-
         thisController.run();
-
-
     }
 }

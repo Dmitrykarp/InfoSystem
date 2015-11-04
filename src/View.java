@@ -18,7 +18,8 @@ public class View {
         STUDENT_ALREADY_DB,
         STUDENT_ALREADY_GROUP,
         STUDENT_ADD_DATE,
-        GROUP_ALREADY
+        GROUP_ALREADY,
+        FILE_NULL
 
     }
 
@@ -37,11 +38,9 @@ public class View {
         System.out.print(">");
     }
 
-
     public void printStudent(int id, String n, String pa, String su, Date da) {
         System.out.println(id + " " + n + " " + pa + " " + su + " " + format1.format(da));
     }
-
 
     public void printGroup(int id, String facult, boolean b) {
         if (b)
@@ -77,6 +76,9 @@ public class View {
                 break;
             case GROUP_ALREADY:
                 System.out.println("Ошибка! Данная группа уже имеется в базе!");
+                break;
+            case FILE_NULL:
+                System.out.println("Ошибка! Все данные из файла уже имеются в базе!");
                 break;
             default:
                 System.out.println("Ошибка!");
@@ -136,8 +138,6 @@ public class View {
                 break;
             default:
                 printError(Error.UNKNOWN_ERROR);
-
-
         }
     }
 
