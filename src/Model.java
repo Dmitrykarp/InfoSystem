@@ -9,6 +9,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -258,17 +260,42 @@ public class Model {
 
     }
 
-    public Student searchStudent(String name) {
-        return null;
+    public ArrayList<Student> searchStudent(String find) {
+        int temp=0;
+        ArrayList<Student> stTemp = new ArrayList<Student>();
+
+        if(find.contains("*")){
+            find = find.replace("*",".");
+        }else if(find.contains("?")){
+            find = find.replace("?","[а-я]*");
+        }
+        Pattern p = Pattern.compile("^" +find.toLowerCase() +"$");
+        Matcher m;
+
+        for(Student st: students){
+            m = p.matcher(st.getName().toLowerCase());
+            if(m.matches()){
+                stTemp.add(st);
+                temp++;
+            }
+            else {
+                m = p.matcher(st.getPatronymic().toLowerCase());
+                if(m.matches()){
+                    stTemp.add(st);
+                    temp++;
+                } else {
+                    m = p.matcher(st.getSurname().toLowerCase());
+                    if(m.matches()) {
+                        stTemp.add(st);
+                        temp++;
+                    }
+                }
+            }
+        }
+        if(temp ==0) throw new RuntimeException();
+        else return stTemp;
     }
 
-    public Student searchStudent(String name, String patr) {
-        return null;
-    }
-
-    public Student searchStudent(int id) {
-        return null;
-    }
 
     public Group searchGroup(int id) {
         return null;

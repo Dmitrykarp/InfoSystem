@@ -2,6 +2,7 @@ import javax.xml.bind.JAXBException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.StringJoiner;
 
@@ -113,7 +114,7 @@ public class Controller {
                             String facult = command[4];
                             thisModel.modifyGroup(idOld, idNew, facult);
                             thisView.printConfirm(View.Confirm.GROUP_MOD);
-                        }
+                        } else thisView.printError(View.Error.INVALID_SYNTAX);
                     } catch (ArrayIndexOutOfBoundsException e) {
                         thisView.printError(View.Error.INVALID_SYNTAX);
                     } catch (NumberFormatException e) {
@@ -181,6 +182,31 @@ public class Controller {
 
                     } catch (ArrayIndexOutOfBoundsException e) {
                         thisView.printError(View.Error.INVALID_SYNTAX);
+                    }
+                    break;
+                case "find":
+                    try {
+                        if ("-s".equals(command[1].toLowerCase())){
+                            ArrayList<Student> students;
+                            students = thisModel.searchStudent(command[2]);
+                            for (int i = 0; i < students.size(); i++) {
+                                int id = students.get(i).getId();
+                                String na = students.get(i).getName();
+                                String pa = students.get(i).getPatronymic();
+                                String su = students.get(i).getSurname();
+                                Date da = students.get(i).getDate();
+                                thisView.printStudent(id, na, pa, su, da);
+                            }
+                        }else if ("-g".equals(command[1].toLowerCase())){
+                            //TODO группы
+                        }else thisView.printError(View.Error.INVALID_SYNTAX);
+
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        thisView.printError(View.Error.INVALID_SYNTAX);
+                    } catch (RuntimeException e) {
+                        if("-s".equals(command[1].toLowerCase())) thisView.printError(View.Error.STUDENT_NOT_FOUND);
+                        else if("-g".equals(command[1].toLowerCase())) thisView.printError(View.Error.GROUP_NOT_FOUND);
+                        else thisView.printError(View.Error.UNKNOWN_ERROR);
                     }
                     break;
                 case "help":

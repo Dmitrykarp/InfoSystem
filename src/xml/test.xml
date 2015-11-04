@@ -39,5 +39,12 @@
             <surname>Гусев</surname>
             <date>2000-12-19T11:51:16.080+03:00</date>
         </students>
+        <students>
+            <id>5</id>
+            <name>Олег</name>
+            <patronymic>Дмитриевич</patronymic>
+            <surname>Попов</surname>
+            <date>2014-05-16T14:13:45.495+04:00</date>
+        </students>
     </group>
 </model>
