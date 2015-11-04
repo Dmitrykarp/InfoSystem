@@ -353,16 +353,6 @@ public class Model {
         for (Group gr : mTemp.getGroups())
             for (Student st : gr.getStudents())
                 st.setId(m.students.size() + 1);
-        for (Group gr : mTemp.getGroups())
-            System.out.print(gr.getNumber() + " " + gr.getFacult() + "   ");
-        System.out.println("111111");
-        for (Student st : mTemp.getStudents())
-            System.out.println(st.getSurname());
-        System.out.println("111111");
-        for (Group gr : mTemp.getGroups())
-            for (Student st : gr.getStudents())
-                System.out.println(st.getId() + " " + st.getSurname());
-        System.out.println();
         for (int i = 0; i < mTemp.getGroups().size(); i++) {
             m.addGroup(mTemp.getGroups().get(i));
             for (int j = 0; j < mTemp.getGroups().get(i).getStudents().size(); j++) {
@@ -373,7 +363,7 @@ public class Model {
                 m.addStudent(n, s, p, d);
             }
         }
-        System.out.println();
+
         return m;
     }
 

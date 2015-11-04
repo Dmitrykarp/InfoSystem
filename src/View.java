@@ -19,7 +19,7 @@ public class View {
         STUDENT_ALREADY_GROUP,
         STUDENT_ADD_DATE,
         GROUP_ALREADY,
-        FILE_NULL
+        FILE_NOT_FOUND
 
     }
 
@@ -30,7 +30,8 @@ public class View {
         STUDENT_DELL,
         GROUP_DELL,
         STUDENT_MOD,
-        GROUP_MOD
+        GROUP_MOD,
+        MERGER
 
     }
 
@@ -77,8 +78,8 @@ public class View {
             case GROUP_ALREADY:
                 System.out.println("Ошибка! Данная группа уже имеется в базе!");
                 break;
-            case FILE_NULL:
-                System.out.println("Ошибка! Все данные из файла уже имеются в базе!");
+            case FILE_NOT_FOUND:
+                System.out.println("Ошибка! Неудается найти указанный файл!");
                 break;
             default:
                 System.out.println("Ошибка!");
@@ -110,6 +111,9 @@ public class View {
         System.out.println("FIND -s [имя/отчество/фамилия]");
         System.out.println("        В параметре можно указать [*] для неизвестного символа");
         System.out.println("        или [?] для неизвестного набора символов.");
+        System.out.println();
+        System.out.println("-= ДОБАВЛЕНИЕ ДАННЫХ ИЗ ФАЙЛА =-");
+        System.out.println("FILE [путь к файлу, например С:\\1\\target.xml] ");
 
     }
 
@@ -135,6 +139,9 @@ public class View {
                 break;
             case GROUP_MOD:
                 System.out.println("Группа успешно изменена");
+                break;
+            case MERGER:
+                System.out.println("Данные из файла добавлены успешно");
                 break;
             default:
                 printError(Error.UNKNOWN_ERROR);

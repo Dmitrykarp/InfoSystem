@@ -1,4 +1,8 @@
+import com.sun.xml.internal.bind.v2.ContextFactory;
+import com.sun.xml.internal.bind.v2.runtime.IllegalAnnotationException;
+
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.UnmarshalException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -210,9 +214,12 @@ public class Controller {
                     break;
                 case "file":
                     try {
-                        thisModel = thisModel.fileToFile("src\\xml\\test2.xml", thisModel);
-                    } catch (NullPointerException e) {
-                        thisView.printError(View.Error.FILE_NULL);
+                        thisModel = thisModel.fileToFile(command[1].toLowerCase(), thisModel);
+                        thisView.printConfirm(View.Confirm.MERGER);
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        thisView.printError(View.Error.INVALID_SYNTAX);
+                    } catch (UnmarshalException e) {
+                        thisView.printError(View.Error.FILE_NOT_FOUND);
                     }
                     break;
                 case "help":

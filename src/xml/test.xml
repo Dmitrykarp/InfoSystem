@@ -84,4 +84,15 @@
             <date>1992-09-05T10:18:08.041+04:00</date>
         </students>
     </group>
+    <group>
+        <number>711</number>
+        <facult>Филологический</facult>
+        <students>
+            <id>9</id>
+            <name>Никита</name>
+            <patronymic>Сергеевич</patronymic>
+            <surname>Копытов</surname>
+            <date>1992-09-05T10:18:08.041+04:00</date>
+        </students>
+    </group>
 </model>
