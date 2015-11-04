@@ -1,6 +1,3 @@
-import com.sun.xml.internal.bind.v2.ContextFactory;
-import com.sun.xml.internal.bind.v2.runtime.IllegalAnnotationException;
-
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.UnmarshalException;
 import java.io.BufferedReader;
@@ -8,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.StringJoiner;
+
 
 
 public class Controller {
@@ -44,6 +41,7 @@ public class Controller {
                                 d.setYear(Integer.parseInt(st[2]) - 1900);
                                 thisModel.addStudent(command[2], command[4], command[3], d);
                                 thisView.printConfirm(View.Confirm.STUDENT_ADD);
+
                             } catch (IndexOutOfBoundsException e) {
                                 thisView.printError(View.Error.INVALID_SYNTAX);
                             } catch (NumberFormatException e) {
@@ -51,6 +49,7 @@ public class Controller {
                             } catch (RuntimeException e) {
                                 thisView.printError(View.Error.STUDENT_ALREADY_DB);
                             }
+
                         } else if ("-g".equals(command[1].toLowerCase())) {
                             try {
                                 thisModel.addGroup(Integer.parseInt(command[2]), command[3]);
@@ -60,6 +59,7 @@ public class Controller {
                             } catch (RuntimeException e) {
                                 thisView.printError(View.Error.GROUP_ALREADY);
                             }
+
                         } else if ("-stg".equals(command[1].toLowerCase())) {
                             try {
                                 thisModel.studentToGroup(Integer.parseInt(command[2]), Integer.parseInt(command[3]));
@@ -69,20 +69,24 @@ public class Controller {
                             } catch (RuntimeException e) {
                                 thisView.printError(View.Error.STUDENT_ALREADY_GROUP);
                             }
+
                         } else thisView.printError(View.Error.INVALID_SYNTAX);
 
                     } catch (ArrayIndexOutOfBoundsException e) {
                         thisView.printError(View.Error.INVALID_SYNTAX);
                     }
                     break;
+
                 case "del":
                     try {
                         if ("-s".equals(command[1].toLowerCase())) {
                             thisModel.delStudent(Integer.parseInt(command[2]));
                             thisView.printConfirm(View.Confirm.STUDENT_DELL);
+
                         } else if ("-g".equals(command[1].toLowerCase())) {
                             thisModel.delGroup(Integer.parseInt(command[2]));
                             thisView.printConfirm(View.Confirm.GROUP_DELL);
+
                         } else thisView.printError(View.Error.INVALID_SYNTAX);
 
                     } catch (NumberFormatException e) {
@@ -95,6 +99,7 @@ public class Controller {
                         else thisView.printError(View.Error.UNKNOWN_ERROR);
                     }
                     break;
+
                 case "mod":
                     try {
                         if ("-s".equals(command[1].toLowerCase())) {
@@ -109,13 +114,16 @@ public class Controller {
                             d.setYear(Integer.parseInt(st[2]) - 1900);
                             thisModel.modifyStudent(id, n, s, p, d);
                             thisView.printConfirm(View.Confirm.STUDENT_MOD);
+
                         } else if ("-g".equals(command[1].toLowerCase())) {
                             int idOld = Integer.parseInt(command[2]);
                             int idNew = Integer.parseInt(command[3]);
                             String facult = command[4];
                             thisModel.modifyGroup(idOld, idNew, facult);
                             thisView.printConfirm(View.Confirm.GROUP_MOD);
+
                         } else thisView.printError(View.Error.INVALID_SYNTAX);
+
                     } catch (ArrayIndexOutOfBoundsException e) {
                         thisView.printError(View.Error.INVALID_SYNTAX);
                     } catch (NumberFormatException e) {
@@ -126,6 +134,7 @@ public class Controller {
                         else thisView.printError(View.Error.UNKNOWN_ERROR);
                     }
                     break;
+
                 case "view":
                     try {
                         if ("-alls".equals(command[1].toLowerCase())) {
@@ -137,12 +146,14 @@ public class Controller {
                                 Date da = thisModel.getStudents().get(i).getDate();
                                 thisView.printStudent(id, na, pa, su, da);
                             }
+
                         } else if ("-allg".equals(command[1].toLowerCase())) {
                             for (int i = 0; i < thisModel.getGroups().size(); i++) {
                                 int num = thisModel.getGroups().get(i).getNumber();
                                 String fac = thisModel.getGroups().get(i).getFacult();
                                 thisView.printGroup(num, fac, true);
                             }
+
                         } else if ("-s".equals(command[1].toLowerCase())) {
                             try {
                                 int i = Integer.parseInt(command[2]) - 1;
@@ -152,11 +163,13 @@ public class Controller {
                                 String su = thisModel.getStudents().get(i).getSurname();
                                 Date da = thisModel.getStudents().get(i).getDate();
                                 thisView.printStudent(id, na, pa, su, da);
+
                             } catch (NumberFormatException e) {
                                 thisView.printError(View.Error.HELP);
                             } catch (IndexOutOfBoundsException e) {
                                 thisView.printError(View.Error.STUDENT_NOT_FOUND);
                             }
+
                         } else if ("-g".equals(command[1].toLowerCase())) {
                             try {
                                 int id = Integer.parseInt(command[2]);
@@ -171,17 +184,20 @@ public class Controller {
                                     Date da = thisModel.getGroup(id).getStudents().get(i).getDate();
                                     thisView.printStudent(ids, na, pa, su, da);
                                 }
+
                             } catch (NumberFormatException e) {
                                 thisView.printError(View.Error.HELP);
                             } catch (RuntimeException e) {
                                 thisView.printError(View.Error.GROUP_NOT_FOUND);
                             }
+
                         } else thisView.printError(View.Error.INVALID_SYNTAX);
 
                     } catch (ArrayIndexOutOfBoundsException e) {
                         thisView.printError(View.Error.INVALID_SYNTAX);
                     }
                     break;
+
                 case "find":
                     try {
                         if ("-s".equals(command[1].toLowerCase())) {
@@ -195,6 +211,7 @@ public class Controller {
                                 Date da = students.get(i).getDate();
                                 thisView.printStudent(id, na, pa, su, da);
                             }
+
                         } else if ("-g".equals(command[1].toLowerCase())) {
                             ArrayList<Group> groups = new ArrayList<Group>();
                             groups = thisModel.searchGroup(command[2]);
@@ -203,7 +220,9 @@ public class Controller {
                                 String fac = groups.get(i).getFacult();
                                 thisView.printGroup(num, fac, true);
                             }
+
                         } else thisView.printError(View.Error.INVALID_SYNTAX);
+
                     } catch (ArrayIndexOutOfBoundsException e) {
                         thisView.printError(View.Error.INVALID_SYNTAX);
                     } catch (RuntimeException e) {
@@ -212,24 +231,29 @@ public class Controller {
                         else thisView.printError(View.Error.UNKNOWN_ERROR);
                     }
                     break;
+
                 case "file":
                     try {
                         thisModel = thisModel.fileToFile(command[1].toLowerCase(), thisModel);
                         thisView.printConfirm(View.Confirm.MERGER);
+
                     } catch (ArrayIndexOutOfBoundsException e) {
                         thisView.printError(View.Error.INVALID_SYNTAX);
                     } catch (UnmarshalException e) {
                         thisView.printError(View.Error.FILE_NOT_FOUND);
                     }
                     break;
+
                 case "help":
                     thisView.printHelp();
                     break;
+
                 case "exit":
                     exit = false;
                     thisModel.saveXML("src\\xml\\test.xml");
                     thisModel.saveZIP("src\\xml\\test.xml");
                     break;
+
                 default:
                     thisView.printError(View.Error.HELP);
                     break;

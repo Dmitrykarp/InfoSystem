@@ -54,33 +54,43 @@ public class View {
             case HELP:
                 System.out.println("Ошибка! Введите команду [help] для справки.");
                 break;
+
             case STUDENT_NOT_FOUND:
                 System.out.println("Ошибка! Студент не найден!");
                 break;
+
             case GROUP_NOT_FOUND:
                 System.out.println("Ошибка! Группа не найдена!");
                 break;
+
             case INVALID_SYNTAX:
                 System.out.println("Ошибка! Неверный синтаксис команды. Введите [help] для справки!");
                 break;
+
             case UNKNOWN_ERROR:
                 System.out.println("Ошибка! Код ошибки не найден!");
                 break;
+
             case STUDENT_ALREADY_DB:
                 System.out.println("Ошибка! Данный студент уже имеется в базе!");
                 break;
+
             case STUDENT_ADD_DATE:
                 System.out.println("Ошибка! Введите дату в формате: ДД.ММ.ГГГГ!");
                 break;
+
             case STUDENT_ALREADY_GROUP:
                 System.out.println("Ошибка! Студента {группы} не существует или он уже содержится в группе!");
                 break;
+
             case GROUP_ALREADY:
                 System.out.println("Ошибка! Данная группа уже имеется в базе!");
                 break;
+
             case FILE_NOT_FOUND:
                 System.out.println("Ошибка! Неудается найти указанный файл!");
                 break;
+
             default:
                 System.out.println("Ошибка!");
         }
@@ -122,27 +132,35 @@ public class View {
             case STUDENT_ADD:
                 System.out.println("Студент добавлен");
                 break;
+
             case GROUP_ADD:
                 System.out.println("Группа добавлена");
                 break;
+
             case STUDENT_IN_GROUP:
                 System.out.println("Студент добавлен в группу");
                 break;
+
             case STUDENT_DELL:
                 System.out.println("Студент успешно удален");
                 break;
+
             case GROUP_DELL:
                 System.out.println("Группа успешно удалена");
                 break;
+
             case STUDENT_MOD:
                 System.out.println("Студент успешно изменен");
                 break;
+
             case GROUP_MOD:
                 System.out.println("Группа успешно изменена");
                 break;
+
             case MERGER:
                 System.out.println("Данные из файла добавлены успешно");
                 break;
+
             default:
                 printError(Error.UNKNOWN_ERROR);
         }

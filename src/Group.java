@@ -3,7 +3,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import java.util.ArrayList;
-import java.util.List;
+
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -29,6 +29,7 @@ public class Group {
     }
 
     public int getNumber() {
+
         return number;
     }
 
@@ -37,6 +38,7 @@ public class Group {
     }
 
     public String getFacult() {
+
         return facult;
     }
 
@@ -48,6 +50,7 @@ public class Group {
         if (students == null) {
             students = new ArrayList<Student>();
         }
+
         return this.students;
     }
 
