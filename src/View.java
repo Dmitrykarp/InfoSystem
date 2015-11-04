@@ -98,6 +98,10 @@ public class View {
         System.out.println("DEL - УДАЛЕНИЕ ЭЛЕМЕНТОВ");
         System.out.println("DEL -g [id Группы]");
         System.out.println("DEL -s [id Студента]");
+        System.out.println();
+        System.out.println("MOD - ИЗМЕНЕНИЕ ЭЛЕМЕНТОВ");
+        System.out.println("MOD -g [id изменяемой группы] [новый id] [факультет]");
+        System.out.println("MOD -s [id Студента] [имя] [отчество] [фамилия] [дата]");
 
     }
 
