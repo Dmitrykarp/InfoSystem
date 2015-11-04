@@ -27,7 +27,9 @@ public class View {
         GROUP_ADD,
         STUDENT_IN_GROUP,
         STUDENT_DELL,
-        GROUP_DELL
+        GROUP_DELL,
+        STUDENT_MOD,
+        GROUP_MOD
 
     }
 
@@ -35,7 +37,7 @@ public class View {
         System.out.print(">");
     }
 
-    //TODO поменять на ДАту
+
     public void printStudent(int id, String n, String pa, String su, Date da) {
         System.out.println(id + " " + n + " " + pa + " " + su + " " + format1.format(da));
     }
@@ -115,6 +117,12 @@ public class View {
                 break;
             case GROUP_DELL:
                 System.out.println("Группа успешно удалена");
+                break;
+            case STUDENT_MOD:
+                System.out.println("Студент успешно изменен");
+                break;
+            case GROUP_MOD:
+                System.out.println("Группа успешно изменена");
                 break;
             default:
                 printError(Error.UNKNOWN_ERROR);

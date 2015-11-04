@@ -180,9 +180,7 @@ public class Model {
         } else throw new RuntimeException();
     }
 
-    public void modifyStudent(int i, String n, String s, String p, String d) {
 
-    }
 
     public void addGroup(int n, String f) {
         Group groups = new Group(n, f);
@@ -221,7 +219,42 @@ public class Model {
         throw new RuntimeException();
     }
 
-    public void modifyGroup(int i, String f, Student st) {
+    public void modifyStudent(int i, String n, String s, String p, Date d) {
+        int temp=0;
+        for(Student st: students){
+            if(st.getId()==i){
+                st.setDate(d);
+                st.setName(n);
+                st.setPatronymic(p);
+                st.setSurname(s);
+                temp++;
+            }
+        }
+        for(Group gr: group){
+            for(Student st: gr.getStudents()){
+                if(st.getId()==i){
+                    st.setDate(d);
+                    st.setName(n);
+                    st.setPatronymic(p);
+                    st.setSurname(s);
+                    temp++;
+                }
+            }
+        }
+        if(temp==0) throw new RuntimeException();
+
+    }
+
+    public void modifyGroup(int oldID, int newID, String f) {
+        int temp=0;
+        for(Group gr: group){
+            if(gr.getNumber()==oldID){
+                gr.setFacult(f);
+                gr.setNumber(newID);
+                temp++;
+            }
+        }
+        if(temp==0) throw new RuntimeException();
 
     }
 

@@ -3,6 +3,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Date;
+import java.util.StringJoiner;
 
 
 public class Controller {
@@ -93,6 +94,35 @@ public class Controller {
                     }
                     break;
                 case "mod":
+                    try{
+                        if("-s".equals(command[1].toLowerCase())){
+                            int id=Integer.parseInt(command[2]);
+                            String n = command[3];
+                            String p = command[4];
+                            String s = command[5];
+                            Date d = new Date();
+                            String[] st = command[6].split("\\.");
+                            d.setDate(Integer.parseInt(st[0]));
+                            d.setMonth(Integer.parseInt(st[1]) - 1);
+                            d.setYear(Integer.parseInt(st[2]) - 1900);
+                            thisModel.modifyStudent(id, n, s, p, d);
+                            thisView.printConfirm(View.Confirm.STUDENT_MOD);
+                        } else if("-g".equals(command[1].toLowerCase())){
+                            int idOld = Integer.parseInt(command[2]);
+                            int idNew = Integer.parseInt(command[3]);
+                            String facult = command[4];
+                            thisModel.modifyGroup(idOld, idNew, facult);
+                            thisView.printConfirm(View.Confirm.GROUP_MOD);
+                        }
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        thisView.printError(View.Error.INVALID_SYNTAX);
+                    } catch (NumberFormatException e) {
+                        thisView.printError(View.Error.INVALID_SYNTAX);
+                    } catch (RuntimeException e) {
+                        if("-s".equals(command[1].toLowerCase())) thisView.printError(View.Error.STUDENT_NOT_FOUND);
+                        else if("-g".equals(command[1].toLowerCase())) thisView.printError(View.Error.GROUP_NOT_FOUND);
+                        else thisView.printError(View.Error.UNKNOWN_ERROR);
+                    }
                     break;
                 case "view":
                     try {
