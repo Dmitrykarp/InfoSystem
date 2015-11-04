@@ -2,6 +2,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import java.util.Date;
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -21,10 +22,10 @@ public class Student {
     @XmlElement(required = true)
     private int id;
     @XmlElement(required = true)
-    private String date;
+    private Date date;
 
 
-    Student(int i, String name, String surname, String patronymic, String date) {
+    Student(int i, String name, String surname, String patronymic, Date date) {
         this.name = name;
         this.surname = surname;
         this.patronymic = patronymic;
@@ -83,12 +84,12 @@ public class Student {
     }
 
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
 
-    public void setDate(String value) {
+    public void setDate(Date value) {
         this.date = value;
     }
 

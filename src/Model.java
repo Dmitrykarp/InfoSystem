@@ -5,10 +5,13 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -37,6 +40,50 @@ public class Model {
 
     }
 
+    public void loadZIP (String path) {
+        try {
+            ZipInputStream in = new ZipInputStream(new FileInputStream(path));
+            ZipEntry entry = in.getNextEntry();
+            String targetfile = "src\\xml\\test.xml";
+            OutputStream out = new FileOutputStream(targetfile);
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+            out.close();
+            in.close();
+        } catch (IOException e){
+            System.out.println(e);
+        }
+
+    }
+
+    public void saveZIP(String path) {
+
+        byte[] buf = new byte[1024];
+
+        try {
+            String target = "src\\test.zip";
+
+            ZipOutputStream out = new ZipOutputStream(new FileOutputStream(target));
+            FileInputStream in = new FileInputStream(path);
+            out.putNextEntry(new ZipEntry(path));
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+            out.closeEntry();
+            in.close();
+            out.close();
+
+
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+    }
+
+
     public void saveXML(String path) throws JAXBException {
         JAXBContext jaxbCtx = JAXBContext.newInstance(this.getClass());
         Marshaller marshaller = jaxbCtx.createMarshaller();
@@ -58,7 +105,9 @@ public class Model {
 
     }
 
-    public void addStudent(String n, String s, String p, String d) {
+
+
+    public void addStudent(String n, String s, String p, Date d) {
         counter = this.students.size() + 1;
         Student student = new Student(counter, n, s, p, d);
         int tempStud = 0;
@@ -77,6 +126,21 @@ public class Model {
     }
 
     public void delStudent(int n) {
+        Iterator it = students.iterator();
+        while(it.hasNext()){
+            Student item = (Student) it.next();
+            if(item.getId()==n) it.remove();
+        }
+        for(Group i: group){
+            it = i.getStudents().iterator();
+            while(it.hasNext()){
+                Student item = (Student) it.next();
+                if(item.getId()==n) it.remove();
+            }
+        }
+    }
+
+    public void delGroup(int n) {
 
     }
 
@@ -125,9 +189,7 @@ public class Model {
         } else throw new RuntimeException();
     }
 
-    public void delGroup(int n) {
 
-    }
 
     public ArrayList<Student> getStudents() {
         return this.students;

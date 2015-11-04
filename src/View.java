@@ -1,4 +1,8 @@
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class View {
+    SimpleDateFormat format1 = new SimpleDateFormat("dd.MM.yyyy");
 
     View() {
         System.out.println("Введите команду [help] для справки.");
@@ -13,6 +17,7 @@ public class View {
         UNKNOWN_ERROR,
         STUDENT_ALREADY_DB,
         STUDENT_ALREADY_GROUP,
+        STUDENT_ADD_DATE,
         GROUP_ALREADY
 
     }
@@ -27,8 +32,9 @@ public class View {
         System.out.print(">");
     }
 
-    public void printStudent(int id, String n, String pa, String su, String da) {
-        System.out.println(id + " " + n + " " + pa + " " + su + " " + da);
+    //TODO поменять на ДАту
+    public void printStudent(int id, String n, String pa, String su, Date da) {
+        System.out.println(id + " " + n + " " + pa + " " + su + " " + format1.format(da));
     }
 
 
@@ -58,6 +64,9 @@ public class View {
             case STUDENT_ALREADY_DB:
                 System.out.println("Ошибка! Данный студент уже имеется в базе!");
                 break;
+            case  STUDENT_ADD_DATE:
+                System.out.println("Ошибка! Введите дату в формате: ДД.ММ.ГГГГ!");
+                break;
             case STUDENT_ALREADY_GROUP:
                 System.out.println("Ошибка! Студента {группы} не существует или он уже содержится в группе!");
                 break;
@@ -71,7 +80,7 @@ public class View {
 
     public void printHelp() {
         System.out.println("ADD - ДОБАВЛЕНИЕ ЭЛЕМЕНТА");
-        System.out.println("ADD -s [имя] [фамилия] [отчество] [дата]");
+        System.out.println("ADD -s [имя] [отчество] [фамилия] [дата: dd.mm.yyyy]");
         System.out.println("ADD -g [номер] [факультет]");
         System.out.println("ADD -stg [ID студента] [ID группы]");
         System.out.println();
