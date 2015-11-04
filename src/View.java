@@ -25,7 +25,10 @@ public class View {
     enum Confirm{
         STUDENT_ADD,
         GROUP_ADD,
-        STUDENT_IN_GROUP
+        STUDENT_IN_GROUP,
+        STUDENT_DELL,
+        GROUP_DELL
+
     }
 
     public void printConsole() {
@@ -89,6 +92,10 @@ public class View {
         System.out.println("VIEW -alls");
         System.out.println("VIEW -s [id] ");
         System.out.println("VIEW -g [номер]");
+        System.out.println();
+        System.out.println("DEL - УДАЛЕНИЕ ЭЛЕМЕНТОВ");
+        System.out.println("DEL -g [id Группы]");
+        System.out.println("DEL -s [id Студента]");
 
     }
 
@@ -102,6 +109,12 @@ public class View {
                 break;
             case STUDENT_IN_GROUP:
                 System.out.println("Студент добавлен в группу");
+                break;
+            case STUDENT_DELL:
+                System.out.println("Студент успешно удален");
+                break;
+            case GROUP_DELL:
+                System.out.println("Группа успешно удалена");
                 break;
             default:
                 printError(Error.UNKNOWN_ERROR);

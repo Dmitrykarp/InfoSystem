@@ -126,22 +126,30 @@ public class Model {
     }
 
     public void delStudent(int n) {
+        int temp=0;
         Iterator it = students.iterator();
         while(it.hasNext()){
             Student item = (Student) it.next();
-            if(item.getId()==n) it.remove();
+            if(item.getId()==n) {it.remove(); temp++;}
         }
         for(Group i: group){
             it = i.getStudents().iterator();
             while(it.hasNext()){
                 Student item = (Student) it.next();
-                if(item.getId()==n) it.remove();
+                if(item.getId()==n) {it.remove(); temp++;}
             }
         }
+        if(temp==0) throw new RuntimeException();
     }
 
     public void delGroup(int n) {
-
+        int temp=0;
+        Iterator it = group.iterator();
+        while(it.hasNext()){
+            Group item = (Group) it.next();
+            if(item.getNumber() == n) {it.remove(); temp++;}
+        }
+        if(temp==0) throw new RuntimeException();
     }
 
     public void studentToGroup(int idStudent, int idGroup) {

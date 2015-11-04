@@ -29,15 +29,4 @@
             <date>1986-10-24T10:18:50.659+03:00</date>
         </students>
     </group>
-    <group>
-        <number>500</number>
-        <facult>МЕХМАТ</facult>
-        <students>
-            <id>4</id>
-            <name>Павел</name>
-            <patronymic>сергеевич</patronymic>
-            <surname>Гусев</surname>
-            <date>2007-10-15T15:03:15.214+04:00</date>
-        </students>
-    </group>
 </model>

@@ -76,16 +76,20 @@ public class Controller {
                     try{
                         if("-s".equals(command[1].toLowerCase())){
                             thisModel.delStudent(Integer.parseInt(command[2]));
-                        } else if("-stg".equals(command[1].toLowerCase())){
-                            //TODO Студента из группы
+                            thisView.printConfirm(View.Confirm.STUDENT_DELL);
                         } else if("-g".equals(command[1].toLowerCase())){
-                            //TODO Группы
+                            thisModel.delGroup(Integer.parseInt(command[2]));
+                            thisView.printConfirm(View.Confirm.GROUP_DELL);
                         } else thisView.printError(View.Error.INVALID_SYNTAX);
 
                     }catch (NumberFormatException e){
                         thisView.printError(View.Error.INVALID_SYNTAX);
                     }catch (ArrayIndexOutOfBoundsException e){
                         thisView.printError(View.Error.INVALID_SYNTAX);
+                    }catch (RuntimeException e) {
+                        if("-s".equals(command[1].toLowerCase())) thisView.printError(View.Error.STUDENT_NOT_FOUND);
+                        else if("-g".equals(command[1].toLowerCase())) thisView.printError(View.Error.GROUP_NOT_FOUND);
+                        else thisView.printError(View.Error.UNKNOWN_ERROR);
                     }
                     break;
                 case "mod":
