@@ -24,7 +24,7 @@ public class Group {
         students = new ArrayList<Student>();
     }
 
-    Group(){
+    Group() {
 
     }
 

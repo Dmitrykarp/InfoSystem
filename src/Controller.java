@@ -40,11 +40,11 @@ public class Controller {
                                 d.setYear(Integer.parseInt(st[2]) - 1900);
                                 thisModel.addStudent(command[2], command[4], command[3], d);
                                 thisView.printConfirm(View.Confirm.STUDENT_ADD);
-                            } catch (IndexOutOfBoundsException e){
+                            } catch (IndexOutOfBoundsException e) {
                                 thisView.printError(View.Error.INVALID_SYNTAX);
-                            }catch (NumberFormatException e){
+                            } catch (NumberFormatException e) {
                                 thisView.printError(View.Error.STUDENT_ADD_DATE);
-                            }catch (RuntimeException e){
+                            } catch (RuntimeException e) {
                                 thisView.printError(View.Error.STUDENT_ALREADY_DB);
                             }
                         } else if ("-g".equals(command[1].toLowerCase())) {
@@ -53,7 +53,7 @@ public class Controller {
                                 thisView.printConfirm(View.Confirm.GROUP_ADD);
                             } catch (NumberFormatException e) {
                                 thisView.printError(View.Error.HELP);
-                            } catch (RuntimeException e){
+                            } catch (RuntimeException e) {
                                 thisView.printError(View.Error.GROUP_ALREADY);
                             }
                         } else if ("-stg".equals(command[1].toLowerCase())) {
@@ -62,7 +62,7 @@ public class Controller {
                                 thisView.printConfirm(View.Confirm.STUDENT_IN_GROUP);
                             } catch (NumberFormatException e) {
                                 thisView.printError(View.Error.HELP);
-                            } catch (RuntimeException e){
+                            } catch (RuntimeException e) {
                                 thisView.printError(View.Error.STUDENT_ALREADY_GROUP);
                             }
                         } else thisView.printError(View.Error.INVALID_SYNTAX);
@@ -72,29 +72,29 @@ public class Controller {
                     }
                     break;
                 case "del":
-                    try{
-                        if("-s".equals(command[1].toLowerCase())){
+                    try {
+                        if ("-s".equals(command[1].toLowerCase())) {
                             thisModel.delStudent(Integer.parseInt(command[2]));
                             thisView.printConfirm(View.Confirm.STUDENT_DELL);
-                        } else if("-g".equals(command[1].toLowerCase())){
+                        } else if ("-g".equals(command[1].toLowerCase())) {
                             thisModel.delGroup(Integer.parseInt(command[2]));
                             thisView.printConfirm(View.Confirm.GROUP_DELL);
                         } else thisView.printError(View.Error.INVALID_SYNTAX);
 
-                    }catch (NumberFormatException e){
+                    } catch (NumberFormatException e) {
                         thisView.printError(View.Error.INVALID_SYNTAX);
-                    }catch (ArrayIndexOutOfBoundsException e){
+                    } catch (ArrayIndexOutOfBoundsException e) {
                         thisView.printError(View.Error.INVALID_SYNTAX);
-                    }catch (RuntimeException e) {
-                        if("-s".equals(command[1].toLowerCase())) thisView.printError(View.Error.STUDENT_NOT_FOUND);
-                        else if("-g".equals(command[1].toLowerCase())) thisView.printError(View.Error.GROUP_NOT_FOUND);
+                    } catch (RuntimeException e) {
+                        if ("-s".equals(command[1].toLowerCase())) thisView.printError(View.Error.STUDENT_NOT_FOUND);
+                        else if ("-g".equals(command[1].toLowerCase())) thisView.printError(View.Error.GROUP_NOT_FOUND);
                         else thisView.printError(View.Error.UNKNOWN_ERROR);
                     }
                     break;
                 case "mod":
-                    try{
-                        if("-s".equals(command[1].toLowerCase())){
-                            int id=Integer.parseInt(command[2]);
+                    try {
+                        if ("-s".equals(command[1].toLowerCase())) {
+                            int id = Integer.parseInt(command[2]);
                             String n = command[3];
                             String p = command[4];
                             String s = command[5];
@@ -105,7 +105,7 @@ public class Controller {
                             d.setYear(Integer.parseInt(st[2]) - 1900);
                             thisModel.modifyStudent(id, n, s, p, d);
                             thisView.printConfirm(View.Confirm.STUDENT_MOD);
-                        } else if("-g".equals(command[1].toLowerCase())){
+                        } else if ("-g".equals(command[1].toLowerCase())) {
                             int idOld = Integer.parseInt(command[2]);
                             int idNew = Integer.parseInt(command[3]);
                             String facult = command[4];
@@ -117,8 +117,8 @@ public class Controller {
                     } catch (NumberFormatException e) {
                         thisView.printError(View.Error.INVALID_SYNTAX);
                     } catch (RuntimeException e) {
-                        if("-s".equals(command[1].toLowerCase())) thisView.printError(View.Error.STUDENT_NOT_FOUND);
-                        else if("-g".equals(command[1].toLowerCase())) thisView.printError(View.Error.GROUP_NOT_FOUND);
+                        if ("-s".equals(command[1].toLowerCase())) thisView.printError(View.Error.STUDENT_NOT_FOUND);
+                        else if ("-g".equals(command[1].toLowerCase())) thisView.printError(View.Error.GROUP_NOT_FOUND);
                         else thisView.printError(View.Error.UNKNOWN_ERROR);
                     }
                     break;
@@ -180,7 +180,7 @@ public class Controller {
                     break;
                 case "find":
                     try {
-                        if ("-s".equals(command[1].toLowerCase())){
+                        if ("-s".equals(command[1].toLowerCase())) {
                             ArrayList<Student> students;
                             students = thisModel.searchStudent(command[2]);
                             for (int i = 0; i < students.size(); i++) {
@@ -191,7 +191,7 @@ public class Controller {
                                 Date da = students.get(i).getDate();
                                 thisView.printStudent(id, na, pa, su, da);
                             }
-                        }else if ("-g".equals(command[1].toLowerCase())){
+                        } else if ("-g".equals(command[1].toLowerCase())) {
                             ArrayList<Group> groups = new ArrayList<Group>();
                             groups = thisModel.searchGroup(command[2]);
                             for (int i = 0; i < groups.size(); i++) {
@@ -199,19 +199,19 @@ public class Controller {
                                 String fac = groups.get(i).getFacult();
                                 thisView.printGroup(num, fac, true);
                             }
-                        }else thisView.printError(View.Error.INVALID_SYNTAX);
+                        } else thisView.printError(View.Error.INVALID_SYNTAX);
                     } catch (ArrayIndexOutOfBoundsException e) {
                         thisView.printError(View.Error.INVALID_SYNTAX);
                     } catch (RuntimeException e) {
-                        if("-s".equals(command[1].toLowerCase())) thisView.printError(View.Error.STUDENT_NOT_FOUND);
-                        else if("-g".equals(command[1].toLowerCase())) thisView.printError(View.Error.GROUP_NOT_FOUND);
+                        if ("-s".equals(command[1].toLowerCase())) thisView.printError(View.Error.STUDENT_NOT_FOUND);
+                        else if ("-g".equals(command[1].toLowerCase())) thisView.printError(View.Error.GROUP_NOT_FOUND);
                         else thisView.printError(View.Error.UNKNOWN_ERROR);
                     }
                     break;
                 case "file":
                     try {
                         thisModel = thisModel.fileToFile("src\\xml\\test2.xml", thisModel);
-                    }catch (NullPointerException e){
+                    } catch (NullPointerException e) {
                         thisView.printError(View.Error.FILE_NULL);
                     }
                     break;

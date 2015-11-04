@@ -9,7 +9,7 @@ public class View {
 
     }
 
-    enum Error{
+    enum Error {
         HELP,
         STUDENT_NOT_FOUND,
         GROUP_NOT_FOUND,
@@ -23,7 +23,7 @@ public class View {
 
     }
 
-    enum Confirm{
+    enum Confirm {
         STUDENT_ADD,
         GROUP_ADD,
         STUDENT_IN_GROUP,
@@ -68,7 +68,7 @@ public class View {
             case STUDENT_ALREADY_DB:
                 System.out.println("Ошибка! Данный студент уже имеется в базе!");
                 break;
-            case  STUDENT_ADD_DATE:
+            case STUDENT_ADD_DATE:
                 System.out.println("Ошибка! Введите дату в формате: ДД.ММ.ГГГГ!");
                 break;
             case STUDENT_ALREADY_GROUP:

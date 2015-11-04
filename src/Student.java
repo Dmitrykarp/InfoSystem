@@ -33,7 +33,7 @@ public class Student {
         this.id = i;
     }
 
-    Student(){
+    Student() {
 
     }
 
@@ -82,10 +82,10 @@ public class Student {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if(id == ((Student) o).getId() )
-            if(name.equals(((Student) o).getName()))
-                if(surname.equals(((Student) o).getSurname()))
-                    if(patronymic.equals(((Student) o).getPatronymic()))
+        if (id == ((Student) o).getId())
+            if (name.equals(((Student) o).getName()))
+                if (surname.equals(((Student) o).getSurname()))
+                    if (patronymic.equals(((Student) o).getPatronymic()))
                         return true;
         Student student = (Student) o;
         if (id != student.id) return false;
@@ -98,9 +98,9 @@ public class Student {
     public boolean equals(Object o, int n) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if(name.equals(((Student) o).getName()))
-            if(surname.equals(((Student) o).getSurname()))
-                 if(patronymic.equals(((Student) o).getPatronymic()))
+        if (name.equals(((Student) o).getName()))
+            if (surname.equals(((Student) o).getSurname()))
+                if (patronymic.equals(((Student) o).getPatronymic()))
                     return true;
         Student student = (Student) o;
         if (id != student.id) return false;
