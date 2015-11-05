@@ -30,21 +30,25 @@ public class Model {
         counter = 1;
     }
 
-    public Model loadXML(String path, Model m) throws JAXBException {
-        JAXBContext jaxbCtx = JAXBContext.newInstance(m.getClass());
+    public Model loadXML(String path, Model model) throws JAXBException {
+        JAXBContext jaxbCtx = JAXBContext.newInstance(model.getClass());
         Unmarshaller um = jaxbCtx.createUnmarshaller();
-        m = (Model) um.unmarshal(new File(path));
-        ArrayList<Student> grSt = new ArrayList<Student>();
+        model = (Model) um.unmarshal(new File(path));
+        ArrayList<Student> studentsInGroup = new ArrayList<Student>();
 
-        for (int i = 0; i < m.getGroups().size(); i++) {
-            grSt.addAll(m.getGroups().get(i).getStudents());
+        for (int i = 0; i < model.getGroups().size(); i++) {
+            studentsInGroup.addAll(model.getGroups().get(i).getStudents());
         }
 
-        for (int i = 0; i < grSt.size(); i++) {
-            m.addStudent(grSt.get(i).getId(), grSt.get(i).getName(), grSt.get(i).getSurname(), grSt.get(i).getPatronymic(), grSt.get(i).getDate());
+        for (int i = 0; i < studentsInGroup.size(); i++) {
+            model.addStudent(studentsInGroup.get(i).getId(),
+                    studentsInGroup.get(i).getName(),
+                    studentsInGroup.get(i).getSurname(),
+                    studentsInGroup.get(i).getPatronymic(),
+                    studentsInGroup.get(i).getDate());
         }
 
-        return m;
+        return model;
 
     }
 
@@ -111,9 +115,12 @@ public class Model {
     }
 
 
-    public void addStudent(String n, String s, String p, Date d) {
+    public void addStudent(String name,
+                           String surname,
+                           String patronymic,
+                           Date date) {
         counter = this.students.size() + 1;
-        Student student = new Student(counter, n, s, p, d);
+        Student student = new Student(counter, name, surname, patronymic, date);
         int tempStud = 0;
 
         for (int i = 0; i < students.size(); i++)
@@ -126,8 +133,12 @@ public class Model {
         } else throw new RuntimeException();
     }
 
-    public void addStudent(int id, String n, String s, String p, Date d) {
-        Student student = new Student(id, n, s, p, d);
+    public void addStudent(int id,
+                           String name,
+                           String surname,
+                           String patronymic,
+                           Date date) {
+        Student student = new Student(id, name, surname, patronymic, date);
         int tempStud = 0;
 
         for (int i = 0; i < students.size(); i++)
@@ -139,24 +150,24 @@ public class Model {
         } else throw new RuntimeException();
     }
 
-    public void delStudent(int n) {
+    public void delStudent(int id) {
         int temp = 0;
-        Iterator it = students.iterator();
+        Iterator iterator = students.iterator();
 
-        while (it.hasNext()) {
-            Student item = (Student) it.next();
-            if (item.getId() == n) {
-                it.remove();
+        while (iterator.hasNext()) {
+            Student item = (Student) iterator.next();
+            if (item.getId() == id) {
+                iterator.remove();
                 temp++;
             }
         }
 
         for (Group i : group) {
-            it = i.getStudents().iterator();
-            while (it.hasNext()) {
-                Student item = (Student) it.next();
-                if (item.getId() == n) {
-                    it.remove();
+            iterator = i.getStudents().iterator();
+            while (iterator.hasNext()) {
+                Student item = (Student) iterator.next();
+                if (item.getId() == id) {
+                    iterator.remove();
                     temp++;
                 }
             }
@@ -165,12 +176,12 @@ public class Model {
         if (temp == 0) throw new RuntimeException();
     }
 
-    public void delGroup(int n) {
+    public void delGroup(int number) {
         int temp = 0;
         Iterator it = group.iterator();
         while (it.hasNext()) {
             Group item = (Group) it.next();
-            if (item.getNumber() == n) {
+            if (item.getNumber() == number) {
                 it.remove();
                 temp++;
             }
@@ -210,8 +221,8 @@ public class Model {
         } else throw new RuntimeException();
     }
 
-    public void addGroup(int n, String f) {
-        Group groups = new Group(n, f);
+    public void addGroup(int number, String facult) {
+        Group groups = new Group(number, facult);
         int tempCount = 0;
 
         for (int i = 0; i < group.size(); i++) {
@@ -252,26 +263,30 @@ public class Model {
         throw new RuntimeException();
     }
 
-    public void modifyStudent(int i, String n, String s, String p, Date d) {
+    public void modifyStudent(int id,
+                              String name,
+                              String surname,
+                              String patronymic,
+                              Date date) {
         int temp = 0;
 
         for (Student st : students) {
-            if (st.getId() == i) {
-                st.setDate(d);
-                st.setName(n);
-                st.setPatronymic(p);
-                st.setSurname(s);
+            if (st.getId() == id) {
+                st.setDate(date);
+                st.setName(name);
+                st.setPatronymic(patronymic);
+                st.setSurname(surname);
                 temp++;
             }
         }
 
         for (Group gr : group) {
             for (Student st : gr.getStudents()) {
-                if (st.getId() == i) {
-                    st.setDate(d);
-                    st.setName(n);
-                    st.setPatronymic(p);
-                    st.setSurname(s);
+                if (st.getId() == id) {
+                    st.setDate(date);
+                    st.setName(name);
+                    st.setPatronymic(patronymic);
+                    st.setSurname(surname);
                     temp++;
                 }
             }
@@ -279,12 +294,12 @@ public class Model {
         if (temp == 0) throw new RuntimeException();
     }
 
-    public void modifyGroup(int oldID, int newID, String f) {
+    public void modifyGroup(int oldID, int newID, String facult) {
         int temp = 0;
 
         for (Group gr : group) {
             if (gr.getNumber() == oldID) {
-                gr.setFacult(f);
+                gr.setFacult(facult);
                 gr.setNumber(newID);
                 temp++;
             }
@@ -355,29 +370,30 @@ public class Model {
         else return grTemp;
     }
 
-    public Model fileToFile(String path, Model m) throws JAXBException {
-        JAXBContext jaxbCtx = JAXBContext.newInstance(m.getClass());
+    public Model fileToFile(String path, Model model) throws JAXBException {
+        JAXBContext jaxbCtx = JAXBContext.newInstance(model.getClass());
         Unmarshaller um = jaxbCtx.createUnmarshaller();
         Model mTemp = new Model();
         mTemp = (Model) um.unmarshal(new File(path));
         mTemp = equalStudents(mTemp);
 
-        Iterator iteratorGroupM = m.getGroups().iterator();
+        Iterator iteratorGroupM = model.getGroups().iterator();
         while (iteratorGroupM.hasNext()) {
             Group itemGroupM = (Group) iteratorGroupM.next();
             Iterator groupIteratorTemp = mTemp.getGroups().iterator();
             while (groupIteratorTemp.hasNext()) {
                 Group itemGroupTemp = (Group) groupIteratorTemp.next();
-                if (itemGroupM.getNumber() == itemGroupTemp.getNumber() & itemGroupM.getFacult().equals(itemGroupTemp.getFacult())) {
+                if ((itemGroupM.getNumber() == itemGroupTemp.getNumber()) &
+                        itemGroupM.getFacult().equals(itemGroupTemp.getFacult())) {
                     groupIteratorTemp.remove();
                 } else {
-                    Iterator iteratorStudentM = m.getStudents().iterator();
+                    Iterator iteratorStudentM = model.getStudents().iterator();
                     while (iteratorStudentM.hasNext()) {
                         Student itemStudentM = (Student) iteratorStudentM.next();
                         Iterator iteratotStudentTemp = itemGroupTemp.getStudents().iterator();
                         while (iteratotStudentTemp.hasNext()) {
                             Student itemStTemp = (Student) iteratotStudentTemp.next();
-                            if (itemStudentM.equals(itemStTemp, 1)) {
+                            if (itemStudentM.equalsWitchoutId(itemStTemp)) {
                                 iteratotStudentTemp.remove();
                             }
                         }
@@ -390,20 +406,20 @@ public class Model {
 
         for (Group gr : mTemp.getGroups())
             for (Student st : gr.getStudents())
-                st.setId(m.students.size() + 1);
+                st.setId(model.students.size() + 1);
 
         for (int i = 0; i < mTemp.getGroups().size(); i++) {
-            m.addGroup(mTemp.getGroups().get(i));
+            model.addGroup(mTemp.getGroups().get(i));
             for (int j = 0; j < mTemp.getGroups().get(i).getStudents().size(); j++) {
-                String n = mTemp.getGroups().get(i).getStudents().get(j).getName();
-                String p = mTemp.getGroups().get(i).getStudents().get(j).getPatronymic();
-                String s = mTemp.getGroups().get(i).getStudents().get(j).getSurname();
-                Date d = mTemp.getGroups().get(i).getStudents().get(j).getDate();
-                m.addStudent(n, s, p, d);
+                String name = mTemp.getGroups().get(i).getStudents().get(j).getName();
+                String patronymic = mTemp.getGroups().get(i).getStudents().get(j).getPatronymic();
+                String surname = mTemp.getGroups().get(i).getStudents().get(j).getSurname();
+                Date date = mTemp.getGroups().get(i).getStudents().get(j).getDate();
+                model.addStudent(name, surname, patronymic, date);
             }
         }
 
-        return m;
+        return model;
     }
 
     public Model equalStudents(Model m) {
@@ -414,7 +430,10 @@ public class Model {
         }
 
         for (int i = 0; i < grSt.size(); i++) {
-            m.addStudent(grSt.get(i).getName(), grSt.get(i).getSurname(), grSt.get(i).getPatronymic(), grSt.get(i).getDate());
+            m.addStudent(grSt.get(i).getName(),
+                    grSt.get(i).getSurname(),
+                    grSt.get(i).getPatronymic(),
+                    grSt.get(i).getDate());
         }
 
         return m;

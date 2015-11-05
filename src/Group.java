@@ -54,7 +54,7 @@ public class Group {
         return this.students;
     }
 
-    public void addStudentToGroup(Student st) {
-        students.add(st);
+    public void addStudentToGroup(Student student) {
+        students.add(student);
     }
 }

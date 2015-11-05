@@ -25,12 +25,12 @@ public class Student {
     private Date date;
 
 
-    Student(int i, String name, String surname, String patronymic, Date date) {
+    Student(int id, String name, String surname, String patronymic, Date date) {
         this.name = name;
         this.surname = surname;
         this.patronymic = patronymic;
         this.date = date;
-        this.id = i;
+        this.id = id;
     }
 
     Student() {
@@ -77,7 +77,6 @@ public class Student {
         this.date = value;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -99,7 +98,7 @@ public class Student {
         return !(date != null ? !date.equals(student.date) : student.date != null);
     }
 
-    public boolean equals(Object o, int n) {
+    public boolean equalsWitchoutId(Object o) {
         if (this == o) return true;
 
         if (o == null || getClass() != o.getClass()) return false;

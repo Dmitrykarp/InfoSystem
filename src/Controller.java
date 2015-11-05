@@ -34,12 +34,12 @@ public class Controller {
                     try {
                         if ("-s".equals(command[1].toLowerCase())) {
                             try {
-                                Date d = new Date();
-                                String[] st = command[5].split("\\.");
-                                d.setDate(Integer.parseInt(st[0]));
-                                d.setMonth(Integer.parseInt(st[1]) - 1);
-                                d.setYear(Integer.parseInt(st[2]) - 1900);
-                                thisModel.addStudent(command[2], command[4], command[3], d);
+                                Date date = new Date();
+                                String[] split = command[5].split("\\.");
+                                date.setDate(Integer.parseInt(split[0]));
+                                date.setMonth(Integer.parseInt(split[1]) - 1);
+                                date.setYear(Integer.parseInt(split[2]) - 1900);
+                                thisModel.addStudent(command[2], command[4], command[3], date);
                                 thisView.printConfirm(View.Confirm.STUDENT_ADD);
 
                             } catch (IndexOutOfBoundsException e) {
@@ -104,15 +104,15 @@ public class Controller {
                     try {
                         if ("-s".equals(command[1].toLowerCase())) {
                             int id = Integer.parseInt(command[2]);
-                            String n = command[3];
-                            String p = command[4];
-                            String s = command[5];
-                            Date d = new Date();
+                            String name = command[3];
+                            String patronymic = command[4];
+                            String surname = command[5];
+                            Date date = new Date();
                             String[] st = command[6].split("\\.");
-                            d.setDate(Integer.parseInt(st[0]));
-                            d.setMonth(Integer.parseInt(st[1]) - 1);
-                            d.setYear(Integer.parseInt(st[2]) - 1900);
-                            thisModel.modifyStudent(id, n, s, p, d);
+                            date.setDate(Integer.parseInt(st[0]));
+                            date.setMonth(Integer.parseInt(st[1]) - 1);
+                            date.setYear(Integer.parseInt(st[2]) - 1900);
+                            thisModel.modifyStudent(id, name, surname, patronymic, date);
                             thisView.printConfirm(View.Confirm.STUDENT_MOD);
 
                         } else if ("-g".equals(command[1].toLowerCase())) {
@@ -140,29 +140,29 @@ public class Controller {
                         if ("-alls".equals(command[1].toLowerCase())) {
                             for (int i = 0; i < thisModel.getStudents().size(); i++) {
                                 int id = thisModel.getStudents().get(i).getId();
-                                String na = thisModel.getStudents().get(i).getName();
-                                String pa = thisModel.getStudents().get(i).getPatronymic();
-                                String su = thisModel.getStudents().get(i).getSurname();
-                                Date da = thisModel.getStudents().get(i).getDate();
-                                thisView.printStudent(id, na, pa, su, da);
+                                String name = thisModel.getStudents().get(i).getName();
+                                String patronymic = thisModel.getStudents().get(i).getPatronymic();
+                                String surname = thisModel.getStudents().get(i).getSurname();
+                                Date date = thisModel.getStudents().get(i).getDate();
+                                thisView.printStudent(id, name, patronymic, surname, date);
                             }
 
                         } else if ("-allg".equals(command[1].toLowerCase())) {
                             for (int i = 0; i < thisModel.getGroups().size(); i++) {
-                                int num = thisModel.getGroups().get(i).getNumber();
-                                String fac = thisModel.getGroups().get(i).getFacult();
-                                thisView.printGroup(num, fac, true);
+                                int number = thisModel.getGroups().get(i).getNumber();
+                                String facult = thisModel.getGroups().get(i).getFacult();
+                                thisView.printGroup(number, facult, true);
                             }
 
                         } else if ("-s".equals(command[1].toLowerCase())) {
                             try {
-                                int i = Integer.parseInt(command[2]) - 1;
-                                int id = thisModel.getStudents().get(i).getId();
-                                String na = thisModel.getStudents().get(i).getName();
-                                String pa = thisModel.getStudents().get(i).getPatronymic();
-                                String su = thisModel.getStudents().get(i).getSurname();
-                                Date da = thisModel.getStudents().get(i).getDate();
-                                thisView.printStudent(id, na, pa, su, da);
+                                int idStudent = Integer.parseInt(command[2]) - 1;
+                                int id = thisModel.getStudents().get(idStudent).getId();
+                                String name = thisModel.getStudents().get(idStudent).getName();
+                                String patronymic = thisModel.getStudents().get(idStudent).getPatronymic();
+                                String surname = thisModel.getStudents().get(idStudent).getSurname();
+                                Date date = thisModel.getStudents().get(idStudent).getDate();
+                                thisView.printStudent(id, name, patronymic, surname, date);
 
                             } catch (NumberFormatException e) {
                                 thisView.printError(View.Error.HELP);
@@ -173,16 +173,16 @@ public class Controller {
                         } else if ("-g".equals(command[1].toLowerCase())) {
                             try {
                                 int id = Integer.parseInt(command[2]);
-                                int num = thisModel.getGroup(id).getNumber();
-                                String fac = thisModel.getGroup(id).getFacult();
-                                thisView.printGroup(num, fac, false);
+                                int number = thisModel.getGroup(id).getNumber();
+                                String facult = thisModel.getGroup(id).getFacult();
+                                thisView.printGroup(number, facult, false);
                                 for (int i = 0; i < thisModel.getGroup(id).getStudents().size(); i++) {
-                                    int ids = thisModel.getGroup(id).getStudents().get(i).getId();
-                                    String na = thisModel.getGroup(id).getStudents().get(i).getName();
-                                    String pa = thisModel.getGroup(id).getStudents().get(i).getPatronymic();
-                                    String su = thisModel.getGroup(id).getStudents().get(i).getSurname();
-                                    Date da = thisModel.getGroup(id).getStudents().get(i).getDate();
-                                    thisView.printStudent(ids, na, pa, su, da);
+                                    int idStudent = thisModel.getGroup(id).getStudents().get(i).getId();
+                                    String name = thisModel.getGroup(id).getStudents().get(i).getName();
+                                    String patronymic = thisModel.getGroup(id).getStudents().get(i).getPatronymic();
+                                    String surname = thisModel.getGroup(id).getStudents().get(i).getSurname();
+                                    Date date = thisModel.getGroup(id).getStudents().get(i).getDate();
+                                    thisView.printStudent(idStudent, name, patronymic, surname, date);
                                 }
 
                             } catch (NumberFormatException e) {
@@ -205,20 +205,20 @@ public class Controller {
                             students = thisModel.searchStudent(command[2]);
                             for (int i = 0; i < students.size(); i++) {
                                 int id = students.get(i).getId();
-                                String na = students.get(i).getName();
-                                String pa = students.get(i).getPatronymic();
-                                String su = students.get(i).getSurname();
-                                Date da = students.get(i).getDate();
-                                thisView.printStudent(id, na, pa, su, da);
+                                String name = students.get(i).getName();
+                                String patronymic = students.get(i).getPatronymic();
+                                String surname = students.get(i).getSurname();
+                                Date date = students.get(i).getDate();
+                                thisView.printStudent(id, name, patronymic, surname, date);
                             }
 
                         } else if ("-g".equals(command[1].toLowerCase())) {
                             ArrayList<Group> groups = new ArrayList<Group>();
                             groups = thisModel.searchGroup(command[2]);
                             for (int i = 0; i < groups.size(); i++) {
-                                int num = groups.get(i).getNumber();
-                                String fac = groups.get(i).getFacult();
-                                thisView.printGroup(num, fac, true);
+                                int number = groups.get(i).getNumber();
+                                String facult = groups.get(i).getFacult();
+                                thisView.printGroup(number, facult, true);
                             }
 
                         } else thisView.printError(View.Error.INVALID_SYNTAX);
@@ -261,8 +261,8 @@ public class Controller {
         }
     }
 
-    public String[] parseCommand(String s) {
-        String[] st = s.trim().split("\\s+");
-        return st;
+    public String[] parseCommand(String command) {
+        String[] splitCommand = command.trim().split("\\s+");
+        return splitCommand;
     }
 }

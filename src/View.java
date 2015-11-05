@@ -39,18 +39,18 @@ public class View {
         System.out.print(">");
     }
 
-    public void printStudent(int id, String n, String pa, String su, Date da) {
-        System.out.println(id + " " + n + " " + pa + " " + su + " " + format1.format(da));
+    public void printStudent(int id, String name, String patronymic, String surname, Date date) {
+        System.out.println(id + " " + name + " " + patronymic + " " + surname + " " + format1.format(date));
     }
 
-    public void printGroup(int id, String facult, boolean b) {
+    public void printGroup(int number, String facult, boolean b) {
         if (b)
-            System.out.println("Номер: " + id + ". Факультет: " + facult);
-        else System.out.println("Номер: " + id + ". Факультет: " + facult + ". Студенты в группе:");
+            System.out.println("Номер: " + number + ". Факультет: " + facult);
+        else System.out.println("Номер: " + number + ". Факультет: " + facult + ". Студенты в группе:");
     }
 
-    public void printError(Error e) {
-        switch (e) {
+    public void printError(Error error) {
+        switch (error) {
             case HELP:
                 System.out.println("Ошибка! Введите команду [help] для справки.");
                 break;
@@ -127,8 +127,8 @@ public class View {
 
     }
 
-    public void printConfirm(Confirm c) {
-        switch (c) {
+    public void printConfirm(Confirm confirm) {
+        switch (confirm) {
             case STUDENT_ADD:
                 System.out.println("Студент добавлен");
                 break;
