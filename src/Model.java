@@ -13,7 +13,11 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
-
+/**
+ * Класс описывает логику работы с данными.
+ *
+ * @author Karpenko Dmitry
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "model", propOrder = {
         "group"
@@ -26,20 +30,33 @@ public class Model {
     @XmlTransient
     private int counter;
 
+    /**
+     * Конструктор инициализирует счетчик студентов.
+     */
     Model() {
         counter = 1;
     }
 
+    /**
+     * Метод загружает данные из XML файла.
+     *
+     * @param path Путь к файлу.
+     * @param model Экземпляр Model, куда будут загружены данные.
+     *
+     * @return Экземпляр Model с обновленными данными.
+     *
+     * @throws JAXBException Возникает при неверном указании источника данных или его отсутствии.
+     */
     public Model loadXML(String path, Model model) throws JAXBException {
         JAXBContext jaxbCtx = JAXBContext.newInstance(model.getClass());
         Unmarshaller um = jaxbCtx.createUnmarshaller();
         model = (Model) um.unmarshal(new File(path));
         ArrayList<Student> studentsInGroup = new ArrayList<Student>();
 
+        /** Переносим студентов из конкретных групп в общую базу */
         for (int i = 0; i < model.getGroups().size(); i++) {
             studentsInGroup.addAll(model.getGroups().get(i).getStudents());
         }
-
         for (int i = 0; i < studentsInGroup.size(); i++) {
             model.addStudent(studentsInGroup.get(i).getId(),
                     studentsInGroup.get(i).getName(),
@@ -49,11 +66,18 @@ public class Model {
         }
 
         return model;
-
     }
 
-    public void loadZIP(String path) {
-        try {
+    /**
+     * /**
+     * Метод выгружает XML файл из ZIP-архива.
+     *
+     * @param path Путь к ZIP-архиву.
+     *
+     * @throws IOException Возникает если путь к файлу не верный.
+     */
+    public void loadZIP(String path) throws IOException {
+
             ZipInputStream in = new ZipInputStream(new FileInputStream(path));
             ZipEntry entry = in.getNextEntry();
             String targetfile = "src\\xml\\test.xml";
@@ -68,15 +92,20 @@ public class Model {
             out.close();
             in.close();
 
-        } catch (IOException e) {
-            System.out.println(e);
-        }
+
     }
 
-    public void saveZIP(String path) {
+    /**
+     *Метод сжимает XML файл в ZIP-архив.
+     *
+     * @param path Путь до XML файла.
+     *
+     * @throws IOException Возникает если путь к файлу не верный.
+     */
+    public void saveZIP(String path) throws IOException {
         byte[] buf = new byte[1024];
 
-        try {
+
             String target = "src\\test.zip";
             ZipOutputStream out = new ZipOutputStream(new FileOutputStream(target));
             FileInputStream in = new FileInputStream(path);
@@ -91,12 +120,16 @@ public class Model {
             in.close();
             out.close();
 
-        } catch (IOException e) {
-            System.out.println(e);
-        }
+
     }
 
-
+    /**
+     * Метод сохраняет данные в XML файл.
+     *
+     * @param path Путь до конечного XML файла.
+     *
+     * @throws JAXBException Возникает при неверном указании источника данных или его отсутствии.
+     */
     public void saveXML(String path) throws JAXBException {
         JAXBContext jaxbCtx = JAXBContext.newInstance(this.getClass());
         Marshaller marshaller = jaxbCtx.createMarshaller();
@@ -114,7 +147,15 @@ public class Model {
         marshaller.marshal(this, fos);
     }
 
-
+    /**
+     * Метод добавляет студента в общий список студентов.
+     * Метод необходим для добавления студентов в момент работы с данными в реальном времени.
+     *
+     * @param name Uмя студента.
+     * @param surname Фамилия студента.
+     * @param patronymic Отчество студента.
+     * @param date Дата зачисления студента.
+     */
     public void addStudent(String name,
                            String surname,
                            String patronymic,
@@ -133,6 +174,16 @@ public class Model {
         } else throw new RuntimeException();
     }
 
+    /**
+     * Метод добавляет студента в общий список студентов.
+     * Метод необходим при добавлении из XML файла.
+     *
+     * @param id Номер студента.
+     * @param name Uмя студента.
+     * @param surname Фамилия студента.
+     * @param patronymic Отчество студента.
+     * @param date Дата зачисления студента.
+     */
     public void addStudent(int id,
                            String name,
                            String surname,
@@ -150,8 +201,15 @@ public class Model {
         } else throw new RuntimeException();
     }
 
+    /**
+     * Метод удаляет студента из группы и из общего списка студентов.
+     *
+     * @param id Номер студента.
+     */
     public void delStudent(int id) {
         int temp = 0;
+
+        /** Удаляем из общего списка */
         Iterator iterator = students.iterator();
 
         while (iterator.hasNext()) {
@@ -162,6 +220,7 @@ public class Model {
             }
         }
 
+        /** Удаляем из списка групп */
         for (Group i : group) {
             iterator = i.getStudents().iterator();
             while (iterator.hasNext()) {
@@ -176,6 +235,11 @@ public class Model {
         if (temp == 0) throw new RuntimeException();
     }
 
+    /**
+     * Метод удаляет группу.
+     *
+     * @param number Номер группы.
+     */
     public void delGroup(int number) {
         int temp = 0;
         Iterator it = group.iterator();
@@ -190,10 +254,16 @@ public class Model {
         if (temp == 0) throw new RuntimeException();
     }
 
+    /**
+     * Метод добавляет студента в группу.
+     *
+     * @param idStudent Номер студента.
+     * @param idGroup Номер группы.
+     */
     public void studentToGroup(int idStudent, int idGroup) {
         int tempSt = 0;
         int tempGr = 0;
-
+        /** Поиск идентичного студента */
         for (Student i : students) {
             if (i.getId() == idStudent) {
                 for (Group j : group) {
@@ -204,11 +274,11 @@ public class Model {
                 }
             }
         }
-
+        /** Поиск необходимой группы */
         for (Group j : group) {
             if (j.getNumber() == idGroup) tempGr++;
         }
-
+        /** Добавление студента в группу */
         if (tempSt == 0 & idStudent <= students.size() & tempGr > 0) {
             for (Student i : students) {
                 if (i.getId() == idStudent) {
@@ -221,34 +291,63 @@ public class Model {
         } else throw new RuntimeException();
     }
 
+    /**
+     * Метод создает группу.
+     *
+     * @param number Номер группы.
+     * @param facult Название факультета.
+     */
     public void addGroup(int number, String facult) {
         Group groups = new Group(number, facult);
         int tempCount = 0;
-
+        /** Поиск идентичной группы */
         for (int i = 0; i < group.size(); i++) {
             if (group.get(i).getNumber() == groups.getNumber())
                 if (group.get(i).getFacult().equals(groups.getFacult()))
                     tempCount++;
         }
-
+        /** Добавление группы */
         if (tempCount == 0) {
             group.add(groups);
         } else throw new RuntimeException();
     }
 
+    /**
+     * Метод добавляет группу.
+     * Метод необходим для загрузки данных из XML файла.
+     *
+     * @param g Экземпляр Group.
+     */
     public void addGroup(Group g) {
         this.group.add(g);
     }
 
+    /**
+     * Метод возвращает общий список студентов.
+     *
+     * @return Список экземпляров Group.
+     */
     public ArrayList<Student> getStudents() {
 
         return this.students;
     }
 
+    /**
+     * Метод возвращает конкретного студента из списка.
+     *
+     * @param id Номер студента.
+     *
+     * @return Экземпляр Student.
+     */
     public Student getStudent(int id) {
         return students.get(id);
     }
 
+    /**
+     * Метод возвращает список групп.
+     *
+     * @return Список экземпляров Group.
+     */
     public ArrayList<Group> getGroups() {
         if (group == null) {
             group = new ArrayList<Group>();
@@ -256,6 +355,13 @@ public class Model {
         return this.group;
     }
 
+    /**
+     * Метод возвращает конкретную группу
+     *
+     * @param id Номер группы.
+     *
+     * @return Экземпляр Group.
+     */
     public Group getGroup(int id) {
         for (Group g : group) {
             if (g.getNumber() == id) return g;
@@ -263,13 +369,21 @@ public class Model {
         throw new RuntimeException();
     }
 
+    /**
+     * Метод изменяет данные студента в общем списке и в группе, которой находится.
+     *
+     * @param id Номер студента.
+     * @param name Uмя студента.
+     * @param surname Фамилия студента.
+     * @param patronymic Отчество студента.
+     * @param date Дата зачисления студента.
+     */
     public void modifyStudent(int id,
                               String name,
                               String surname,
                               String patronymic,
                               Date date) {
         int temp = 0;
-
         for (Student st : students) {
             if (st.getId() == id) {
                 st.setDate(date);
@@ -294,6 +408,13 @@ public class Model {
         if (temp == 0) throw new RuntimeException();
     }
 
+    /**
+     * Метод изменяет данные группы.
+     *
+     * @param oldID Текущий номер группы.
+     * @param newID Новый номер группы.
+     * @param facult Новое название факультета.
+     */
     public void modifyGroup(int oldID, int newID, String facult) {
         int temp = 0;
 
@@ -308,6 +429,14 @@ public class Model {
         if (temp == 0) throw new RuntimeException();
     }
 
+    /**
+     * Метод осуществляет поиск студентов по входным параметрам.
+     *
+     * @param find Параметры поиска.
+     *             Может включать [*] - для пропуска символа и [?] - для пропуска нескольких символов.
+     *
+     * @return Список найденных студентов.
+     */
     public ArrayList<Student> searchStudent(String find) {
         int temp = 0;
         ArrayList<Student> stTemp = new ArrayList<Student>();
@@ -344,7 +473,14 @@ public class Model {
         else return stTemp;
     }
 
-
+    /**
+     * Метод осуществляет поиск группы по заданным параметрам.
+     *
+     * @param find Параметры поиска.
+     *             Может включать [*] - для пропуска символа и [?] - для пропуска нескольких символов.
+     *
+     * @return Список найденных групп.
+     */
     public ArrayList<Group> searchGroup(String find) {
         int temp = 0;
         ArrayList<Group> grTemp = new ArrayList<Group>();
@@ -363,20 +499,29 @@ public class Model {
                 grTemp.add(gr);
                 temp++;
             }
-
         }
 
         if (temp == 0) throw new RuntimeException();
         else return grTemp;
     }
 
+    /**
+     * Метод добавляет данные из XML файла в сущесствующую модель.
+     *
+     * @param path Путь к XML файлу.
+     * @param model Экземпляр Model, куда будут загружены данные.
+     *
+     * @return Экземпляр Model с обновленными данными.
+     *
+     * @throws JAXBException Возникает при неверном указании источника данных или его отсутствии.
+     */
     public Model fileToFile(String path, Model model) throws JAXBException {
         JAXBContext jaxbCtx = JAXBContext.newInstance(model.getClass());
         Unmarshaller um = jaxbCtx.createUnmarshaller();
         Model mTemp = new Model();
         mTemp = (Model) um.unmarshal(new File(path));
-        mTemp = equalStudents(mTemp);
-
+        mTemp = addStudentInStudentList(mTemp);
+        /** Удаляем одинаковые группы и студентов в группах */
         Iterator iteratorGroupM = model.getGroups().iterator();
         while (iteratorGroupM.hasNext()) {
             Group itemGroupM = (Group) iteratorGroupM.next();
@@ -403,11 +548,11 @@ public class Model {
 
             }
         }
-
+        /** Даем новые порядковые номера */
         for (Group gr : mTemp.getGroups())
             for (Student st : gr.getStudents())
                 st.setId(model.students.size() + 1);
-
+        /** Добавляем группы и студентов в модель */
         for (int i = 0; i < mTemp.getGroups().size(); i++) {
             model.addGroup(mTemp.getGroups().get(i));
             for (int j = 0; j < mTemp.getGroups().get(i).getStudents().size(); j++) {
@@ -422,7 +567,14 @@ public class Model {
         return model;
     }
 
-    public Model equalStudents(Model m) {
+    /**
+     * Метод переносит студентов из группы в общий список студентов.
+     *
+     * @param m Экземпляр Model для обновления списка студентов.
+     *
+     * @return Обновленный экземпляр Model.
+     */
+    public Model addStudentInStudentList(Model m) {
         ArrayList<Student> grSt = new ArrayList<Student>();
 
         for (int i = 0; i < m.getGroups().size(); i++) {

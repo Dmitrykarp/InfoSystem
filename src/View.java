@@ -1,14 +1,23 @@
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Класс <code>View</code> оповещает пользователя о последствиях ввода его команд.
+ *
+ * @author Karpenko Dmitry
+ */
 public class View {
     SimpleDateFormat format1 = new SimpleDateFormat("dd.MM.yyyy");
 
+    /**
+     * Конструктор выводит сообщение о помощи.
+     */
     View() {
         System.out.println("Введите команду [help] для справки.");
 
     }
 
+    /** Перечисление всех возможных ошибок. */
     enum Error {
         HELP,
         STUDENT_NOT_FOUND,
@@ -19,10 +28,13 @@ public class View {
         STUDENT_ALREADY_GROUP,
         STUDENT_ADD_DATE,
         GROUP_ALREADY,
-        FILE_NOT_FOUND
+        FILE_NOT_FOUND,
+        FILE_ARCHIVE_NOT_FOUND,
+        FILE_XML_NOT_FOUND
 
     }
 
+    /** Перечисление результатов всех удачных комманд. */
     enum Confirm {
         STUDENT_ADD,
         GROUP_ADD,
@@ -35,20 +47,44 @@ public class View {
 
     }
 
+    /**
+     * Выводит символ начала ввода команды для пользователя.
+     */
     public void printConsole() {
         System.out.print(">");
     }
 
+    /**
+     * Метод выводит на консоль определенного студента.
+     *
+     * @param id Номер студента.
+     * @param name имя студента.
+     * @param patronymic Отчество студента.
+     * @param surname Фамилия студента.
+     * @param date Дата зачисления студента.
+     */
     public void printStudent(int id, String name, String patronymic, String surname, Date date) {
         System.out.println(id + " " + name + " " + patronymic + " " + surname + " " + format1.format(date));
     }
 
+    /**
+     * Метод выводит на консоль определенную группу.
+     *
+     * @param number Номер группы.
+     * @param facult Факультет.
+     * @param b Указывает о необходимости печати студентов из группы. True - печатать, false -нет.
+     */
     public void printGroup(int number, String facult, boolean b) {
-        if (b)
+        if (!b)
             System.out.println("Номер: " + number + ". Факультет: " + facult);
         else System.out.println("Номер: " + number + ". Факультет: " + facult + ". Студенты в группе:");
     }
 
+    /**
+     * Метод печатает ошибки на консоль.
+     *
+     * @param error Значение ошибки из перечисления <code>Error</code>.
+     */
     public void printError(Error error) {
         switch (error) {
             case HELP:
@@ -91,13 +127,24 @@ public class View {
                 System.out.println("Ошибка! Неудается найти указанный файл!");
                 break;
 
+            case FILE_ARCHIVE_NOT_FOUND:
+                System.out.println("Ошибка! Архивный файл не найден!");
+                break;
+
+            case FILE_XML_NOT_FOUND:
+                System.out.println("Ошибка! Файл с данными поврежден или не обнаружен!");
+                break;
+
             default:
                 System.out.println("Ошибка!");
         }
     }
 
+    /**
+     * Метод выводит на консоль справку.
+     */
     public void printHelp() {
-        System.out.println("-= ДОБАВЛЕНИЕ ЭЛЕМЕНТА =-");
+        System.out.println("-= ДОБАВЛЕНиЕ ЭЛЕМЕНТА =-");
         System.out.println("ADD -s [имя] [отчество] [фамилия] [дата: dd.mm.yyyy]");
         System.out.println("ADD -g [номер] [факультет]");
         System.out.println("ADD -stg [ID студента] [ID группы]");
@@ -108,25 +155,30 @@ public class View {
         System.out.println("VIEW -s [id] ");
         System.out.println("VIEW -g [номер]");
         System.out.println();
-        System.out.println("-= УДАЛЕНИЕ ЭЛЕМЕНТОВ =-");
+        System.out.println("-= УДАЛЕНиЕ ЭЛЕМЕНТОВ =-");
         System.out.println("DEL -g [id Группы]");
         System.out.println("DEL -s [id Студента]");
         System.out.println();
-        System.out.println("-= ИЗМЕНЕНИЕ ЭЛЕМЕНТОВ =-");
+        System.out.println("-= иЗМЕНЕНиЕ ЭЛЕМЕНТОВ =-");
         System.out.println("MOD -g [id изменяемой группы] [новый id] [факультет]");
         System.out.println("MOD -s [id Студента] [имя] [отчество] [фамилия] [дата]");
         System.out.println();
-        System.out.println("-= ПОИСК ЭЛЕМЕНТОВ =-");
+        System.out.println("-= ПОиСК ЭЛЕМЕНТОВ =-");
         System.out.println("FIND -g [факультет]");
         System.out.println("FIND -s [имя/отчество/фамилия]");
         System.out.println("        В параметре можно указать [*] для неизвестного символа");
         System.out.println("        или [?] для неизвестного набора символов.");
         System.out.println();
-        System.out.println("-= ДОБАВЛЕНИЕ ДАННЫХ ИЗ ФАЙЛА =-");
+        System.out.println("-= ДОБАВЛЕНиЕ ДАННЫХ иЗ ФАЙЛА =-");
         System.out.println("FILE [путь к файлу, например С:\\1\\target.xml] ");
 
     }
 
+    /**
+     * Метод выводит на консоль подтверждение действия пользователя.
+     *
+     * @param confirm Значение из перечисления <code>Confirm</code>.
+     */
     public void printConfirm(Confirm confirm) {
         switch (confirm) {
             case STUDENT_ADD:

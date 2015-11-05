@@ -1,29 +1,57 @@
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.UnmarshalException;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
 
 
-
+/**
+ * Класс <code>Controller</code> взаимодействует с классами <code>Model</code> и
+ * <code>View</code>.
+ * Класс обрабатывает все комманды пользователя и манипулирует данными.
+ *
+ * @author Karpenko Dmitry
+ */
 public class Controller {
     private Model thisModel;
     private View thisView;
 
+    /**
+     * Конструктору необходимо явно указать с какой <code>Model</code> и
+     * <code>View</code> ему работать.
+     *
+     * @param model Model
+     *
+     * @param view View
+     */
     Controller(Model model, View view) {
         thisModel = model;
         thisView = view;
     }
 
+    /**
+     * Метод считывает данные, введенные в консоли и манипулирует ими.
+     *
+     * @throws IOException  Возникает при ошибке ввода\вывода.
+     *
+     * @throws JAXBException Возникает при неверном указании источника данных или его отсутствии.
+     */
     public void run() throws IOException, JAXBException {
         String[] command;
         boolean exit = true;
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        thisModel.loadZIP("src\\test.zip");
-        thisModel = thisModel.loadXML("src\\xml\\test.xml", thisModel);
+        try {
+            thisModel.loadZIP("src\\test.zip");
+            thisModel = thisModel.loadXML("src\\xml\\test.xml", thisModel);
+        } catch (FileNotFoundException e){
+            thisView.printError(View.Error.FILE_ARCHIVE_NOT_FOUND);
+        } catch (UnmarshalException e){
+            thisView.printError(View.Error.FILE_XML_NOT_FOUND);
+        }
 
         while (exit) {
             thisView.printConsole();
@@ -261,6 +289,13 @@ public class Controller {
         }
     }
 
+    /**
+     * Метод принимает строку слов, разделенных пробелами, и создает массив этих слов.
+     *
+     * @param command Входная строка.
+     *
+     * @return Массив слов.
+     */
     public String[] parseCommand(String command) {
         String[] splitCommand = command.trim().split("\\s+");
         return splitCommand;

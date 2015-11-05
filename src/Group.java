@@ -5,7 +5,11 @@ import javax.xml.bind.annotation.XmlType;
 import java.util.ArrayList;
 
 
-
+/**
+ * Класс описывает сущность группы.
+ *
+ * @author Karpenko Dmitry
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "group", propOrder = {
         "number",
@@ -13,11 +17,16 @@ import java.util.ArrayList;
         "students"
 })
 public class Group {
-    protected int number;
+    private int number;
     @XmlElement(required = true)
-    protected String facult;
-    protected ArrayList<Student> students;
+    private String facult;
+    private ArrayList<Student> students;
 
+    /**
+     * Конструктору необходимо явно указать данные группы.
+     * @param number Номер группы.
+     * @param facult Факультет.
+     */
     Group(int number, String facult) {
         this.facult = facult;
         this.number = number;
@@ -25,27 +34,52 @@ public class Group {
     }
 
     Group() {
-
+    //Необходим при загрузке из XML файла.
     }
 
+    /**
+     * Метод возвращает номер группы.
+     *
+     * @return номер группы.
+     */
     public int getNumber() {
 
         return number;
     }
 
+    /**
+     * Метод задает номер группы.
+     *
+     * @param value Номер группы.
+     */
     public void setNumber(int value) {
         this.number = value;
     }
 
+    /**
+     * Метод возвращает название факультета.
+     *
+     * @return Название факультета.
+     */
     public String getFacult() {
 
         return facult;
     }
 
+    /**
+     * Метод задает название факультета.
+     *
+     * @param value Название факультета.
+     */
     public void setFacult(String value) {
         this.facult = value;
     }
 
+    /**
+     * Метод возвращает список всех студентов, состоящих в группе.
+     *
+     * @return Коллекция студентов.
+     */
     public ArrayList<Student> getStudents() {
         if (students == null) {
             students = new ArrayList<Student>();
@@ -54,6 +88,11 @@ public class Group {
         return this.students;
     }
 
+    /**
+     * Метод добавляет студента в группу.
+     *
+     * @param student Экземпляр Student.
+     */
     public void addStudentToGroup(Student student) {
         students.add(student);
     }
