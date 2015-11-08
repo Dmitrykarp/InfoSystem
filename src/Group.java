@@ -3,6 +3,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import java.util.ArrayList;
+import java.util.IllegalFormatException;
 
 
 /**
@@ -24,12 +25,13 @@ public class Group {
 
     /**
      * Конструктору необходимо явно указать данные группы.
+     *
      * @param number Номер группы.
      * @param facult Факультет.
      */
     Group(int number, String facult) {
-        this.facult = facult;
-        this.number = number;
+        setFacult(facult);
+        setNumber(number);
         students = new ArrayList<Student>();
     }
 
@@ -40,7 +42,7 @@ public class Group {
     /**
      * Метод возвращает номер группы.
      *
-     * @return номер группы.
+     * @return Номер группы.
      */
     public int getNumber() {
 
@@ -50,9 +52,10 @@ public class Group {
     /**
      * Метод задает номер группы.
      *
-     * @param value Номер группы.
+     * @param value Номер группы должен быть больше нуля.
      */
     public void setNumber(int value) {
+        if(value <1) throw new IllegalArgumentException();
         this.number = value;
     }
 
@@ -67,12 +70,13 @@ public class Group {
     }
 
     /**
-     * Метод задает название факультета.
+     * Метод устанавливает название факультета.
      *
-     * @param value Название факультета.
+     * @param value Название факультета. Параметр не пустой и не null.
      */
     public void setFacult(String value) {
-        this.facult = value;
+        if(value == null || value.trim().isEmpty()) throw new IllegalArgumentException();
+        else  this.facult = value;
     }
 
     /**

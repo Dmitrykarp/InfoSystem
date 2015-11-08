@@ -74,6 +74,8 @@ public class Controller {
                                 thisView.printError(View.Error.INVALID_SYNTAX);
                             } catch (NumberFormatException e) {
                                 thisView.printError(View.Error.STUDENT_ADD_DATE);
+                            } catch (IllegalArgumentException e) {
+                                thisView.printError(View.Error.STUDENT_FORMAT);
                             } catch (RuntimeException e) {
                                 thisView.printError(View.Error.STUDENT_ALREADY_DB);
                             }
@@ -82,8 +84,11 @@ public class Controller {
                             try {
                                 thisModel.addGroup(Integer.parseInt(command[2]), command[3]);
                                 thisView.printConfirm(View.Confirm.GROUP_ADD);
+
                             } catch (NumberFormatException e) {
                                 thisView.printError(View.Error.HELP);
+                            } catch (IllegalArgumentException e) {
+                                thisView.printError(View.Error.GROUP_FORMAT);
                             } catch (RuntimeException e) {
                                 thisView.printError(View.Error.GROUP_ALREADY);
                             }

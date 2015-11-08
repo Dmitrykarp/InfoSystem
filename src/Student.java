@@ -3,6 +3,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import java.util.Date;
+import java.util.IllegalFormatException;
 
 /**
  * Класс описывает сущность "Студент".
@@ -38,11 +39,11 @@ public class Student {
      * @param date Дата зачисления студента.
      */
     Student(int id, String name, String surname, String patronymic, Date date) {
-        this.name = name;
-        this.surname = surname;
-        this.patronymic = patronymic;
-        this.date = date;
-        this.id = id;
+        setName(name);
+        setSurname(surname);
+        setPatronymic(patronymic);
+        setDate(date);
+        setId(id);
     }
 
     Student() {
@@ -61,10 +62,11 @@ public class Student {
     /**
      * Метод устанавливает номер студенту.
      *
-     * @param value Номер студента.
+     * @param value Номер студента должен быть больше нуля.
      */
     public void setId(int value) {
-        this.id = value;
+        if(value <1) throw new IllegalArgumentException();
+        else this.id = value;
     }
 
     /**
@@ -79,10 +81,11 @@ public class Student {
     /**
      * Метод задает имя студента.
      *
-     * @param value Uмя студента.
+     * @param value Uмя студента не пустое и не null.
      */
     public void setName(String value) {
-        this.name = value;
+        if(value == null || value.trim().isEmpty()) throw new IllegalArgumentException();
+        else this.name = value;
     }
 
     /**
@@ -97,10 +100,11 @@ public class Student {
     /**
      * Метод устанавливает отчество студента.
      *
-     * @param value Отчество студента.
+     * @param value Отчество студента не пустое и не null.
      */
     public void setPatronymic(String value) {
-        this.patronymic = value;
+        if(value == null || value.trim().isEmpty()) throw new IllegalArgumentException();
+        else this.patronymic = value;
     }
 
     /**
@@ -115,10 +119,11 @@ public class Student {
     /**
      * Метод задает фамилию студента.
      *
-     * @param value Фамилия студента.
+     * @param value Фамилия студента не пустое и не null.
      */
     public void setSurname(String value) {
-        this.surname = value;
+        if(value == null || value.trim().isEmpty()) throw new IllegalArgumentException();
+        else this.surname = value;
     }
 
     /**
@@ -143,6 +148,7 @@ public class Student {
      * Метод сравнивает двух студентов на идентичность.
      *
      * @param o Экземпляр Student.
+     *
      * @return True - если эквиваленты, иначе false.
      */
     @Override
@@ -171,6 +177,7 @@ public class Student {
      * Метод используется при загрузке данных из файла.
      *
      * @param o Экземпляр Student.
+     *
      * @return True - если эквиваленты, иначе false.
      */
     public boolean equalsWitchoutId(Object o) {

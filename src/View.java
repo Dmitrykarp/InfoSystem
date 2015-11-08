@@ -27,6 +27,8 @@ public class View {
         STUDENT_ALREADY_DB,
         STUDENT_ALREADY_GROUP,
         STUDENT_ADD_DATE,
+        STUDENT_FORMAT,
+        GROUP_FORMAT,
         GROUP_ALREADY,
         FILE_NOT_FOUND,
         FILE_ARCHIVE_NOT_FOUND,
@@ -119,8 +121,16 @@ public class View {
                 System.out.println("Ошибка! Студента {группы} не существует или он уже содержится в группе!");
                 break;
 
+            case STUDENT_FORMAT:
+                System.out.println("Ошибка! Данные введены не корректно!");
+                break;
+
             case GROUP_ALREADY:
                 System.out.println("Ошибка! Данная группа уже имеется в базе!");
+                break;
+
+            case GROUP_FORMAT:
+                System.out.println("Ошибка! Номер группы или факультета заданы не корректно!");
                 break;
 
             case FILE_NOT_FOUND:
