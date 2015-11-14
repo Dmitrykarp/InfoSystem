@@ -67,8 +67,10 @@ public class View {
         ADD_STG_ID_GROUP,
         DEL,
         MOD,
-        MOD_STUDENT,
-        MOD_GROUP
+        VIEW,
+        FIND,
+        PATH,
+        FIND_STRING
 
     }
 
@@ -119,6 +121,26 @@ public class View {
                 System.out.println("Введите S для изменения студента.");
                 System.out.println("Введите G для изменения группы.");
                 System.out.println("Для выхода введите EXIT.");
+                break;
+            case VIEW:
+                System.out.println("Введите ALLS для вывода всех студентов в БД.");
+                System.out.println("Введите ALLG для вывода всех групп в БД.");
+                System.out.println("Введите S для вывода информации по конкретному студенту.");
+                System.out.println("Введите G для вывода информации по конкретной группе.");
+                System.out.println("Для выхода введите EXIT.");
+                break;
+            case FIND:
+                System.out.println("Введите S для поиска студента.");
+                System.out.println("Введите G для поиска группы.");
+                System.out.println("Для выхода введите EXIT.");
+                break;
+            case FIND_STRING:
+                System.out.println("Укажите данные для поиска.");
+                System.out.println("В параметре поиска можно указать [*] для неизвестного символа");
+                System.out.println("или [?] для неизвестного набора символов.");
+                break;
+            case PATH:
+                System.out.println("Укажите путь к необходимому файлу:");
                 break;
 
 

@@ -4,6 +4,8 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -114,8 +116,8 @@ public class Utility {
         return model;
     }
 
-    public void saveXML(String path) throws JAXBException {
-        JAXBContext jaxbCtx = JAXBContext.newInstance(this.getClass());
+    public void saveXML(String path, Model model) throws JAXBException {
+        JAXBContext jaxbCtx = JAXBContext.newInstance(model.getClass());
         Marshaller marshaller = jaxbCtx.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
@@ -129,5 +131,74 @@ public class Utility {
         }
 
         marshaller.marshal(this, fos);
+    }
+
+    public Model fileToFile(String path, Model model) throws JAXBException {
+        JAXBContext jaxbCtx = JAXBContext.newInstance(model.getClass());
+        Unmarshaller um = jaxbCtx.createUnmarshaller();
+        Model mTemp = new Model();
+        mTemp = (Model) um.unmarshal(new File(path));
+        mTemp = addStudentInStudentList(mTemp);
+        /** Удаляем одинаковые группы и студентов в группах */
+        Iterator iteratorGroupM = model.getGroups().iterator();
+        while (iteratorGroupM.hasNext()) {
+            Group itemGroupM = (Group) iteratorGroupM.next();
+            Iterator groupIteratorTemp = mTemp.getGroups().iterator();
+            while (groupIteratorTemp.hasNext()) {
+                Group itemGroupTemp = (Group) groupIteratorTemp.next();
+                if ((itemGroupM.getNumber() == itemGroupTemp.getNumber()) &
+                        itemGroupM.getFacult().equals(itemGroupTemp.getFacult())) {
+                    groupIteratorTemp.remove();
+                } else {
+                    Iterator iteratorStudentM = model.getStudents().iterator();
+                    while (iteratorStudentM.hasNext()) {
+                        Student itemStudentM = (Student) iteratorStudentM.next();
+                        Iterator iteratotStudentTemp = itemGroupTemp.getStudents().iterator();
+                        while (iteratotStudentTemp.hasNext()) {
+                            Student itemStTemp = (Student) iteratotStudentTemp.next();
+                            if (itemStudentM.equalsWitchoutId(itemStTemp)) {
+                                iteratotStudentTemp.remove();
+                            }
+                        }
+                    }
+
+                }
+
+            }
+        }
+        /** Даем новые порядковые номера */
+        for (Group gr : mTemp.getGroups())
+            for (Student st : gr.getStudents())
+                st.setId(model.getStudents().size() + 1);
+        /** Добавляем группы и студентов в модель */
+        for (int i = 0; i < mTemp.getGroups().size(); i++) {
+            model.addGroup(mTemp.getGroups().get(i));
+            for (int j = 0; j < mTemp.getGroups().get(i).getStudents().size(); j++) {
+                String name = mTemp.getGroups().get(i).getStudents().get(j).getName();
+                String patronymic = mTemp.getGroups().get(i).getStudents().get(j).getPatronymic();
+                String surname = mTemp.getGroups().get(i).getStudents().get(j).getSurname();
+                Date date = mTemp.getGroups().get(i).getStudents().get(j).getDate();
+                model.addStudent(name, surname, patronymic, date);
+            }
+        }
+
+        return model;
+    }
+
+    public Model addStudentInStudentList(Model m) {
+        ArrayList<Student> grSt = new ArrayList<Student>();
+
+        for (int i = 0; i < m.getGroups().size(); i++) {
+            grSt.addAll(m.getGroups().get(i).getStudents());
+        }
+
+        for (int i = 0; i < grSt.size(); i++) {
+            m.addStudent(grSt.get(i).getName(),
+                    grSt.get(i).getSurname(),
+                    grSt.get(i).getPatronymic(),
+                    grSt.get(i).getDate());
+        }
+
+        return m;
     }
 }
