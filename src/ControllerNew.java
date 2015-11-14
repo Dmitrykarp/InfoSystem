@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 public class ControllerNew {
     private Model thisModel;
     private View thisView;
-    private Utility thisUtil;
+    private Utility thisUtil = new Utility();
 
     ControllerNew(Model model, View view) {
         thisModel = model;
@@ -26,13 +26,13 @@ public class ControllerNew {
         boolean exit = false;
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        /*try {
+        try {
             thisUtil.loadZIP("src\\test.zip");
             thisModel = thisUtil.loadXML("src\\xml\\test.xml");
         } catch (UnmarshalException e){
             thisView.printError(View.Error.FILE_XML_NOT_FOUND);
             //TODO Поидее еще 1 эксепшен на возврате FileNotFound
-        }*/
+        }
 
         while (!exit) {
             thisView.printConsole(View.Help.CONSOLE);
@@ -79,7 +79,7 @@ public class ControllerNew {
                             thisView.printConsole(View.Help.ID_STUDENT);
                             thisView.printConsole(View.Help.CONSOLE);
                             int studentID = Integer.parseInt(reader.readLine());
-                            thisView.printConsole(View.Help.ADD_STG_ID_GROUP);
+                            thisView.printConsole(View.Help.GROUP_NUMBER);
                             thisView.printConsole(View.Help.CONSOLE);
                             int groupID = Integer.parseInt(reader.readLine());
                             thisModel.studentToGroup(studentID, groupID);
@@ -87,6 +87,8 @@ public class ControllerNew {
 
                         } else if("exit".equals(command.toLowerCase())){
                             subExit = true;
+                            thisView.printConfirm(View.Confirm.COMPLETE);
+
                         } else thisView.printError(View.Error.INVALID_SYNTAX);
                     }
                     break;
@@ -113,6 +115,7 @@ public class ControllerNew {
 
                         } else if("exit".equals(command.toLowerCase())){
                             subExit = true;
+                            thisView.printConfirm(View.Confirm.COMPLETE);
 
                         } else thisView.printError(View.Error.INVALID_SYNTAX);
                     }
@@ -159,6 +162,7 @@ public class ControllerNew {
 
                         } else if("exit".equals(command.toLowerCase())){
                             subExit = true;
+                            thisView.printConfirm(View.Confirm.COMPLETE);
 
                         } else thisView.printError(View.Error.INVALID_SYNTAX);
                     }
@@ -179,13 +183,15 @@ public class ControllerNew {
                                 Date date = thisModel.getStudents().get(i).getDate();
                                 thisView.printStudent(id, name, patronymic, surname, date);
                             }
+                            thisView.printConfirm(View.Confirm.COMPLETE);
 
                         } else if ("allg".equals(command.toLowerCase())) {
                             for (int i = 0; i < thisModel.getGroups().size(); i++) {
                                 int number = thisModel.getGroups().get(i).getNumber();
                                 String facult = thisModel.getGroups().get(i).getFacult();
-                                thisView.printGroup(number, facult, true);
+                                thisView.printGroup(number, facult, false);
                             }
+                            thisView.printConfirm(View.Confirm.COMPLETE);
 
                         } else if ("s".equals(command.toLowerCase())) {
                             thisView.printConsole(View.Help.ID_STUDENT);
@@ -197,6 +203,7 @@ public class ControllerNew {
                             String surname = thisModel.getStudents().get(studentID).getSurname();
                             Date date = thisModel.getStudents().get(studentID).getDate();
                             thisView.printStudent(id, name, patronymic, surname, date);
+                            thisView.printConfirm(View.Confirm.COMPLETE);
 
                         } else if ("g".equals(command.toLowerCase())) {
                             thisView.printConsole(View.Help.GROUP_NUMBER);
@@ -204,7 +211,7 @@ public class ControllerNew {
                             int id = Integer.parseInt(reader.readLine());
                             int number = thisModel.getGroup(id).getNumber();
                             String facult = thisModel.getGroup(id).getFacult();
-                            thisView.printGroup(number, facult, false);
+                            thisView.printGroup(number, facult, true);
                             for (int i = 0; i < thisModel.getGroup(id).getStudents().size(); i++) {
                                 int idStudent = thisModel.getGroup(id).getStudents().get(i).getId();
                                 String name = thisModel.getGroup(id).getStudents().get(i).getName();
@@ -213,9 +220,11 @@ public class ControllerNew {
                                 Date date = thisModel.getGroup(id).getStudents().get(i).getDate();
                                 thisView.printStudent(idStudent, name, patronymic, surname, date);
                             }
+                            thisView.printConfirm(View.Confirm.COMPLETE);
 
                         } else if("exit".equals(command.toLowerCase())){
                             subExit = true;
+                            thisView.printConfirm(View.Confirm.COMPLETE);
 
                         } else thisView.printError(View.Error.INVALID_SYNTAX);
                     }
@@ -253,6 +262,9 @@ public class ControllerNew {
                                 String facult = groups.get(i).getFacult();
                                 thisView.printGroup(number, facult, true);
                             }
+                        } else if("exit".equals(command.toLowerCase())){
+                            subExit = true;
+                            thisView.printConfirm(View.Confirm.COMPLETE);
 
                         } else thisView.printError(View.Error.INVALID_SYNTAX);
                     }
@@ -263,6 +275,7 @@ public class ControllerNew {
                     thisView.printConsole(View.Help.CONSOLE);
                     command = reader.readLine();
                     thisModel = thisUtil.fileToFile(command,thisModel);
+                    thisView.printConfirm(View.Confirm.MERGER);
                     break;
 
                 case "help":
@@ -270,7 +283,7 @@ public class ControllerNew {
                     break;
 
                 case "exit":
-                    exit = false;
+                    exit = true;
                     thisUtil.saveXML("src\\xml\\test.xml", thisModel);
                     thisUtil.saveZIP("src\\xml\\test.xml");
                     break;

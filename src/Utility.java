@@ -12,44 +12,45 @@ import java.util.zip.ZipOutputStream;
 
 public class Utility {
 
-    public void loadZIP(String path) {
+    public void loadZIP(String path)  {
         ZipInputStream in = null;
-        try {
-            in = new ZipInputStream(new FileInputStream(path));
-        } catch (FileNotFoundException e) {
-            //TODO Чтото выводить
-            e.printStackTrace();
-        }
-        String targetfile = "src\\xml\\test.xml";
         OutputStream out = null;
-        try {
+        try{
+            in = new ZipInputStream(new FileInputStream(path));
+            //Берем первый элемент из архива.
+            ZipEntry entry = in.getNextEntry();
+            String targetfile = "src\\xml\\test.xml";
             out = new FileOutputStream(targetfile);
-        } catch (FileNotFoundException e) {
-            //TODO Чтото выводить
-            e.printStackTrace();
-        }
-        byte[] buf = new byte[1024];
-        int len;
+            byte[] buf = new byte[1024];
+            int len;
 
-        try {
             while ((len = in.read(buf)) > 0) {
                 out.write(buf, 0, len);
             }
-        } catch (IOException e) {
-            //TODO тоже самое
-            e.printStackTrace();
-        } finally {
-            if (out == null & in == null){
 
+        } catch (IOException e){
+
+        } finally {
+            if(out!=null){
                 try {
                     out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if(in != null){
+                try {
                     in.close();
                 } catch (IOException e) {
-                    //TODO чтото
                     e.printStackTrace();
                 }
             }
         }
+
+
+
+
     }
 
     public void saveZIP (String path){
@@ -130,7 +131,7 @@ public class Utility {
             e.printStackTrace();
         }
 
-        marshaller.marshal(this, fos);
+        marshaller.marshal(model, fos);
     }
 
     public Model fileToFile(String path, Model model) throws JAXBException {

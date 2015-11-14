@@ -49,7 +49,9 @@ public class View {
         GROUP_DELL,
         STUDENT_MOD,
         GROUP_MOD,
-        MERGER
+        MERGER,
+        COMPLETE
+
 
     }
 
@@ -64,7 +66,6 @@ public class View {
         GROUP_NUMBER_NEW,
         ADD_GROUP_FACULT,
         ID_STUDENT,
-        ADD_STG_ID_GROUP,
         DEL,
         MOD,
         VIEW,
@@ -314,6 +315,9 @@ public class View {
 
             case MERGER:
                 System.out.println("Данные из файла добавлены успешно");
+                break;
+            case COMPLETE:
+                System.out.println("======КОМАНДА ВЫПОЛНЕНА УСПЕШНО======");
                 break;
 
             default:
