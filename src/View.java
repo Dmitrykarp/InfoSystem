@@ -17,7 +17,9 @@ public class View {
 
     }
 
-    /** Перечисление всех возможных ошибок. */
+    /**
+     * Перечисление всех возможных ошибок.
+     */
     enum Error {
         HELP,
         STUDENT_NOT_FOUND,
@@ -36,7 +38,9 @@ public class View {
 
     }
 
-    /** Перечисление результатов всех удачных комманд. */
+    /**
+     * Перечисление результатов всех удачных комманд.
+     */
     enum Confirm {
         STUDENT_ADD,
         GROUP_ADD,
@@ -49,21 +53,88 @@ public class View {
 
     }
 
+    enum Help {
+        CONSOLE,
+        ADD,
+        ADD_STUDENT_NAME,
+        ADD_STUDENT_PATR,
+        ADD_STRUDENT_SURN,
+        ADD_STUDENT_DATE,
+        GROUP_NUMBER,
+        GROUP_NUMBER_NEW,
+        ADD_GROUP_FACULT,
+        ID_STUDENT,
+        ADD_STG_ID_GROUP,
+        DEL,
+        MOD,
+        MOD_STUDENT,
+        MOD_GROUP
+
+    }
+
     /**
      * Выводит символ начала ввода команды для пользователя.
      */
-    public void printConsole() {
-        System.out.print(">");
+    public void printConsole(Help console) {
+        switch (console){
+            case CONSOLE:
+                System.out.print(">");
+                break;
+            case ADD:
+                System.out.println("Введите S для добавления студентов.");
+                System.out.println("Введите G для добавления группы.");
+                System.out.println("Введите STG для добавления студента в группу.");
+                System.out.println("Для выхода введите EXIT.");
+                break;
+            case ADD_STUDENT_NAME:
+                System.out.println("Введите имя студента:");
+                break;
+            case ADD_STUDENT_PATR:
+                System.out.println("Введите отчество студента:");
+                break;
+            case ADD_STRUDENT_SURN:
+                System.out.println("Введите фамилию студента:");
+                break;
+            case ADD_STUDENT_DATE:
+                System.out.println("Введите дату зачисления студента в формате: ДД.ММ.ГГГГ");
+                break;
+            case GROUP_NUMBER:
+                System.out.println("Введите номер группы:");
+                break;
+            case GROUP_NUMBER_NEW:
+                System.out.println("Введите новый номер группы:");
+                break;
+            case ADD_GROUP_FACULT:
+                System.out.println("Введите факультет:");
+                break;
+            case ID_STUDENT:
+                System.out.println("Введите ID студента:");
+                break;
+            case DEL:
+                System.out.println("Введите S для удаления студента.");
+                System.out.println("Введите G для удаления группы.");
+                System.out.println("Для выхода введите EXIT.");
+                break;
+            case MOD:
+                System.out.println("Введите S для изменения студента.");
+                System.out.println("Введите G для изменения группы.");
+                System.out.println("Для выхода введите EXIT.");
+                break;
+
+
+
+
+        }
     }
 
     /**
      * Метод выводит на консоль определенного студента.
      *
-     * @param id Номер студента.
-     * @param name имя студента.
+     * @param id         Номер студента.
+     * @param name       имя студента.
      * @param patronymic Отчество студента.
-     * @param surname Фамилия студента.
-     * @param date Дата зачисления студента.
+     * @param surname    Фамилия студента.
+     * @param date       Дата зачисления студента.
      */
     public void printStudent(int id, String name, String patronymic, String surname, Date date) {
         System.out.println(id + " " + name + " " + patronymic + " " + surname + " " + format1.format(date));
@@ -74,7 +145,7 @@ public class View {
      *
      * @param number Номер группы.
      * @param facult Факультет.
-     * @param b Указывает о необходимости печати студентов из группы. True - печатать, false -нет.
+     * @param b      Указывает о необходимости печати студентов из группы. True - печатать, false -нет.
      */
     public void printGroup(int number, String facult, boolean b) {
         if (!b)

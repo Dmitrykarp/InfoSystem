@@ -54,7 +54,7 @@ public class Controller {
         }
 
         while (exit) {
-            thisView.printConsole();
+            thisView.printConsole(View.Help.CONSOLE);
             command = parseCommand(reader.readLine());
 
             switch (command[0].toLowerCase()) {
