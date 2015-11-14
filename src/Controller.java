@@ -44,14 +44,7 @@ public class Controller {
         boolean exit = true;
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        try {
-            thisModel.loadZIP("src\\test.zip");
-            thisModel = thisModel.loadXML("src\\xml\\test.xml", thisModel);
-        } catch (FileNotFoundException e){
-            thisView.printError(View.Error.FILE_ARCHIVE_NOT_FOUND);
-        } catch (UnmarshalException e){
-            thisView.printError(View.Error.FILE_XML_NOT_FOUND);
-        }
+
 
         while (exit) {
             thisView.printConsole(View.Help.CONSOLE);
@@ -266,16 +259,15 @@ public class Controller {
                     break;
 
                 case "file":
-                    try {
-                        thisModel = thisModel.fileToFile(command[1].toLowerCase(), thisModel);
-                        thisView.printConfirm(View.Confirm.MERGER);
+                    /*try {
+
 
                     } catch (ArrayIndexOutOfBoundsException e) {
                         thisView.printError(View.Error.INVALID_SYNTAX);
                     } catch (UnmarshalException e) {
                         thisView.printError(View.Error.FILE_NOT_FOUND);
                     }
-                    break;
+                    break;*/
 
                 case "help":
                     thisView.printHelp();
@@ -283,8 +275,8 @@ public class Controller {
 
                 case "exit":
                     exit = false;
-                    thisModel.saveXML("src\\xml\\test.xml");
-                    thisModel.saveZIP("src\\xml\\test.xml");
+                    /*thisModel.saveXML("src\\xml\\test.xml");
+                    thisModel.saveZIP("src\\xml\\test.xml");*/
                     break;
 
                 default:

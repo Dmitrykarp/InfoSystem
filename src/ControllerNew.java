@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.SynchronousQueue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -250,6 +251,7 @@ public class ControllerNew {
                                 Date date = students.get(i).getDate();
                                 thisView.printStudent(id, name, patronymic, surname, date);
                             }
+                            thisView.printConfirm(View.Confirm.COMPLETE);
 
                         } else if ("g".equals(command.toLowerCase())) {
                             thisView.printConsole(View.Help.FIND_STRING);
@@ -262,6 +264,7 @@ public class ControllerNew {
                                 String facult = groups.get(i).getFacult();
                                 thisView.printGroup(number, facult, true);
                             }
+                            thisView.printConfirm(View.Confirm.COMPLETE);
                         } else if("exit".equals(command.toLowerCase())){
                             subExit = true;
                             thisView.printConfirm(View.Confirm.COMPLETE);
@@ -298,10 +301,9 @@ public class ControllerNew {
 
     }
 
-    public static boolean validate(String s) {
-        Pattern pattern = Pattern.compile("");
-        //TODO неуверен
-        Matcher matcher = pattern.matcher(s);
+    public static boolean validate(String string) {
+        Pattern pattern = Pattern.compile("^[а-яА-ЯёЁa-zA-Z0-9-\\s?*]+$");
+            Matcher matcher = pattern.matcher(string);
         return matcher.matches();
     }
 }

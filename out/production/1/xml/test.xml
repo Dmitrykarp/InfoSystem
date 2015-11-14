@@ -94,5 +94,12 @@
             <surname>Копытов</surname>
             <date>1992-09-05T10:18:08.041+04:00</date>
         </students>
+        <students>
+            <id>10</id>
+            <name>Ксения</name>
+            <patronymic>Андреевна</patronymic>
+            <surname>Вязова</surname>
+            <date>2006-10-12T00:00:00+04:00</date>
+        </students>
     </group>
 </model>
