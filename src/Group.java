@@ -52,10 +52,9 @@ public class Group {
     /**
      * Метод задает номер группы.
      *
-     * @param value Номер группы должен быть больше нуля.
+     * @param value Номер группы.
      */
     public void setNumber(int value) {
-        if(value <1) throw new IllegalArgumentException();
         this.number = value;
     }
 
@@ -72,11 +71,10 @@ public class Group {
     /**
      * Метод устанавливает название факультета.
      *
-     * @param value Название факультета. Параметр не пустой и не null.
+     * @param value Название факультета.
      */
     public void setFacult(String value) {
-        if(value == null || value.trim().isEmpty()) throw new IllegalArgumentException();
-        else  this.facult = value;
+        this.facult = value;
     }
 
     /**

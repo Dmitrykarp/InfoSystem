@@ -25,6 +25,7 @@ public class View {
         STUDENT_NOT_FOUND,
         GROUP_NOT_FOUND,
         INVALID_SYNTAX,
+        FORBIDDEN_SYMBOLS,
         UNKNOWN_ERROR,
         STUDENT_ALREADY_DB,
         STUDENT_ALREADY_GROUP,
@@ -196,7 +197,11 @@ public class View {
                 break;
 
             case INVALID_SYNTAX:
-                System.out.println("Ошибка! Неверный синтаксис команды. Введите [help] для справки!");
+                System.out.println("Ошибка! Введите [help] для справки!");
+                break;
+
+            case FORBIDDEN_SYMBOLS:
+                System.out.println("Ошибка! Разрешены только буквы, цифры и пробел!");
                 break;
 
             case UNKNOWN_ERROR:
@@ -208,7 +213,7 @@ public class View {
                 break;
 
             case STUDENT_ADD_DATE:
-                System.out.println("Ошибка! Введите дату в формате: ДД.ММ.ГГГГ!");
+                System.out.println("Ошибка! Неверный формат даты!");
                 break;
 
             case STUDENT_ALREADY_GROUP:
@@ -224,11 +229,11 @@ public class View {
                 break;
 
             case GROUP_FORMAT:
-                System.out.println("Ошибка! Номер группы или факультета заданы не корректно!");
+                System.out.println("Ошибка! Номер группы задан не корректно!");
                 break;
 
             case FILE_NOT_FOUND:
-                System.out.println("Ошибка! Неудается найти указанный файл!");
+                System.out.println("Ошибка! Файл имеет неверную структуру или отсутствует!");
                 break;
 
             case FILE_ARCHIVE_NOT_FOUND:

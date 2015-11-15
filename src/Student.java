@@ -62,11 +62,10 @@ public class Student {
     /**
      * Метод устанавливает номер студенту.
      *
-     * @param value Номер студента должен быть больше нуля.
+     * @param value Номер студента.
      */
     public void setId(int value) {
-        if(value <1) throw new IllegalArgumentException();
-        else this.id = value;
+         this.id = value;
     }
 
     /**
@@ -81,11 +80,10 @@ public class Student {
     /**
      * Метод задает имя студента.
      *
-     * @param value Uмя студента не пустое и не null.
+     * @param value Uмя студента.
      */
     public void setName(String value) {
-        if(value == null || value.trim().isEmpty()) throw new IllegalArgumentException();
-        else this.name = value;
+       this.name = value;
     }
 
     /**
@@ -100,11 +98,10 @@ public class Student {
     /**
      * Метод устанавливает отчество студента.
      *
-     * @param value Отчество студента не пустое и не null.
+     * @param value Отчество студента.
      */
     public void setPatronymic(String value) {
-        if(value == null || value.trim().isEmpty()) throw new IllegalArgumentException();
-        else this.patronymic = value;
+        this.patronymic = value;
     }
 
     /**
@@ -119,11 +116,10 @@ public class Student {
     /**
      * Метод задает фамилию студента.
      *
-     * @param value Фамилия студента не пустое и не null.
+     * @param value Фамилия студента.
      */
     public void setSurname(String value) {
-        if(value == null || value.trim().isEmpty()) throw new IllegalArgumentException();
-        else this.surname = value;
+        this.surname = value;
     }
 
     /**

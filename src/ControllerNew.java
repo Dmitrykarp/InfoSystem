@@ -1,3 +1,5 @@
+import org.xml.sax.SAXParseException;
+
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.UnmarshalException;
 import java.io.BufferedReader;
@@ -39,7 +41,7 @@ public class ControllerNew {
             thisView.printConsole(View.Help.CONSOLE);
             command = reader.readLine();
 
-            switch (command.toLowerCase()){
+            switch (command.trim().toLowerCase()){
 
                 case "add":
                     boolean subExit = false;
@@ -47,44 +49,118 @@ public class ControllerNew {
                         thisView.printConsole(View.Help.ADD);
                         thisView.printConsole(View.Help.CONSOLE);
                         command = reader.readLine();
-                        if("s".equals(command.toLowerCase())){
-                            //TODO валидацию сделать
+                        if("s".equals(command.trim().toLowerCase())){
+                            String name;
+                            String patronymic;
+                            String surname;
+                            String temp;
                             thisView.printConsole(View.Help.ADD_STUDENT_NAME);
                             thisView.printConsole(View.Help.CONSOLE);
-                            String name = reader.readLine();
+                            temp = reader.readLine();
+                            if(validate(temp)) {
+                                name = temp;
+                            } else {
+                                thisView.printError(View.Error.FORBIDDEN_SYMBOLS);
+                                continue;
+                            }
                             thisView.printConsole(View.Help.ADD_STUDENT_PATR);
                             thisView.printConsole(View.Help.CONSOLE);
-                            String patronymic = reader.readLine();
+                            temp = reader.readLine();
+                            if(validate(temp)) {
+                               patronymic = temp;
+                            } else {
+                                thisView.printError(View.Error.FORBIDDEN_SYMBOLS);
+                                continue;
+                            }
                             thisView.printConsole(View.Help.ADD_STRUDENT_SURN);
                             thisView.printConsole(View.Help.CONSOLE);
-                            String surname = reader.readLine();
+                            temp = reader.readLine();
+                            if(validate(temp)) {
+                                surname = temp;
+                            } else {
+                                thisView.printError(View.Error.FORBIDDEN_SYMBOLS);
+                                continue;
+                            }
                             thisView.printConsole(View.Help.ADD_STUDENT_DATE);
                             thisView.printConsole(View.Help.CONSOLE);
-                            SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-                            Date date = format.parse(reader.readLine());
-                            thisModel.addStudent(name, surname, patronymic, date);
-                            thisView.printConfirm(View.Confirm.STUDENT_ADD);
+                            Date date;
+                            try {
+                                SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+                                date = format.parse(reader.readLine());
+                            } catch (ParseException e){
+                                thisView.printError(View.Error.STUDENT_ADD_DATE);
+                                continue;
+                            }
+                            try {
+                                thisModel.addStudent(name, surname, patronymic, date);
+                                thisView.printConfirm(View.Confirm.STUDENT_ADD);
+                            } catch (UnsupportedOperationException e){
+                                thisView.printError(View.Error.STUDENT_ALREADY_DB);
+                                continue;
+                            }
 
-                        } else if("g".equals(command.toLowerCase())){
+
+                        } else if("g".equals(command.trim().toLowerCase())){
+                            int number, tempInt;
+                            String facult, tempString;
                             thisView.printConsole(View.Help.GROUP_NUMBER);
                             thisView.printConsole(View.Help.CONSOLE);
-                            int number = Integer.parseInt(reader.readLine());
+                            try {
+                                tempInt = Integer.parseInt(reader.readLine());
+                            } catch (NumberFormatException e) {
+                                thisView.printError(View.Error.STUDENT_FORMAT);
+                                continue;
+                            }
+                            if(tempInt <=0){
+                                number = tempInt;
+                            } else {
+                                thisView.printError(View.Error.GROUP_FORMAT);
+                                continue;
+                            }
                             thisView.printConsole(View.Help.ADD_GROUP_FACULT);
                             thisView.printConsole(View.Help.CONSOLE);
-                            String facult = reader.readLine();
-                            thisModel.addGroup(number,facult);
-                            thisView.printConfirm(View.Confirm.GROUP_ADD);
+                            tempString = reader.readLine();
+                            if(validate(tempString)) {
+                                facult = tempString;
+                            } else {
+                                thisView.printError(View.Error.FORBIDDEN_SYMBOLS);
+                                continue;
+                            }
+                            try {
+                                thisModel.addGroup(number,facult);
+                                thisView.printConfirm(View.Confirm.GROUP_ADD);
+                            } catch (UnsupportedOperationException e){
+                                thisView.printError(View.Error.GROUP_ALREADY);
+                                continue;
+                            }
 
 
-                        } else if("stg".equals(command.toLowerCase())){
+                        } else if("stg".equals(command.trim().toLowerCase())){
+                            int studentID;
+                            int groupID;
                             thisView.printConsole(View.Help.ID_STUDENT);
                             thisView.printConsole(View.Help.CONSOLE);
-                            int studentID = Integer.parseInt(reader.readLine());
+                            try {
+                                studentID = Integer.parseInt(reader.readLine());
+                            } catch (NumberFormatException e) {
+                                thisView.printError(View.Error.STUDENT_FORMAT);
+                                continue;
+                            }
                             thisView.printConsole(View.Help.GROUP_NUMBER);
                             thisView.printConsole(View.Help.CONSOLE);
-                            int groupID = Integer.parseInt(reader.readLine());
-                            thisModel.studentToGroup(studentID, groupID);
-                            thisView.printConfirm(View.Confirm.STUDENT_IN_GROUP);
+                            try {
+                                groupID = Integer.parseInt(reader.readLine());
+                            } catch (NumberFormatException e) {
+                                thisView.printError(View.Error.STUDENT_FORMAT);
+                                continue;
+                            }
+                            try {
+                                thisModel.studentToGroup(studentID, groupID);
+                                thisView.printConfirm(View.Confirm.STUDENT_IN_GROUP);
+                            } catch (UnsupportedOperationException e){
+                                thisView.printError(View.Error.STUDENT_ALREADY_GROUP);
+                                continue;
+                            }
 
                         } else if("exit".equals(command.toLowerCase())){
                             subExit = true;
@@ -100,21 +176,37 @@ public class ControllerNew {
                         thisView.printConsole(View.Help.DEL);
                         thisView.printConsole(View.Help.CONSOLE);
                         command = reader.readLine();
-                        if("s".equals(command.toLowerCase())){
+                        if("s".equals(command.trim().toLowerCase())){
                             thisView.printConsole(View.Help.ID_STUDENT);
                             thisView.printConsole(View.Help.CONSOLE);
-                            int studentID = Integer.parseInt(reader.readLine());
-                            thisModel.delStudent(studentID);
-                            thisView.printConfirm(View.Confirm.STUDENT_DELL);
+                            try {
+                                int studentID = Integer.parseInt(reader.readLine());
+                                thisModel.delStudent(studentID);
+                                thisView.printConfirm(View.Confirm.STUDENT_DELL);
+                            } catch (UnsupportedOperationException e){
+                                thisView.printError(View.Error.STUDENT_NOT_FOUND);
+                                continue;
+                            } catch (NumberFormatException e){
+                                thisView.printError(View.Error.STUDENT_FORMAT);
+                                continue;
+                            }
 
-                        } else if("g".equals(command.toLowerCase())){
+                        } else if("g".equals(command.trim().toLowerCase())){
                             thisView.printConsole(View.Help.GROUP_NUMBER);
                             thisView.printConsole(View.Help.CONSOLE);
-                            int groupID = Integer.parseInt(reader.readLine());
-                            thisModel.delGroup(groupID);
-                            thisView.printConfirm(View.Confirm.GROUP_DELL);
+                            try {
+                                int groupID = Integer.parseInt(reader.readLine());
+                                thisModel.delGroup(groupID);
+                                thisView.printConfirm(View.Confirm.GROUP_DELL);
+                            } catch (UnsupportedOperationException e){
+                                thisView.printError(View.Error.STUDENT_NOT_FOUND);
+                                continue;
+                            } catch (NumberFormatException e){
+                                thisView.printError(View.Error.STUDENT_FORMAT);
+                                continue;
+                            }
 
-                        } else if("exit".equals(command.toLowerCase())){
+                        } else if("exit".equals(command.trim().toLowerCase())){
                             subExit = true;
                             thisView.printConfirm(View.Confirm.COMPLETE);
 
@@ -128,40 +220,103 @@ public class ControllerNew {
                         thisView.printConsole(View.Help.MOD);
                         thisView.printConsole(View.Help.CONSOLE);
                         command = reader.readLine();
-                        if ("s".equals(command.toLowerCase())) {
+                        if ("s".equals(command.trim().toLowerCase())) {
+                            int studentID;
+                            String name;
+                            String patronymic;
+                            String surname;
+                            String temp;
                             thisView.printConsole(View.Help.ID_STUDENT);
                             thisView.printConsole(View.Help.CONSOLE);
-                            int studentID = Integer.parseInt(reader.readLine());
+                            try {
+                                studentID = Integer.parseInt(reader.readLine());
+                            } catch (NumberFormatException e){
+                                thisView.printError(View.Error.STUDENT_FORMAT);
+                                continue;
+                            }
                             thisView.printConsole(View.Help.ADD_STUDENT_NAME);
                             thisView.printConsole(View.Help.CONSOLE);
-                            String name = reader.readLine();
+                            temp = reader.readLine();
+                            if(validate(temp)) {
+                                name = temp;
+                            } else {
+                                thisView.printError(View.Error.FORBIDDEN_SYMBOLS);
+                                continue;
+                            }
                             thisView.printConsole(View.Help.ADD_STUDENT_PATR);
                             thisView.printConsole(View.Help.CONSOLE);
-                            String patronymic = reader.readLine();
+                            temp = reader.readLine();
+                            if(validate(temp)) {
+                                patronymic = temp;
+                            } else {
+                                thisView.printError(View.Error.FORBIDDEN_SYMBOLS);
+                                continue;
+                            }
                             thisView.printConsole(View.Help.ADD_STRUDENT_SURN);
                             thisView.printConsole(View.Help.CONSOLE);
-                            String surname = reader.readLine();
+                            temp = reader.readLine();
+                            if(validate(temp)) {
+                                surname = temp;
+                            } else {
+                                thisView.printError(View.Error.FORBIDDEN_SYMBOLS);
+                                continue;
+                            }
                             thisView.printConsole(View.Help.ADD_STUDENT_DATE);
                             thisView.printConsole(View.Help.CONSOLE);
-                            SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-                            Date date = format.parse(reader.readLine());
-                            thisModel.modifyStudent(studentID, name, surname, patronymic, date);
-                            thisView.printConfirm(View.Confirm.STUDENT_MOD);
+                            Date date;
+                            try {
+                                SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+                                date = format.parse(reader.readLine());
+                            } catch (ParseException e){
+                                thisView.printError(View.Error.STUDENT_ADD_DATE);
+                                continue;
+                            }
+                            try {
+                                thisModel.modifyStudent(studentID, name, surname, patronymic, date);
+                                thisView.printConfirm(View.Confirm.STUDENT_MOD);
+                            } catch (UnsupportedOperationException e){
+                                thisView.printError(View.Error.STUDENT_NOT_FOUND);
+                                continue;
+                            }
 
-                        } else if("g".equals(command.toLowerCase())){
+                        } else if("g".equals(command.trim().toLowerCase())){
+                            int oldID;
+                            int newID;
+                            String facult, temp;
                             thisView.printConsole(View.Help.GROUP_NUMBER);
                             thisView.printConsole(View.Help.CONSOLE);
-                            int oldID = Integer.parseInt(reader.readLine());
+                            try {
+                                oldID = Integer.parseInt(reader.readLine());
+                            } catch (NumberFormatException e) {
+                                thisView.printError(View.Error.STUDENT_FORMAT);
+                                continue;
+                            }
                             thisView.printConsole(View.Help.GROUP_NUMBER_NEW);
                             thisView.printConsole(View.Help.CONSOLE);
-                            int newID = Integer.parseInt(reader.readLine());
+                            try {
+                                newID = Integer.parseInt(reader.readLine());
+                            } catch (NumberFormatException e){
+                                thisView.printError(View.Error.STUDENT_FORMAT);
+                                continue;
+                            }
                             thisView.printConsole(View.Help.ADD_GROUP_FACULT);
                             thisView.printConsole(View.Help.CONSOLE);
-                            String facult = reader.readLine();
-                            thisModel.modifyGroup(oldID, newID, facult);
-                            thisView.printConfirm(View.Confirm.GROUP_MOD);
+                            temp = reader.readLine();
+                            if(validate(temp)){
+                                facult=temp;
+                            } else {
+                                thisView.printError(View.Error.FORBIDDEN_SYMBOLS);
+                                continue;
+                            }
+                            try {
+                                thisModel.modifyGroup(oldID, newID, facult);
+                                thisView.printConfirm(View.Confirm.GROUP_MOD);
+                            } catch (UnsupportedOperationException e){
+                                thisView.printError(View.Error.GROUP_NOT_FOUND);
+                                continue;
+                            }
 
-                        } else if("exit".equals(command.toLowerCase())){
+                        } else if("exit".equals(command.trim().toLowerCase())){
                             subExit = true;
                             thisView.printConfirm(View.Confirm.COMPLETE);
 
@@ -175,55 +330,81 @@ public class ControllerNew {
                         thisView.printConsole(View.Help.VIEW);
                         thisView.printConsole(View.Help.CONSOLE);
                         command = reader.readLine();
-                        if ("alls".equals(command.toLowerCase())) {
-                            for (int i = 0; i < thisModel.getStudents().size(); i++) {
-                                int id = thisModel.getStudents().get(i).getId();
-                                String name = thisModel.getStudents().get(i).getName();
-                                String patronymic = thisModel.getStudents().get(i).getPatronymic();
-                                String surname = thisModel.getStudents().get(i).getSurname();
-                                Date date = thisModel.getStudents().get(i).getDate();
+                        if ("alls".equals(command.trim().toLowerCase())) {
+                            for(Student student: thisModel.getStudents()){
+                                int id = student.getId();
+                                String name = student.getName();
+                                String patronymic = student.getPatronymic();
+                                String surname = student.getSurname();
+                                Date date = student.getDate();
                                 thisView.printStudent(id, name, patronymic, surname, date);
                             }
                             thisView.printConfirm(View.Confirm.COMPLETE);
 
-                        } else if ("allg".equals(command.toLowerCase())) {
-                            for (int i = 0; i < thisModel.getGroups().size(); i++) {
-                                int number = thisModel.getGroups().get(i).getNumber();
-                                String facult = thisModel.getGroups().get(i).getFacult();
+                        } else if ("allg".equals(command.trim().toLowerCase())) {
+                            for(Group group: thisModel.getGroups()){
+                                int number = group.getNumber();
+                                String facult = group.getFacult();
                                 thisView.printGroup(number, facult, false);
                             }
                             thisView.printConfirm(View.Confirm.COMPLETE);
 
-                        } else if ("s".equals(command.toLowerCase())) {
+                        } else if ("s".equals(command.trim().toLowerCase())) {
+                            int studentID;
                             thisView.printConsole(View.Help.ID_STUDENT);
                             thisView.printConsole(View.Help.CONSOLE);
-                            int studentID = Integer.parseInt(reader.readLine())-1;
-                            int id = thisModel.getStudents().get(studentID).getId();
-                            String name = thisModel.getStudents().get(studentID).getName();
-                            String patronymic = thisModel.getStudents().get(studentID).getPatronymic();
-                            String surname = thisModel.getStudents().get(studentID).getSurname();
-                            Date date = thisModel.getStudents().get(studentID).getDate();
+                            try {
+                                studentID = Integer.parseInt(reader.readLine())-1;
+                            } catch (NumberFormatException e){
+                                thisView.printError(View.Error.STUDENT_FORMAT);
+                                continue;
+                            }
+                            Student student;
+                            try{
+                                student = thisModel.getStudents().get(studentID);
+                            } catch (IndexOutOfBoundsException e){
+                                thisView.printError(View.Error.STUDENT_NOT_FOUND);
+                                continue;
+                            }
+                            int id = student.getId();
+                            String name = student.getName();
+                            String patronymic = student.getPatronymic();
+                            String surname = student.getSurname();
+                            Date date = student.getDate();
                             thisView.printStudent(id, name, patronymic, surname, date);
                             thisView.printConfirm(View.Confirm.COMPLETE);
 
-                        } else if ("g".equals(command.toLowerCase())) {
+                        } else if ("g".equals(command.trim().toLowerCase())) {
+                            int id;
                             thisView.printConsole(View.Help.GROUP_NUMBER);
                             thisView.printConsole(View.Help.CONSOLE);
-                            int id = Integer.parseInt(reader.readLine());
-                            int number = thisModel.getGroup(id).getNumber();
-                            String facult = thisModel.getGroup(id).getFacult();
+                            try {
+                                id = Integer.parseInt(reader.readLine());
+                            } catch (NumberFormatException e){
+                                thisView.printError(View.Error.STUDENT_FORMAT);
+                                continue;
+                            }
+                            Group group;
+                            try {
+                                group = thisModel.getGroup(id);
+                            } catch (IndexOutOfBoundsException e){
+                                thisView.printError(View.Error.GROUP_NOT_FOUND);
+                                continue;
+                            }
+                            int number = group.getNumber();
+                            String facult = group.getFacult();
                             thisView.printGroup(number, facult, true);
-                            for (int i = 0; i < thisModel.getGroup(id).getStudents().size(); i++) {
-                                int idStudent = thisModel.getGroup(id).getStudents().get(i).getId();
-                                String name = thisModel.getGroup(id).getStudents().get(i).getName();
-                                String patronymic = thisModel.getGroup(id).getStudents().get(i).getPatronymic();
-                                String surname = thisModel.getGroup(id).getStudents().get(i).getSurname();
-                                Date date = thisModel.getGroup(id).getStudents().get(i).getDate();
+                            for(Student student: group.getStudents()){
+                                int idStudent = student.getId();
+                                String name = student.getName();
+                                String patronymic = student.getPatronymic();
+                                String surname = student.getSurname();
+                                Date date = student.getDate();
                                 thisView.printStudent(idStudent, name, patronymic, surname, date);
                             }
                             thisView.printConfirm(View.Confirm.COMPLETE);
 
-                        } else if("exit".equals(command.toLowerCase())){
+                        } else if("exit".equals(command.trim().toLowerCase())){
                             subExit = true;
                             thisView.printConfirm(View.Confirm.COMPLETE);
 
@@ -237,35 +418,53 @@ public class ControllerNew {
                         thisView.printConsole(View.Help.FIND);
                         thisView.printConsole(View.Help.CONSOLE);
                         command = reader.readLine();
-                        if ("s".equals(command.toLowerCase())) {
+                        if ("s".equals(command.trim().toLowerCase())) {
                             thisView.printConsole(View.Help.FIND_STRING);
                             thisView.printConsole(View.Help.CONSOLE);
                             command = reader.readLine();
+                            if(!validateFind(command)){
+                                thisView.printError(View.Error.FORBIDDEN_SYMBOLS);
+                                continue;
+                            }
                             ArrayList<Student> students;
                             students = thisModel.searchStudent(command);
-                            for (int i = 0; i < students.size(); i++) {
-                                int id = students.get(i).getId();
-                                String name = students.get(i).getName();
-                                String patronymic = students.get(i).getPatronymic();
-                                String surname = students.get(i).getSurname();
-                                Date date = students.get(i).getDate();
-                                thisView.printStudent(id, name, patronymic, surname, date);
+                            if(students.isEmpty()){
+                                thisView.printError(View.Error.STUDENT_NOT_FOUND);
+                                continue;
+                            }else {
+                                for (Student student : students) {
+                                    int id = student.getId();
+                                    String name = student.getName();
+                                    String patronymic = student.getPatronymic();
+                                    String surname = student.getSurname();
+                                    Date date = student.getDate();
+                                    thisView.printStudent(id, name, patronymic, surname, date);
+                                }
+                                thisView.printConfirm(View.Confirm.COMPLETE);
                             }
-                            thisView.printConfirm(View.Confirm.COMPLETE);
 
-                        } else if ("g".equals(command.toLowerCase())) {
+                        } else if ("g".equals(command.trim().toLowerCase())) {
                             thisView.printConsole(View.Help.FIND_STRING);
                             thisView.printConsole(View.Help.CONSOLE);
                             command = reader.readLine();
+                            if(!validateFind(command)){
+                                thisView.printError(View.Error.FORBIDDEN_SYMBOLS);
+                                continue;
+                            }
                             ArrayList<Group> groups;
                             groups = thisModel.searchGroup(command);
-                            for (int i = 0; i < groups.size(); i++) {
-                                int number = groups.get(i).getNumber();
-                                String facult = groups.get(i).getFacult();
-                                thisView.printGroup(number, facult, true);
+                            if(groups.isEmpty()){
+                                thisView.printError(View.Error.GROUP_NOT_FOUND);
+                                continue;
+                            }else {
+                                for (int i = 0; i < groups.size(); i++) {
+                                    int number = groups.get(i).getNumber();
+                                    String facult = groups.get(i).getFacult();
+                                    thisView.printGroup(number, facult, false);
+                                }
+                                thisView.printConfirm(View.Confirm.COMPLETE);
                             }
-                            thisView.printConfirm(View.Confirm.COMPLETE);
-                        } else if("exit".equals(command.toLowerCase())){
+                        } else if("exit".equals(command.trim().toLowerCase())){
                             subExit = true;
                             thisView.printConfirm(View.Confirm.COMPLETE);
 
@@ -277,8 +476,12 @@ public class ControllerNew {
                     thisView.printConsole(View.Help.PATH);
                     thisView.printConsole(View.Help.CONSOLE);
                     command = reader.readLine();
-                    thisModel = thisUtil.fileToFile(command,thisModel);
-                    thisView.printConfirm(View.Confirm.MERGER);
+                    try {
+                        thisModel = thisUtil.fileToFile(command, thisModel);
+                        thisView.printConfirm(View.Confirm.MERGER);
+                    } catch (UnmarshalException e) {
+                        thisView.printError(View.Error.FILE_NOT_FOUND);
+                    }
                     break;
 
                 case "help":
@@ -301,9 +504,15 @@ public class ControllerNew {
 
     }
 
-    public static boolean validate(String string) {
+    public static boolean validateFind(String string) {
         Pattern pattern = Pattern.compile("^[а-яА-ЯёЁa-zA-Z0-9-\\s?*]+$");
             Matcher matcher = pattern.matcher(string);
+        return matcher.matches();
+    }
+
+    public static boolean validate(String string) {
+        Pattern pattern = Pattern.compile("^[а-яА-ЯёЁa-zA-Z0-9-\\s]+$");
+        Matcher matcher = pattern.matcher(string);
         return matcher.matches();
     }
 }

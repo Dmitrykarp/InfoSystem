@@ -55,13 +55,13 @@ public class Model {
         int tempStud = 0;
 
         for (int i = 0; i < students.size(); i++)
-            if (students.get(i).equals(student))
+            if (students.get(i).equalsWitchoutId(student))
                 tempStud++;
 
         if (tempStud == 0) {
             counter++;
             students.add(student);
-        } else throw new RuntimeException();
+        } else throw new UnsupportedOperationException();
     }
 
     /**
@@ -122,7 +122,7 @@ public class Model {
             }
         }
 
-        if (temp == 0) throw new RuntimeException();
+        if (temp == 0) throw new UnsupportedOperationException();
     }
 
     /**
@@ -141,7 +141,7 @@ public class Model {
             }
         }
 
-        if (temp == 0) throw new RuntimeException();
+        if (temp == 0) throw new UnsupportedOperationException();
     }
 
     /**
@@ -178,7 +178,7 @@ public class Model {
                 }
             }
 
-        } else throw new RuntimeException();
+        } else throw new UnsupportedOperationException();
     }
 
     /**
@@ -199,7 +199,7 @@ public class Model {
         /** Добавление группы */
         if (tempCount == 0) {
             group.add(groups);
-        } else throw new RuntimeException();
+        } else throw new UnsupportedOperationException();
     }
 
     /**
@@ -256,7 +256,7 @@ public class Model {
         for (Group g : group) {
             if (g.getNumber() == id) return g;
         }
-        throw new RuntimeException();
+        throw new IndexOutOfBoundsException();
     }
 
     /**
@@ -295,7 +295,7 @@ public class Model {
                 }
             }
         }
-        if (temp == 0) throw new RuntimeException();
+        if (temp == 0) throw new UnsupportedOperationException();
     }
 
     /**
@@ -328,7 +328,6 @@ public class Model {
      * @return Список найденных студентов.
      */
     public ArrayList<Student> searchStudent(String find) {
-        int temp = 0;
         ArrayList<Student> stTemp = new ArrayList<Student>();
 
         if (find.contains("*")) {
@@ -343,24 +342,20 @@ public class Model {
             m = p.matcher(st.getName().toLowerCase());
             if (m.matches()) {
                 stTemp.add(st);
-                temp++;
             } else {
                 m = p.matcher(st.getPatronymic().toLowerCase());
                 if (m.matches()) {
                     stTemp.add(st);
-                    temp++;
                 } else {
                     m = p.matcher(st.getSurname().toLowerCase());
                     if (m.matches()) {
                         stTemp.add(st);
-                        temp++;
                     }
                 }
             }
         }
 
-        if (temp == 0) throw new RuntimeException();
-        else return stTemp;
+       return stTemp;
     }
 
     /**
@@ -372,7 +367,6 @@ public class Model {
      * @return Список найденных групп.
      */
     public ArrayList<Group> searchGroup(String find) {
-        int temp = 0;
         ArrayList<Group> grTemp = new ArrayList<Group>();
 
         if (find.contains("*")) {
@@ -387,11 +381,9 @@ public class Model {
             m = p.matcher(gr.getFacult().toLowerCase());
             if (m.matches()) {
                 grTemp.add(gr);
-                temp++;
             }
         }
 
-        if (temp == 0) throw new RuntimeException();
-        else return grTemp;
+        return grTemp;
     }
 }
