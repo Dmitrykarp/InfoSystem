@@ -10,8 +10,21 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
+/**
+ * Утилитный класс для работы с файловой системой.
+ * Позволяет работать с ZIP архивами и XML файлами.
+ *
+ * @author Karpenko Dmitry
+ */
 public class Utility {
 
+    /**
+     * Метод выгружает XML файл из ZIP-архива.
+     *
+     * @param path Путь к ZIP-архиву.
+     *
+     * @throws IOException Возникает если путь к файлу не верный.
+     */
     public void loadZIP(String path)  {
         ZipInputStream in = null;
         OutputStream out = null;
@@ -29,7 +42,7 @@ public class Utility {
             }
 
         } catch (IOException e){
-
+            e.printStackTrace();
         } finally {
             if(out!=null){
                 try {
@@ -53,6 +66,13 @@ public class Utility {
 
     }
 
+    /**
+     *Метод сжимает XML файл в ZIP-архив.
+     *
+     * @param path Путь до XML файла.
+     *
+     * @throws IOException Возникает если путь к файлу не верный.
+     */
     public void saveZIP (String path){
         byte[] buf = new byte[1024];
         String target = "src\\test.zip";
@@ -63,7 +83,6 @@ public class Utility {
             out = new ZipOutputStream(new FileOutputStream(target));
             in = new FileInputStream(path);
         } catch (FileNotFoundException e) {
-            //TODO Чтото
             e.printStackTrace();
         }
 
@@ -71,7 +90,6 @@ public class Utility {
         try {
             out.putNextEntry(new ZipEntry(path));
         } catch (IOException e) {
-            //TODO чтото
             e.printStackTrace();
         }
         int len;
@@ -81,7 +99,6 @@ public class Utility {
                 out.write(buf, 0, len);
             }
         } catch (IOException e) {
-            //TODO чтото
             e.printStackTrace();
         } finally {
             try {
@@ -89,12 +106,20 @@ public class Utility {
                 in.close();
                 out.close();
             } catch (IOException e) {
-                //TODO чтото
                 e.printStackTrace();
             }
         }
     }
 
+    /**
+     * Метод загружает данные из XML файла.
+     *
+     * @param path Путь к файлу.
+     *
+     * @return Экземпляр Model с обновленными данными.
+     *
+     * @throws JAXBException Возникает при неверном указании источника данных или его отсутствии.
+     */
     public Model loadXML(String path) throws JAXBException {
         Model model = new Model();
         JAXBContext jaxbCtx = JAXBContext.newInstance(model.getClass());
@@ -103,20 +128,29 @@ public class Utility {
         ArrayList<Student> studentsInGroup = new ArrayList<Student>();
 
         /** Переносим студентов из конкретных групп в общую базу */
-        for (int i = 0; i < model.getGroups().size(); i++) {
-            studentsInGroup.addAll(model.getGroups().get(i).getStudents());
+        for(Group group: model.getGroups()){
+            studentsInGroup.addAll(group.getStudents());
         }
-        for (int i = 0; i < studentsInGroup.size(); i++) {
-            model.addStudent(studentsInGroup.get(i).getId(),
-                    studentsInGroup.get(i).getName(),
-                    studentsInGroup.get(i).getSurname(),
-                    studentsInGroup.get(i).getPatronymic(),
-                    studentsInGroup.get(i).getDate());
+        for (Student student: studentsInGroup){
+            model.addStudent(student.getId(),
+                    student.getName(),
+                    student.getSurname(),
+                    student.getPatronymic(),
+                    student.getDate());
         }
 
         return model;
     }
 
+    /**
+     * Метод сохраняет данные в XML файл.
+     *
+     * @param path Путь до конечного XML файла.
+     *
+     * @param model Экзмепляр Model, которую необходимо сохранить.
+     *
+     * @throws JAXBException Возникает при неверном указании источника данных или его отсутствии.
+     */
     public void saveXML(String path, Model model) throws JAXBException {
         JAXBContext jaxbCtx = JAXBContext.newInstance(model.getClass());
         Marshaller marshaller = jaxbCtx.createMarshaller();
@@ -134,6 +168,16 @@ public class Utility {
         marshaller.marshal(model, fos);
     }
 
+    /**
+     * Метод добавляет данные из XML файла в сущесствующую модель.
+     *
+     * @param path Путь к XML файлу.
+     * @param model Экземпляр Model, куда будут загружены данные.
+     *
+     * @return Экземпляр Model с обновленными данными.
+     *
+     * @throws JAXBException Возникает при неверном указании источника данных или его отсутствии.
+     */
     public Model fileToFile(String path, Model model) throws JAXBException {
         JAXBContext jaxbCtx = JAXBContext.newInstance(model.getClass());
         Unmarshaller um = jaxbCtx.createUnmarshaller();
@@ -172,13 +216,13 @@ public class Utility {
             for (Student st : gr.getStudents())
                 st.setId(model.getStudents().size() + 1);
         /** Добавляем группы и студентов в модель */
-        for (int i = 0; i < mTemp.getGroups().size(); i++) {
-            model.addGroup(mTemp.getGroups().get(i));
-            for (int j = 0; j < mTemp.getGroups().get(i).getStudents().size(); j++) {
-                String name = mTemp.getGroups().get(i).getStudents().get(j).getName();
-                String patronymic = mTemp.getGroups().get(i).getStudents().get(j).getPatronymic();
-                String surname = mTemp.getGroups().get(i).getStudents().get(j).getSurname();
-                Date date = mTemp.getGroups().get(i).getStudents().get(j).getDate();
+        for(Group group: mTemp.getGroups()){
+            model.addGroup(group);
+            for(Student student: group.getStudents()){
+                String name = student.getName();
+                String patronymic = student.getPatronymic();
+                String surname = student.getSurname();
+                Date date = student.getDate();
                 model.addStudent(name, surname, patronymic, date);
             }
         }
@@ -186,20 +230,27 @@ public class Utility {
         return model;
     }
 
-    public Model addStudentInStudentList(Model m) {
+    /**
+     * Метод переносит студентов из группы в общий список студентов.
+     *
+     * @param model Экземпляр Model для обновления списка студентов.
+     *
+     * @return Обновленный экземпляр Model.
+     */
+    public Model addStudentInStudentList(Model model) {
         ArrayList<Student> grSt = new ArrayList<Student>();
 
-        for (int i = 0; i < m.getGroups().size(); i++) {
-            grSt.addAll(m.getGroups().get(i).getStudents());
+        for (int i = 0; i < model.getGroups().size(); i++) {
+            grSt.addAll(model.getGroups().get(i).getStudents());
         }
 
         for (int i = 0; i < grSt.size(); i++) {
-            m.addStudent(grSt.get(i).getName(),
+            model.addStudent(grSt.get(i).getName(),
                     grSt.get(i).getSurname(),
                     grSt.get(i).getPatronymic(),
                     grSt.get(i).getDate());
         }
 
-        return m;
+        return model;
     }
 }

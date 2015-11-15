@@ -1,17 +1,9 @@
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.*;
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
 
 /**
  * Класс описывает логику работы с данными.
@@ -188,17 +180,17 @@ public class Model {
      * @param facult Название факультета.
      */
     public void addGroup(int number, String facult) {
-        Group groups = new Group(number, facult);
+        Group groupTemp = new Group(number, facult);
         int tempCount = 0;
         /** Поиск идентичной группы */
         for (int i = 0; i < group.size(); i++) {
-            if (group.get(i).getNumber() == groups.getNumber())
-                if (group.get(i).getFacult().equals(groups.getFacult()))
+            if (group.get(i).getNumber() == groupTemp.getNumber())
+                if (group.get(i).getFacult().equals(groupTemp.getFacult()))
                     tempCount++;
         }
         /** Добавление группы */
         if (tempCount == 0) {
-            group.add(groups);
+            group.add(groupTemp);
         } else throw new UnsupportedOperationException();
     }
 
@@ -312,11 +304,10 @@ public class Model {
             if (gr.getNumber() == oldID) {
                 gr.setFacult(facult);
                 gr.setNumber(newID);
-                temp++;
             }
         }
 
-        if (temp == 0) throw new RuntimeException();
+        if (temp == 0) throw new UnsupportedOperationException();
     }
 
     /**

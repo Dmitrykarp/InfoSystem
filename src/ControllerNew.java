@@ -1,29 +1,47 @@
-import org.xml.sax.SAXParseException;
-
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.UnmarshalException;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.concurrent.SynchronousQueue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Класс <code>Controller</code> взаимодействует с классами <code>Model</code> и
+ * <code>View</code>.
+ * Класс обрабатывает все комманды пользователя и манипулирует данными.
+ *
+ * @author Karpenko Dmitry
+ */
 public class ControllerNew {
     private Model thisModel;
     private View thisView;
     private Utility thisUtil = new Utility();
 
+    /**
+     * Конструктору необходимо явно указать с какой <code>Model</code> и
+     * <code>View</code> ему работать.
+     *
+     * @param model Model
+     *
+     * @param view View
+     */
     ControllerNew(Model model, View view) {
         thisModel = model;
         thisView = view;
     }
 
+    /**
+     * Метод считывает данные, введенные в консоли и манипулирует ими.
+     *
+     * @throws IOException  Возникает при ошибке ввода\вывода.
+     * @throws JAXBException Возникает при неверном указании источника данных или его отсутствии.
+     * @throws ParseException Возникает при некорректном вводе формата даты.
+     */
     public void run() throws IOException, JAXBException, ParseException {
         String command;
         boolean exit = false;
@@ -504,12 +522,28 @@ public class ControllerNew {
 
     }
 
+    /**
+     * Метод проводит валидацию на входную строку для дальнейшего поиска по ней.
+     *
+     * @param string Входная строка для проверки.
+     *
+     * @return true - если строка содержит только буквы, цифры, знак[?] или знак[*].
+     *         false - если строка содержит другие символы.
+     */
     public static boolean validateFind(String string) {
         Pattern pattern = Pattern.compile("^[а-яА-ЯёЁa-zA-Z0-9-\\s?*]+$");
             Matcher matcher = pattern.matcher(string);
         return matcher.matches();
     }
 
+    /**
+     * Метод проводит валидацию на входную строку.
+     *
+     * @param string Входная строка для проверки.
+     *
+     * @return true - если строка содержит только буквы и цифры.
+     *         false - если строка содержил другие символы.
+     */
     public static boolean validate(String string) {
         Pattern pattern = Pattern.compile("^[а-яА-ЯёЁa-zA-Z0-9-\\s]+$");
         Matcher matcher = pattern.matcher(string);

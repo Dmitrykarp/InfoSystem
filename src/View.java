@@ -56,6 +56,9 @@ public class View {
 
     }
 
+    /**
+     * Перечисление краткой информации о возможности ввода команд.
+     */
     enum Help {
         CONSOLE,
         ADD,
@@ -77,53 +80,65 @@ public class View {
     }
 
     /**
-     * Выводит символ начала ввода команды для пользователя.
+     * Выводит информацию о возможности ввода команд.
      */
     public void printConsole(Help console) {
         switch (console){
             case CONSOLE:
                 System.out.print(">");
                 break;
+
             case ADD:
                 System.out.println("Введите S для добавления студентов.");
                 System.out.println("Введите G для добавления группы.");
                 System.out.println("Введите STG для добавления студента в группу.");
                 System.out.println("Для выхода введите EXIT.");
                 break;
+
             case ADD_STUDENT_NAME:
                 System.out.println("Введите имя студента:");
                 break;
+
             case ADD_STUDENT_PATR:
                 System.out.println("Введите отчество студента:");
                 break;
+
             case ADD_STRUDENT_SURN:
                 System.out.println("Введите фамилию студента:");
                 break;
+
             case ADD_STUDENT_DATE:
                 System.out.println("Введите дату зачисления студента в формате: ДД.ММ.ГГГГ");
                 break;
+
             case GROUP_NUMBER:
                 System.out.println("Введите номер группы:");
                 break;
+
             case GROUP_NUMBER_NEW:
                 System.out.println("Введите новый номер группы:");
                 break;
+
             case ADD_GROUP_FACULT:
                 System.out.println("Введите факультет:");
                 break;
+
             case ID_STUDENT:
                 System.out.println("Введите ID студента:");
                 break;
+
             case DEL:
                 System.out.println("Введите S для удаления студента.");
                 System.out.println("Введите G для удаления группы.");
                 System.out.println("Для выхода введите EXIT.");
                 break;
+
             case MOD:
                 System.out.println("Введите S для изменения студента.");
                 System.out.println("Введите G для изменения группы.");
                 System.out.println("Для выхода введите EXIT.");
                 break;
+
             case VIEW:
                 System.out.println("Введите ALLS для вывода всех студентов в БД.");
                 System.out.println("Введите ALLG для вывода всех групп в БД.");
@@ -131,23 +146,25 @@ public class View {
                 System.out.println("Введите G для вывода информации по конкретной группе.");
                 System.out.println("Для выхода введите EXIT.");
                 break;
+
             case FIND:
                 System.out.println("Введите S для поиска студента.");
                 System.out.println("Введите G для поиска группы.");
                 System.out.println("Для выхода введите EXIT.");
                 break;
+
             case FIND_STRING:
                 System.out.println("Укажите данные для поиска.");
                 System.out.println("В параметре поиска можно указать [*] для неизвестного символа");
                 System.out.println("или [?] для неизвестного набора символов.");
                 break;
+
             case PATH:
-                System.out.println("Укажите путь к необходимому файлу:");
+                System.out.println("Укажите путь к необходимому файлу [например С:\\1\\target.xml]:");
                 break;
 
-
-
-
+            default:
+                printError(Error.UNKNOWN_ERROR);
         }
     }
 
@@ -253,34 +270,12 @@ public class View {
      * Метод выводит на консоль справку.
      */
     public void printHelp() {
-        System.out.println("-= ДОБАВЛЕНиЕ ЭЛЕМЕНТА =-");
-        System.out.println("ADD -s [имя] [отчество] [фамилия] [дата: dd.mm.yyyy]");
-        System.out.println("ADD -g [номер] [факультет]");
-        System.out.println("ADD -stg [ID студента] [ID группы]");
-        System.out.println();
-        System.out.println("-= ПОКАЗ ЭЛЕМЕНТОВ =-");
-        System.out.println("VIEW -allg");
-        System.out.println("VIEW -alls");
-        System.out.println("VIEW -s [id] ");
-        System.out.println("VIEW -g [номер]");
-        System.out.println();
-        System.out.println("-= УДАЛЕНиЕ ЭЛЕМЕНТОВ =-");
-        System.out.println("DEL -g [id Группы]");
-        System.out.println("DEL -s [id Студента]");
-        System.out.println();
-        System.out.println("-= иЗМЕНЕНиЕ ЭЛЕМЕНТОВ =-");
-        System.out.println("MOD -g [id изменяемой группы] [новый id] [факультет]");
-        System.out.println("MOD -s [id Студента] [имя] [отчество] [фамилия] [дата]");
-        System.out.println();
-        System.out.println("-= ПОиСК ЭЛЕМЕНТОВ =-");
-        System.out.println("FIND -g [факультет]");
-        System.out.println("FIND -s [имя/отчество/фамилия]");
-        System.out.println("        В параметре можно указать [*] для неизвестного символа");
-        System.out.println("        или [?] для неизвестного набора символов.");
-        System.out.println();
-        System.out.println("-= ДОБАВЛЕНиЕ ДАННЫХ иЗ ФАЙЛА =-");
-        System.out.println("FILE [путь к файлу, например С:\\1\\target.xml] ");
-
+        System.out.println("Введите ADD для добавления элемента.");
+        System.out.println("Введите VIEW для вывода элемента на консоль.");
+        System.out.println("Введите DEL для удаления элемента.");
+        System.out.println("Введите MOD для изменения элемента.");
+        System.out.println("Введите FIND для поиска элемента.");
+        System.out.println("Введите FILE для добавления элементов из другого файла.");
     }
 
     /**
