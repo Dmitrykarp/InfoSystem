@@ -22,8 +22,6 @@ public class Utility {
      * Метод выгружает XML файл из ZIP-архива.
      *
      * @param path Путь к ZIP-архиву.
-     *
-     * @throws IOException Возникает если путь к файлу не верный.
      */
     public void loadZIP(String path)  {
         ZipInputStream in = null;
@@ -66,8 +64,6 @@ public class Utility {
      *Метод сжимает XML файл в ZIP-архив.
      *
      * @param path Путь до XML файла.
-     *
-     * @throws IOException Возникает если путь к файлу не верный.
      */
     public void saveZIP (String path){
         byte[] buf = new byte[1024];

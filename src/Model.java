@@ -215,10 +215,10 @@ public class Model {
      * Метод добавляет группу.
      * Метод необходим для загрузки данных из XML файла.
      *
-     * @param g Экземпляр Group.
+     * @param group Экземпляр Group.
      */
-    public void addGroup(Group g) {
-        this.group.add(g);
+    public void addGroup(Group group) {
+        this.group.add(group);
     }
 
     /**

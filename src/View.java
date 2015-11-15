@@ -81,6 +81,8 @@ public class View {
 
     /**
      * Выводит информацию о возможности ввода команд.
+     *
+     * @param console Значение из перечисления <code>Help</code>
      */
     public void printConsole(Help console) {
         switch (console){
