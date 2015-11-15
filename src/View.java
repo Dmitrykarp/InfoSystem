@@ -35,7 +35,8 @@ public class View {
         GROUP_ALREADY,
         FILE_NOT_FOUND,
         FILE_ARCHIVE_NOT_FOUND,
-        FILE_XML_NOT_FOUND
+        FILE_XML_NOT_FOUND,
+        INVALID_SYNTAX_SECOND
 
     }
 
@@ -52,7 +53,6 @@ public class View {
         GROUP_MOD,
         MERGER,
         COMPLETE
-
 
     }
 
@@ -215,6 +215,10 @@ public class View {
 
             case INVALID_SYNTAX:
                 System.out.println("Ошибка! Введите [help] для справки!");
+                break;
+
+            case INVALID_SYNTAX_SECOND:
+                System.out.println("Ошибка! Введите одну из команд ниже:");
                 break;
 
             case FORBIDDEN_SYMBOLS:

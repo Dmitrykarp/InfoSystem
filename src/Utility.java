@@ -60,10 +60,6 @@ public class Utility {
                 }
             }
         }
-
-
-
-
     }
 
     /**
@@ -85,7 +81,6 @@ public class Utility {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
 
         try {
             out.putNextEntry(new ZipEntry(path));
@@ -206,9 +201,7 @@ public class Utility {
                             }
                         }
                     }
-
                 }
-
             }
         }
         /** Даем новые порядковые номера */

@@ -157,7 +157,8 @@ public class Student {
             if (name.equals(((Student) o).getName()))
                 if (surname.equals(((Student) o).getSurname()))
                     if (patronymic.equals(((Student) o).getPatronymic()))
-                        return true;
+                        if(date.equals(((Student) o).getDate()))
+                            return true;
 
         Student student = (Student) o;
 
@@ -184,7 +185,8 @@ public class Student {
         if (name.equals(((Student) o).getName()))
             if (surname.equals(((Student) o).getSurname()))
                 if (patronymic.equals(((Student) o).getPatronymic()))
-                    return true;
+                    if(date.equals(((Student) o).getDate()))
+                        return true;
 
         Student student = (Student) o;
 

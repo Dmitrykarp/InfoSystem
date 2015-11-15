@@ -129,7 +129,7 @@ public class ControllerNew {
                                 thisView.printError(View.Error.STUDENT_FORMAT);
                                 continue;
                             }
-                            if(tempInt <=0){
+                            if(tempInt >=0){
                                 number = tempInt;
                             } else {
                                 thisView.printError(View.Error.GROUP_FORMAT);
@@ -184,7 +184,7 @@ public class ControllerNew {
                             subExit = true;
                             thisView.printConfirm(View.Confirm.COMPLETE);
 
-                        } else thisView.printError(View.Error.INVALID_SYNTAX);
+                        } else thisView.printError(View.Error.INVALID_SYNTAX_SECOND);
                     }
                     break;
 
@@ -228,7 +228,7 @@ public class ControllerNew {
                             subExit = true;
                             thisView.printConfirm(View.Confirm.COMPLETE);
 
-                        } else thisView.printError(View.Error.INVALID_SYNTAX);
+                        } else thisView.printError(View.Error.INVALID_SYNTAX_SECOND);
                     }
                     break;
 
@@ -338,7 +338,7 @@ public class ControllerNew {
                             subExit = true;
                             thisView.printConfirm(View.Confirm.COMPLETE);
 
-                        } else thisView.printError(View.Error.INVALID_SYNTAX);
+                        } else thisView.printError(View.Error.INVALID_SYNTAX_SECOND);
                     }
                     break;
 
@@ -426,7 +426,7 @@ public class ControllerNew {
                             subExit = true;
                             thisView.printConfirm(View.Confirm.COMPLETE);
 
-                        } else thisView.printError(View.Error.INVALID_SYNTAX);
+                        } else thisView.printError(View.Error.INVALID_SYNTAX_SECOND);
                     }
                     break;
 
@@ -486,7 +486,7 @@ public class ControllerNew {
                             subExit = true;
                             thisView.printConfirm(View.Confirm.COMPLETE);
 
-                        } else thisView.printError(View.Error.INVALID_SYNTAX);
+                        } else thisView.printError(View.Error.INVALID_SYNTAX_SECOND);
                     }
                     break;
 
