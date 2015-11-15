@@ -304,6 +304,7 @@ public class Model {
             if (gr.getNumber() == oldID) {
                 gr.setFacult(facult);
                 gr.setNumber(newID);
+                temp++;
             }
         }
 
@@ -324,7 +325,7 @@ public class Model {
         if (find.contains("*")) {
             find = find.replace("*", ".");
         } else if (find.contains("?")) {
-            find = find.replace("?", "[а-я]*");
+            find = find.replace("?", "[а-яА-ЯёЁa-zA-Z0-9-\\s]*");
         }
 
         Pattern p = Pattern.compile("^" + find.toLowerCase() + "$");
@@ -363,7 +364,7 @@ public class Model {
         if (find.contains("*")) {
             find = find.replace("*", ".");
         } else if (find.contains("?")) {
-            find = find.replace("?", "[а-я]*");
+            find = find.replace("?", "[а-яА-ЯёЁa-zA-Z0-9-\\s]*");
         }
 
         Pattern p = Pattern.compile("^" + find.toLowerCase() + "$");
