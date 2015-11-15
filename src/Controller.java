@@ -545,6 +545,7 @@ public class Controller {
      *         false - если строка содержил другие символы.
      */
     public static boolean validate(String string) {
+        if(string.trim().isEmpty()) return false;
         Pattern pattern = Pattern.compile("^[а-яА-ЯёЁa-zA-Z0-9-\\s]+$");
         Matcher matcher = pattern.matcher(string);
         return matcher.matches();
