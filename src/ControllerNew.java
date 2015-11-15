@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Класс <code>Controller</code> взаимодействует с классами <code>Model</code> и
+ * Класс <code>ControllerNew</code> взаимодействует с классами <code>Model</code> и
  * <code>View</code>.
  * Класс обрабатывает все комманды пользователя и манипулирует данными.
  *
