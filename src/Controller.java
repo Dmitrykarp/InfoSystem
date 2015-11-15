@@ -317,7 +317,7 @@ public class Controller {
                                 thisView.printError(View.Error.STUDENT_FORMAT);
                                 continue;
                             }
-                            thisView.printConsole(View.Help.ADD_GROUP_FACULT);
+                            thisView.printConsole(View.Help.ADD_GROUP_FACULT_NEW);
                             thisView.printConsole(View.Help.CONSOLE);
                             temp = reader.readLine();
                             if(validate(temp)){

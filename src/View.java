@@ -75,7 +75,8 @@ public class View {
         VIEW,
         FIND,
         PATH,
-        FIND_STRING
+        FIND_STRING,
+        ADD_GROUP_FACULT_NEW
 
     }
 
@@ -123,6 +124,10 @@ public class View {
 
             case ADD_GROUP_FACULT:
                 System.out.println("Введите факультет:");
+                break;
+
+            case ADD_GROUP_FACULT_NEW:
+                System.out.println("Введите новое название факультета:");
                 break;
 
             case ID_STUDENT:
