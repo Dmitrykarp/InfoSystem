@@ -37,6 +37,9 @@ public class Model {
      * @param surname Фамилия студента.
      * @param patronymic Отчество студента.
      * @param date Дата зачисления студента.
+     *
+     * @throws UnsupportedOperationException Возникает при невозможности добавить студента.
+     *         Студент уже имеется в базе.
      */
     public void addStudent(String name,
                            String surname,
@@ -65,6 +68,8 @@ public class Model {
      * @param surname Фамилия студента.
      * @param patronymic Отчество студента.
      * @param date Дата зачисления студента.
+     *
+     * @throws UnsupportedOperationException Возникает при невозможности добавить студента.
      */
     public void addStudent(int id,
                            String name,
@@ -80,13 +85,16 @@ public class Model {
 
         if (tempStud == 0) {
             students.add(student);
-        } else throw new RuntimeException();
+        } else throw new UnsupportedOperationException();
     }
 
     /**
      * Метод удаляет студента из группы и из общего списка студентов.
      *
      * @param id Номер студента.
+     *
+     * @throws UnsupportedOperationException Возникает при невозможности удалить студента.
+     *          Например студент не найден.
      */
     public void delStudent(int id) {
         int temp = 0;
@@ -121,6 +129,9 @@ public class Model {
      * Метод удаляет группу.
      *
      * @param number Номер группы.
+     *
+     * @throws UnsupportedOperationException Возникает при невозможности удалить группу.
+     *          Например группа не найдена.
      */
     public void delGroup(int number) {
         int temp = 0;
@@ -141,6 +152,9 @@ public class Model {
      *
      * @param idStudent Номер студента.
      * @param idGroup Номер группы.
+     *
+     * @throws UnsupportedOperationException Возникает при невозможности добавить студента в группу.
+     *          Например студент уже имеется в группе.
      */
     public void studentToGroup(int idStudent, int idGroup) {
         int tempSt = 0;
@@ -178,6 +192,9 @@ public class Model {
      *
      * @param number Номер группы.
      * @param facult Название факультета.
+     *
+     * @throws UnsupportedOperationException Возникает при невозможности добавить группу.
+     *          Например группа уже имеется.
      */
     public void addGroup(int number, String facult) {
         Group groupTemp = new Group(number, facult);
@@ -243,6 +260,8 @@ public class Model {
      * @param id Номер группы.
      *
      * @return Экземпляр Group.
+     *
+     * @throws IndexOutOfBoundsException  Возникает, если группа не найдена.
      */
     public Group getGroup(int id) {
         for (Group g : group) {
@@ -259,6 +278,9 @@ public class Model {
      * @param surname Фамилия студента.
      * @param patronymic Отчество студента.
      * @param date Дата зачисления студента.
+     *
+     * @throws UnsupportedOperationException Возникает при невозможности изменить студента.
+     *         Например студент не найден.
      */
     public void modifyStudent(int id,
                               String name,
@@ -296,6 +318,9 @@ public class Model {
      * @param oldID Текущий номер группы.
      * @param newID Новый номер группы.
      * @param facult Новое название факультета.
+     *
+     * @throws UnsupportedOperationException Возникает при невозможности изменить группу.
+     *          Например группа не найдена.
      */
     public void modifyGroup(int oldID, int newID, String facult) {
         int temp = 0;
