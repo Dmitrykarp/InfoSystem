@@ -349,7 +349,8 @@ public class Model {
 
         if (find.contains("*")) {
             find = find.replace("*", ".");
-        } else if (find.contains("?")) {
+        }
+        if (find.contains("?")) {
             find = find.replace("?", "[а-яА-ЯёЁa-zA-Z0-9-\\s]*");
         }
 
@@ -388,7 +389,8 @@ public class Model {
 
         if (find.contains("*")) {
             find = find.replace("*", ".");
-        } else if (find.contains("?")) {
+        }
+        if (find.contains("?")) {
             find = find.replace("?", "[а-яА-ЯёЁa-zA-Z0-9-\\s]*");
         }
 
