@@ -11,13 +11,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Класс <code>ControllerNew</code> взаимодействует с классами <code>Model</code> и
+ * Класс <code>Controller</code> взаимодействует с классами <code>Model</code> и
  * <code>View</code>.
  * Класс обрабатывает все комманды пользователя и манипулирует данными.
  *
  * @author Karpenko Dmitry
  */
-public class ControllerNew {
+public class Controller {
     private Model thisModel;
     private View thisView;
     private Utility thisUtil = new Utility();
@@ -30,7 +30,7 @@ public class ControllerNew {
      *
      * @param view View
      */
-    ControllerNew(Model model, View view) {
+    Controller(Model model, View view) {
         thisModel = model;
         thisView = view;
     }
