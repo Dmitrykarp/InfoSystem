@@ -105,6 +105,7 @@ public class Controller {
                             try {
                                 SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
                                 date = format.parse(reader.readLine());
+                                if(!date.before(new Date())) throw new ParseException("Error",1);
                             } catch (ParseException e){
                                 thisView.printError(View.Error.STUDENT_ADD_DATE);
                                 continue;
@@ -285,6 +286,7 @@ public class Controller {
                             try {
                                 SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
                                 date = format.parse(reader.readLine());
+                                if(!date.before(new Date())) throw new ParseException("Error",1);
                             } catch (ParseException e){
                                 thisView.printError(View.Error.STUDENT_ADD_DATE);
                                 continue;

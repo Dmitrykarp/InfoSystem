@@ -241,7 +241,7 @@ public class View {
                 break;
 
             case STUDENT_ADD_DATE:
-                System.out.println("Ошибка! Неверный формат даты!");
+                System.out.println("Ошибка! Неверный формат даты или она больше текущей!");
                 break;
 
             case STUDENT_ALREADY_GROUP:
